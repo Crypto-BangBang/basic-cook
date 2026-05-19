@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ tools_ui.title[lang] }} — {{ ui.site_title[lang] }}{% endblock %}
+
+{% block content %}
+
+<section class="tools-hero">
+  <div class="container">
+    <h1 class="tools-hero-title">{{ tools_ui.title[lang] }}</h1>
+    <p class="tools-hero-sub">{{ tools_ui.subtitle[lang] }}</p>
+    <nav class="tools-nav">
+      {% for cat in tool_categories %}
+      <a href="#{{ cat.id }}" class="tools-nav-item" style="--cat-color: {{ cat.color }}">
+        {{ cat.name[lang] }}
+      </a>
+      {% endfor %}
+    </nav>
+  </div>
+</section>
+
+{% for cat in tool_categories %}
+<section class="tools-section" id="{{ cat.id }}">
+  <div class="container">
+    <h2 class="tools-cat-title" style="--cat-color: {{ cat.color }}">
+      <span class="tools-cat-bar"></span>
+      {{ cat.name[lang] }}
+    </h2>
+    <div class="tool-list">
+      {% for tool in cat.tools %}
+      <article class="tool-card" style="--cat-color: {{ cat.color }}">
+        <div class="tool-card-header">
+          <h3 class="tool-name">{{ tool.name[lang] }}</h3>
+        </div>
+        <p class="tool-desc">{{ tool.desc[lang] }}</p>
+        <div class="tool-tips">
+          <p class="tips-label">{{ tools_ui.tips_label[lang] }}</p>
+          <ul class="tips-list">
+            {% for tip in tool.tips[lang] %}
+            <li>{{ tip }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endfor %}
+
+{% endblock %}

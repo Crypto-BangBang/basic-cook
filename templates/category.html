@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ cat.name[lang] }} — {{ ui.site_title[lang] }}{% endblock %}
+
+{% block content %}
+
+<section class="page-hero" style="--cat-color: {{ cat.color }}">
+  <div class="container">
+    <a href="/?lang={{ lang }}" class="back-link">{{ ui.back[lang] }}</a>
+    <div class="page-hero-inner">
+      <h1 class="page-hero-title">{{ cat.name[lang] }}</h1>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="sub-grid">
+      {% for sub in cat.sub %}
+      <a href="/category/{{ cat_id }}/{{ sub.id }}?lang={{ lang }}"
+         class="sub-card"
+         style="--cat-color: {{ cat.color }}">
+        <span class="sub-name">{{ sub.name[lang] }}</span>
+        <span class="sub-arrow">→</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

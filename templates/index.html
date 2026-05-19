@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}{{ ui.site_title[lang] }}{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">{{ ui.site_title[lang] }}</p>
+    <h1 class="hero-title">{{ ui.tagline[lang] }}</h1>
+    <div class="hero-cta-row">
+      <a href="#categories" class="hero-cta">{{ ui.explore[lang] }}</a>
+      <a href="/random?lang={{ lang }}" class="hero-cta-ghost">
+        {% if lang == 'ko' %}오늘 뭐 먹지?{% elif lang == 'en' %}Surprise me{% elif lang == 'ja' %}おまかせ{% else %}随机推荐{% endif %}
+      </a>
+    </div>
+  </div>
+  <div class="hero-bg-text">RECIPE</div>
+</section>
+
+<section class="search-section">
+  <div class="container">
+    <form action="/search" method="get" class="search-form">
+      <input type="hidden" name="lang" value="{{ lang }}">
+      <div class="search-bar">
+        <input type="text" name="q" class="search-input"
+               placeholder="{{ search_placeholder }}">
+        <button type="submit" class="search-btn">{{ search_btn }}</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="section" id="categories">
+  <div class="container">
+    <h2 class="section-title">{{ ui.categories[lang] }}</h2>
+    <div class="cat-grid">
+      {% for cat_id, cat in categories.items() %}
+      <a href="/category/{{ cat_id }}?lang={{ lang }}" class="cat-card" style="--cat-color: {{ cat.color }}">
+        <div class="cat-bg"></div>
+        <h3 class="cat-name">{{ cat.name[lang] }}</h3>
+        <ul class="cat-sub-list">
+          {% for sub in cat.sub %}
+          <li>{{ sub.name[lang] }}</li>
+          {% endfor %}
+        </ul>
+        <span class="cat-arrow">→</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="recently-section" id="recently-section" style="display:none">
+  <div class="container">
+    <h2 class="section-title">
+      {% if lang == 'ko' %}최근 본 레시피{% elif lang == 'en' %}Recently Viewed{% elif lang == 'ja' %}最近見たレシピ{% else %}最近查看{% endif %}
+    </h2>
+    <div class="recently-grid" id="recently-grid"></div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var LANG = '{{ lang }}';
+  var RV_KEY = 'easyrecipe-recently';
+  var DIFF = {{ difficulty | tojson }};
+  try {
+    var list = JSON.parse(localStorage.getItem(RV_KEY) || '[]');
+    if (!list.length) return;
+    var section = document.getElementById('recently-section');
+    var grid = document.getElementById('recently-grid');
+    section.style.display = 'block';
+    var timeUnit = { ko: '분', en: 'min', ja: '分', zh: '分钟' }[LANG] || 'min';
+    list.forEach(function (item) {
+      var name = (item.name || {})[LANG] || (item.name || {})['ko'] || '';
+      var catName = (item.cat_name || {})[LANG] || (item.cat_name || {})['ko'] || '';
+      var subName = (item.sub_name || {})[LANG] || (item.sub_name || {})['ko'] || '';
+      var diff = ((DIFF[String(item.difficulty)] || {})[LANG]) || '';
+      var a = document.createElement('a');
+      a.href = '/category/' + item.path + '?lang=' + LANG;
+      a.className = 'recently-card';
+      a.style.cssText = '--cat-color:' + (item.cat_color || 'var(--gold)');
+      a.innerHTML =
+        '<span class="recently-cat">' + catName + ' · ' + subName + '</span>' +
+        '<span class="recently-name">' + name + '</span>' +
+        '<span class="recently-meta">' + item.time + timeUnit + ' · ' + diff + '</span>';
+      grid.appendChild(a);
+    });
+  } catch (e) {}
+})();
+</script>
+
+<section class="story-section">
+  <div class="container">
+    <div class="story-card">
+      <p class="story-label">{{ ui.story_label[lang] }}</p>
+      {% for line in ui.story[lang].split('\n') %}
+      <p class="story-text">{{ line }}</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

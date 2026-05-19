@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}
+  {% if lang == 'ko' %}서버 오류{% elif lang == 'en' %}Server Error{% elif lang == 'ja' %}サーバーエラー{% else %}服务器错误{% endif %}
+  — {{ ui.site_title[lang] }}
+{% endblock %}
+
+{% block content %}
+<section class="error-section">
+  <div class="error-card">
+    <p class="error-code">500</p>
+    <h1 class="error-title">
+      {% if lang == 'ko' %}서버에 문제가 생겼어요{% elif lang == 'en' %}Something Went Wrong{% elif lang == 'ja' %}サーバーエラーが発生しました{% else %}服务器出现问题{% endif %}
+    </h1>
+    <p class="error-msg">
+      {% if lang == 'ko' %}잠시 후 다시 시도해 주세요.
+      {% elif lang == 'en' %}Please try again in a moment.
+      {% elif lang == 'ja' %}しばらくしてからもう一度お試しください。
+      {% else %}请稍后重试。
+      {% endif %}
+    </p>
+    <a href="/?lang={{ lang }}" class="error-home-btn">
+      {% if lang == 'ko' %}홈으로 돌아가기{% elif lang == 'en' %}Back to Home{% elif lang == 'ja' %}ホームに戻る{% else %}返回首页{% endif %}
+    </a>
+  </div>
+</section>
+{% endblock %}

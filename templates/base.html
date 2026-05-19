@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ ui.site_title[lang] }}{% endblock %}</title>
+
+  <!-- OG / Twitter card -->
+  {% block og_meta %}
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="Basic Cook">
+  <meta property="og:title"       content="{{ self.title() }}">
+  <meta property="og:description" content="{{ ui.tagline[lang] }}">
+  <meta property="og:url"         content="{{ request.url }}">
+  <meta property="og:image"       content="{{ url_for('static', filename='images/korean-rice.jpg', _external=True) }}">
+  <meta name="twitter:card"       content="summary_large_image">
+  <meta name="twitter:title"      content="{{ self.title() }}">
+  <meta name="twitter:description" content="{{ ui.tagline[lang] }}">
+  <meta name="twitter:image"      content="{{ url_for('static', filename='images/korean-rice.jpg', _external=True) }}">
+  {% endblock %}
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍳</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="ambient-overlay"></div>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+
+      <a href="/?lang={{ lang }}" class="nav-logo">
+        <span class="logo-text">Basic Cook</span>
+      </a>
+
+      <div class="nav-links">
+        <!-- 홈 -->
+        <a href="/?lang={{ lang }}"
+           class="nav-link {% if request.endpoint=='index' %}active{% endif %}">
+          {% if lang=='ko' %}홈{% elif lang=='en' %}Home{% elif lang=='ja' %}ホーム{% else %}首页{% endif %}
+        </a>
+
+        <!-- 가이드 dropdown -->
+        {% set guide_active = request.endpoint in ['tools','substitutes'] %}
+        <div class="nav-dropdown {% if guide_active %}active{% endif %}" id="dd-guide">
+          <button class="nav-link nav-dd-trigger {% if guide_active %}active{% endif %}"
+                  data-target="dd-guide">
+            {% if lang=='ko' %}가이드{% elif lang=='en' %}Guide{% elif lang=='ja' %}ガイド{% else %}指南{% endif %}
+            <svg class="dd-arrow" viewBox="0 0 10 6" width="9" height="9"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          </button>
+          <div class="nav-dd-menu">
+            <a href="/tools?lang={{ lang }}"
+               class="dd-item {% if request.endpoint=='tools' %}active{% endif %}">
+              {% if lang=='ko' %}도구 가이드{% elif lang=='en' %}Kitchen Tools{% elif lang=='ja' %}道具ガイド{% else %}工具指南{% endif %}
+            </a>
+            <a href="/substitutes?lang={{ lang }}"
+               class="dd-item {% if request.endpoint=='substitutes' %}active{% endif %}">
+              {% if lang=='ko' %}대체 재료{% elif lang=='en' %}Substitutes{% elif lang=='ja' %}代替食材{% else %}替代食材{% endif %}
+            </a>
+          </div>
+        </div>
+
+        <!-- 추천 dropdown -->
+        {% set discover_active = request.endpoint in ['course','seasonal'] %}
+        <div class="nav-dropdown {% if discover_active %}active{% endif %}" id="dd-discover">
+          <button class="nav-link nav-dd-trigger {% if discover_active %}active{% endif %}"
+                  data-target="dd-discover">
+            {% if lang=='ko' %}추천{% elif lang=='en' %}Discover{% elif lang=='ja' %}おすすめ{% else %}推荐{% endif %}
+            <svg class="dd-arrow" viewBox="0 0 10 6" width="9" height="9"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          </button>
+          <div class="nav-dd-menu">
+            <a href="/course?lang={{ lang }}"
+               class="dd-item {% if request.endpoint=='course' %}active{% endif %}">
+              {% if lang=='ko' %}초보자 코스{% elif lang=='en' %}Beginner Course{% elif lang=='ja' %}初心者コース{% else %}新手课程{% endif %}
+            </a>
+            <a href="/seasonal?lang={{ lang }}"
+               class="dd-item {% if request.endpoint=='seasonal' %}active{% endif %}">
+              {% if lang=='ko' %}계절별{% elif lang=='en' %}Seasonal{% elif lang=='ja' %}季節別{% else %}季节{% endif %}
+            </a>
+          </div>
+        </div>
+
+        <!-- 즐겨찾기 -->
+        <a href="/favorites?lang={{ lang }}"
+           class="nav-link {% if request.endpoint=='favorites' %}active{% endif %}">
+          {% if lang=='ko' %}즐겨찾기{% elif lang=='en' %}Favorites{% elif lang=='ja' %}お気に入り{% else %}收藏{% endif %}
+        </a>
+      </div>
+
+      <div class="nav-right">
+        <!-- Search icon -->
+        <button class="search-icon-btn" id="search-icon-btn" aria-label="Search">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="8.5" cy="8.5" r="5.5"/>
+            <line x1="13" y1="13" x2="18" y2="18"/>
+          </svg>
+        </button>
+
+        <!-- Language switcher -->
+        <div class="lang-switcher">
+          {% set lang_labels = {"ko": "한국어", "en": "EN", "ja": "日本語", "zh": "中文"} %}
+          {% for l in langs %}
+            {% set extra = '' %}
+            {% if request.args.get('q') %}{% set extra = '&q=' + request.args.get('q') %}{% endif %}
+            <a href="{{ request.path }}?lang={{ l }}{{ extra }}"
+               class="lang-btn {% if l == lang %}active{% endif %}">
+              {{ lang_labels[l] }}
+            </a>
+          {% endfor %}
+        </div>
+
+        <!-- Profile / Login -->
+        {% if current_user.is_authenticated %}
+          <a href="/profile?lang={{ lang }}"
+             class="nav-profile-btn {% if request.endpoint=='profile' %}active{% endif %}">
+            <span class="nav-avatar">{{ current_user.username[0] | upper }}</span>
+            <span class="nav-profile-name">{{ current_user.username }}</span>
+          </a>
+        {% else %}
+          <a href="{{ url_for('auth.login', lang=lang) }}" class="nav-login-btn">
+            {% if lang=='ko' %}로그인{% elif lang=='en' %}Login{% elif lang=='ja' %}ログイン{% else %}登录{% endif %}
+          </a>
+        {% endif %}
+
+        <!-- Hamburger (mobile) -->
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Search overlay -->
+  <div class="search-overlay" id="search-overlay">
+    <div class="search-overlay-inner">
+      <button class="search-overlay-close" id="search-overlay-close" aria-label="Close">
+        <svg viewBox="0 0 14 14" width="16" height="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/></svg>
+      </button>
+      <form action="/search" method="get" class="search-overlay-form">
+        <input type="hidden" name="lang" value="{{ lang }}">
+        <div class="search-bar">
+          <input type="text" name="q" class="search-input search-overlay-input" id="search-overlay-input"
+                 placeholder="{% if lang=='ko' %}재료나 요리 이름으로 검색{% elif lang=='en' %}Search recipes or ingredients{% elif lang=='ja' %}食材や料理名で検索{% else %}搜索食谱或食材{% endif %}">
+          <button type="submit" class="search-btn">
+            {% if lang=='ko' %}검색{% elif lang=='en' %}Search{% elif lang=='ja' %}検索{% else %}搜索{% endif %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-links">
+      <a href="/?lang={{ lang }}" class="mobile-nav-link {% if request.endpoint=='index' %}active{% endif %}">
+        {% if lang=='ko' %}홈{% elif lang=='en' %}Home{% elif lang=='ja' %}ホーム{% else %}首页{% endif %}
+      </a>
+      <a href="/tools?lang={{ lang }}" class="mobile-nav-link {% if request.endpoint=='tools' %}active{% endif %}">
+        {% if lang=='ko' %}도구 가이드{% elif lang=='en' %}Kitchen Tools{% elif lang=='ja' %}道具ガイド{% else %}工具指南{% endif %}
+      </a>
+      <a href="/substitutes?lang={{ lang }}" class="mobile-nav-link {% if request.endpoint=='substitutes' %}active{% endif %}">
+        {% if lang=='ko' %}대체 재료{% elif lang=='en' %}Substitutes{% elif lang=='ja' %}代替食材{% else %}替代食材{% endif %}
+      </a>
+      <a href="/course?lang={{ lang }}" class="mobile-nav-link {% if request.endpoint=='course' %}active{% endif %}">
+        {% if lang=='ko' %}초보자 코스{% elif lang=='en' %}Beginner Course{% elif lang=='ja' %}初心者コース{% else %}新手课程{% endif %}
+      </a>
+      <a href="/seasonal?lang={{ lang }}" class="mobile-nav-link {% if request.endpoint=='seasonal' %}active{% endif %}">
+        {% if lang=='ko' %}계절별{% elif lang=='en' %}Seasonal{% elif lang=='ja' %}季節別{% else %}季节{% endif %}
+      </a>
+      <a href="/favorites?lang={{ lang }}" class="mobile-nav-link {% if request.endpoint=='favorites' %}active{% endif %}">
+        {% if lang=='ko' %}즐겨찾기{% elif lang=='en' %}Favorites{% elif lang=='ja' %}お気に入り{% else %}收藏{% endif %}
+      </a>
+      {% if current_user.is_authenticated %}
+      <a href="/profile?lang={{ lang }}" class="mobile-nav-link {% if request.endpoint=='profile' %}active{% endif %}">
+        {{ current_user.username }}
+      </a>
+      <a href="{{ url_for('auth.logout', lang=lang) }}" class="mobile-nav-link">
+        {% if lang=='ko' %}로그아웃{% elif lang=='en' %}Logout{% elif lang=='ja' %}ログアウト{% else %}退出{% endif %}
+      </a>
+      {% else %}
+      <a href="{{ url_for('auth.login', lang=lang) }}" class="mobile-nav-link">
+        {% if lang=='ko' %}로그인{% elif lang=='en' %}Login{% elif lang=='ja' %}ログイン{% else %}登录{% endif %}
+      </a>
+      <a href="{{ url_for('auth.register', lang=lang) }}" class="mobile-nav-link">
+        {% if lang=='ko' %}회원가입{% elif lang=='en' %}Sign Up{% elif lang=='ja' %}新規登録{% else %}注册{% endif %}
+      </a>
+      {% endif %}
+    </div>
+    <div class="mobile-lang">
+      {% set lang_labels = {"ko": "한국어", "en": "EN", "ja": "日本語", "zh": "中文"} %}
+      {% for l in langs %}
+        {% set extra = '' %}
+        {% if request.args.get('q') %}{% set extra = '&q=' + request.args.get('q') %}{% endif %}
+        <a href="{{ request.path }}?lang={{ l }}{{ extra }}"
+           class="lang-btn {% if l == lang %}active{% endif %}">
+          {{ lang_labels[l] }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    /* ── Dropdown menus ── */
+    var triggers = document.querySelectorAll('.nav-dd-trigger');
+    triggers.forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var dd = document.getElementById(btn.getAttribute('data-target'));
+        var isOpen = dd.classList.contains('open');
+        document.querySelectorAll('.nav-dropdown').forEach(function (d) { d.classList.remove('open'); });
+        if (!isOpen) dd.classList.add('open');
+      });
+    });
+    document.addEventListener('click', function () {
+      document.querySelectorAll('.nav-dropdown').forEach(function (d) { d.classList.remove('open'); });
+    });
+
+    /* ── Hamburger ── */
+    var hamburger = document.getElementById('hamburger-btn');
+    var mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+    });
+    document.addEventListener('click', function (e) {
+      if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+      }
+    });
+
+    /* ── Search overlay ── */
+    var searchIcon = document.getElementById('search-icon-btn');
+    var overlay = document.getElementById('search-overlay');
+    var overlayInput = document.getElementById('search-overlay-input');
+    var overlayClose = document.getElementById('search-overlay-close');
+
+    function openSearch() {
+      overlay.classList.add('open');
+      setTimeout(function () { overlayInput.focus(); }, 80);
+    }
+    function closeSearch() { overlay.classList.remove('open'); }
+
+    searchIcon.addEventListener('click', openSearch);
+    overlayClose.addEventListener('click', closeSearch);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeSearch(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSearch(); });
+  })();
+  </script>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="flash-wrap">
+        {% for msg in messages %}
+          <div class="flash">{{ msg }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <main>{% block content %}{% endblock %}</main>
+
+  <footer class="footer">
+    <p>{{ ui.footer[lang] }}</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block title %}{{ sub.name[lang] }} — {{ ui.site_title[lang] }}{% endblock %}
+
+{% block content %}
+
+<section class="page-hero" style="--cat-color: {{ cat.color }}">
+  <div class="container">
+    <a href="/category/{{ cat_id }}?lang={{ lang }}" class="back-link">{{ ui.back[lang] }}</a>
+    <div class="page-hero-inner">
+      <h1 class="page-hero-title">{{ sub.name[lang] }}</h1>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    {% if recipe_list %}
+    <div class="filter-bar">
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="time" data-value="all">
+          {% if lang == 'ko' %}전체{% elif lang == 'en' %}All{% elif lang == 'ja' %}全て{% else %}全部{% endif %}
+        </button>
+        <button class="filter-btn" data-filter="time" data-value="15">
+          {% if lang == 'ko' %}15분 이내{% elif lang == 'en' %}Under 15 min{% elif lang == 'ja' %}15分以内{% else %}15分内{% endif %}
+        </button>
+        <button class="filter-btn" data-filter="time" data-value="30">
+          {% if lang == 'ko' %}30분 이내{% elif lang == 'en' %}Under 30 min{% elif lang == 'ja' %}30分以内{% else %}30分内{% endif %}
+        </button>
+        <button class="filter-btn" data-filter="time" data-value="31">
+          {% if lang == 'ko' %}30분 초과{% elif lang == 'en' %}Over 30 min{% elif lang == 'ja' %}30分以上{% else %}30分以上{% endif %}
+        </button>
+      </div>
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="diff" data-value="all">
+          {% if lang == 'ko' %}전체{% elif lang == 'en' %}All{% elif lang == 'ja' %}全て{% else %}全部{% endif %}
+        </button>
+        <button class="filter-btn" data-filter="diff" data-value="1">
+          {% if lang == 'ko' %}쉬움{% elif lang == 'en' %}Easy{% elif lang == 'ja' %}かんたん{% else %}简单{% endif %}
+        </button>
+        <button class="filter-btn" data-filter="diff" data-value="2">
+          {% if lang == 'ko' %}보통{% elif lang == 'en' %}Medium{% elif lang == 'ja' %}ふつう{% else %}中等{% endif %}
+        </button>
+        <button class="filter-btn" data-filter="diff" data-value="3">
+          {% if lang == 'ko' %}어려움{% elif lang == 'en' %}Hard{% elif lang == 'ja' %}むずかしい{% else %}较难{% endif %}
+        </button>
+      </div>
+    </div>
+
+    <p class="filter-empty-msg" id="filter-empty" style="display:none">
+      {% if lang == 'ko' %}해당 조건에 맞는 레시피가 없어요.
+      {% elif lang == 'en' %}No recipes match the selected filters.
+      {% elif lang == 'ja' %}条件に合うレシピがありません。
+      {% else %}没有符合条件的食谱。
+      {% endif %}
+    </p>
+
+    <div class="recipe-grid" id="recipe-grid">
+      {% for recipe in recipe_list %}
+      <a href="/category/{{ cat_id }}/{{ sub.id }}/{{ recipe.id }}?lang={{ lang }}"
+         class="recipe-card"
+         style="--cat-color: {{ cat.color }}"
+         data-time="{{ recipe.time }}"
+         data-diff="{{ recipe.difficulty }}"
+         data-recipe-path="{{ cat_id }}/{{ sub.id }}/{{ recipe.id }}">
+        <div class="recipe-card-header">
+          <span class="meta-tag time">{{ recipe.time }}{% if lang == 'ko' %}분{% elif lang == 'ja' %}分{% elif lang == 'zh' %}分钟{% else %}min{% endif %}</span>
+          <span class="meta-tag diff diff-{{ recipe.difficulty }}">{{ difficulty[recipe.difficulty][lang] }}</span>
+        </div>
+        <div class="recipe-card-body">
+          <h3 class="recipe-name">{{ recipe.name[lang] }}</h3>
+          <p class="recipe-desc">{{ recipe.desc.get(lang, recipe.desc.get('ko', '')) }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <p class="empty-msg">
+        {% if lang == "ko" %}레시피를 준비 중이에요. 곧 만나요!
+        {% elif lang == "en" %}Recipes coming soon!
+        {% elif lang == "ja" %}レシピを準備中です。もうしばらくお待ちください！
+        {% else %}食谱正在准备中，敬请期待！
+        {% endif %}
+      </p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+(function () {
+  var activeTime = 'all';
+  var activeDiff = 'all';
+
+  function applyFilters() {
+    var cards = document.querySelectorAll('#recipe-grid .recipe-card');
+    var visible = 0;
+    cards.forEach(function (card) {
+      var time = parseInt(card.getAttribute('data-time'), 10);
+      var diff = card.getAttribute('data-diff');
+
+      var timeOk = false;
+      if (activeTime === 'all') timeOk = true;
+      else if (activeTime === '15') timeOk = time <= 15;
+      else if (activeTime === '30') timeOk = time <= 30;
+      else if (activeTime === '31') timeOk = time > 30;
+
+      var diffOk = (activeDiff === 'all') || (diff === activeDiff);
+
+      if (timeOk && diffOk) { card.classList.remove('hidden'); visible++; }
+      else card.classList.add('hidden');
+    });
+    var emptyMsg = document.getElementById('filter-empty');
+    if (emptyMsg) emptyMsg.style.display = visible === 0 ? '' : 'none';
+  }
+
+  var FAV_KEY = 'easyrecipe-favorites';
+  function getFavs() {
+    try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); } catch (e) { return []; }
+  }
+  var favs = getFavs();
+  document.querySelectorAll('.recipe-card[data-recipe-path]').forEach(function (card) {
+    if (favs.indexOf(card.getAttribute('data-recipe-path')) !== -1) {
+      card.classList.add('is-fav');
+    }
+  });
+
+  document.querySelectorAll('.filter-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var filterType = btn.getAttribute('data-filter');
+      var value = btn.getAttribute('data-value');
+
+      // Deactivate siblings in the same group
+      btn.closest('.filter-group').querySelectorAll('.filter-btn').forEach(function (b) {
+        b.classList.remove('active');
+      });
+      btn.classList.add('active');
+
+      if (filterType === 'time') activeTime = value;
+      else if (filterType === 'diff') activeDiff = value;
+
+      applyFilters();
+    });
+  });
+})();
+</script>
+
+{% endblock %}

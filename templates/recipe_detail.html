@@ -1,0 +1,481 @@
+{% extends "base.html" %}
+{% block title %}{{ recipe.name[lang] }} — {{ ui.site_title[lang] }}{% endblock %}
+
+{% block og_meta %}
+<meta property="og:type"         content="article">
+<meta property="og:site_name"    content="Basic Cook">
+<meta property="og:title"        content="{{ recipe.name[lang] }} — Basic Cook">
+<meta property="og:description"  content="{{ recipe.desc.get(lang, recipe.desc.get('ko', '')) }}">
+<meta property="og:url"          content="{{ request.url }}">
+<meta property="og:image"        content="{{ url_for('static', filename='images/' + cat_id + '-' + sub_id + '.jpg', _external=True) }}">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="{{ recipe.name[lang] }} — Basic Cook">
+<meta name="twitter:description" content="{{ recipe.desc.get(lang, recipe.desc.get('ko', '')) }}">
+<meta name="twitter:image"       content="{{ url_for('static', filename='images/' + cat_id + '-' + sub_id + '.jpg', _external=True) }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-hero" style="--cat-color: {{ cat.color }}">
+  <div class="container">
+    <div class="detail-top-bar">
+      <a href="/category/{{ cat_id }}/{{ sub_id }}?lang={{ lang }}" class="back-link">{{ ui.back[lang] }}</a>
+      <div class="detail-top-actions">
+        <button class="fav-btn {% if is_fav %}active{% endif %}" id="fav-btn"
+                data-path="{{ recipe_path }}"
+                data-auth="{{ 'true' if current_user.is_authenticated else 'false' }}"
+                data-login-url="{{ url_for('auth.login', lang=lang) }}">
+          <svg class="fav-icon" viewBox="0 0 24 24" width="14" height="14">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <span class="fav-label">
+            {% if is_fav %}
+              {% if lang == 'ko' %}저장됨{% elif lang == 'en' %}Saved{% elif lang == 'ja' %}保存済み{% else %}已收藏{% endif %}
+            {% else %}
+              {% if lang == 'ko' %}저장{% elif lang == 'en' %}Save{% elif lang == 'ja' %}保存{% else %}收藏{% endif %}
+            {% endif %}
+          </span>
+        </button>
+        {% if current_user.is_authenticated %}
+        <button class="cook-btn {% if cook_log %}cooked{% endif %}" id="cook-btn"
+                data-path="{{ recipe_path }}">
+          {% if cook_log %}
+            {% if lang == 'ko' %}{{ cook_log.count }}회 완료{% elif lang == 'en' %}Cooked {{ cook_log.count }}×{% elif lang == 'ja' %}{{ cook_log.count }}回調理{% else %}已做{{ cook_log.count }}次{% endif %}
+          {% else %}
+            {% if lang == 'ko' %}요리 완료{% elif lang == 'en' %}Cooked it!{% elif lang == 'ja' %}調理完了！{% else %}完成烹饪{% endif %}
+          {% endif %}
+        </button>
+        {% endif %}
+        <button class="share-btn" id="share-btn">
+          {% if lang == 'ko' %}공유{% elif lang == 'en' %}Share{% elif lang == 'ja' %}共有{% else %}分享{% endif %}
+        </button>
+        <button class="timer-btn" id="timer-btn">
+          {% if lang == 'ko' %}타이머{% elif lang == 'en' %}Timer{% elif lang == 'ja' %}タイマー{% else %}计时器{% endif %}
+        </button>
+        <button class="print-btn" onclick="window.print()">
+          {% if lang == 'ko' %}인쇄 / PDF{% elif lang == 'en' %}Print / PDF{% elif lang == 'ja' %}印刷 / PDF{% else %}打印 / PDF{% endif %}
+        </button>
+      </div>
+    </div>
+    <div class="page-hero-inner">
+      <div>
+        <p class="detail-breadcrumb">{{ cat.name[lang] }} · {{ sub.name[lang] }}</p>
+        <h1 class="page-hero-title">{{ recipe.name[lang] }}</h1>
+        <p class="detail-desc">{{ recipe.desc.get(lang, recipe.desc.get('ko', '')) }}</p>
+        <div class="detail-badges">
+          <span class="meta-tag time">{{ recipe.time }}{% if lang == 'ko' %}분{% elif lang == 'ja' %}分{% elif lang == 'zh' %}分钟{% else %}min{% endif %}</span>
+          <span class="meta-tag diff diff-{{ recipe.difficulty }}">{{ difficulty[recipe.difficulty][lang] }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="recipe-detail-img-wrap">
+      <img src="{{ url_for('static', filename='images/' + cat_id + '-' + sub_id + '.jpg') }}"
+           alt="{{ recipe.name[lang] }}"
+           class="recipe-detail-img">
+    </div>
+  </div>
+  <div class="container detail-layout">
+
+    <div class="detail-col">
+      <div class="detail-section-header">
+        <h2 class="detail-section-title">
+          {% if lang == 'ko' %}재료{% elif lang == 'en' %}Ingredients{% elif lang == 'ja' %}材料{% else %}食材{% endif %}
+        </h2>
+        <button class="copy-ing-btn" id="copy-ing-btn"
+                data-copied="{% if lang == 'ko' %}복사됨!{% elif lang == 'en' %}Copied!{% elif lang == 'ja' %}コピー済み{% else %}已复制{% endif %}">
+          {% if lang == 'ko' %}목록 복사{% elif lang == 'en' %}Copy list{% elif lang == 'ja' %}リストをコピー{% else %}复制列表{% endif %}
+        </button>
+      </div>
+      <div class="servings-control">
+        <span class="servings-label">
+          {% if lang == 'ko' %}인분{% elif lang == 'en' %}Servings{% elif lang == 'ja' %}人前{% else %}人份{% endif %}
+        </span>
+        <button class="servings-btn" id="servings-minus">-</button>
+        <span class="servings-num" id="servings-num">2</span>
+        <button class="servings-btn" id="servings-plus">+</button>
+      </div>
+      <ul class="ingredient-list">
+        {% for ing in recipe.ingredients %}
+        <li class="ingredient-item">
+          <span class="ing-name">{{ trans_ing(ing.name, lang) }}</span>
+          <span class="ing-amount">{{ trans_amt(ing.amount, lang) }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+
+      {% if current_user.is_authenticated %}
+      <div class="note-section">
+        <h3 class="note-title">
+          {% if lang == 'ko' %}나의 메모{% elif lang == 'en' %}My Notes{% elif lang == 'ja' %}メモ{% else %}我的笔记{% endif %}
+        </h3>
+        <textarea class="note-textarea" id="note-textarea"
+                  data-path="{{ recipe_path }}"
+                  placeholder="{% if lang == 'ko' %}이 레시피에 메모를 남겨보세요 (예: 마늘 두 배로){% elif lang == 'en' %}Leave a note about this recipe (e.g. double the garlic){% elif lang == 'ja' %}このレシピについてメモを残そう（例：にんにく2倍）{% else %}记录这道菜的备注（例：多加蒜）{% endif %}">{{ note_content }}</textarea>
+        <p class="note-status" id="note-status"></p>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="detail-col steps-col">
+      <h2 class="detail-section-title">
+        {% if lang == 'ko' %}조리 순서{% elif lang == 'en' %}Instructions{% elif lang == 'ja' %}作り方{% else %}步骤{% endif %}
+      </h2>
+      <button class="reset-steps-btn" id="reset-steps-btn">
+        {% if lang == 'ko' %}단계 초기화{% elif lang == 'en' %}Reset Steps{% elif lang == 'ja' %}リセット{% else %}重置步骤{% endif %}
+      </button>
+      <ol class="step-list" id="step-list">
+        {% for step in recipe.steps %}
+        <li class="step-item" data-step-id="step-{{ loop.index }}">
+          <span class="step-num">{{ loop.index }}</span>
+          <span class="step-text">{{ step.get(lang, step.get('ko', '')) }}</span>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<div class="timer-panel" id="timer-panel">
+  <span class="timer-label">{% if lang == 'ko' %}조리 타이머{% elif lang == 'en' %}Cooking Timer{% elif lang == 'ja' %}調理タイマー{% else %}计时器{% endif %}</span>
+  <div class="timer-display" id="timer-display"></div>
+  <div class="timer-controls">
+    <button class="timer-ctrl-btn primary" id="timer-start">{% if lang == 'ko' %}시작{% elif lang == 'en' %}Start{% elif lang == 'ja' %}開始{% else %}开始{% endif %}</button>
+    <button class="timer-ctrl-btn" id="timer-reset">{% if lang == 'ko' %}초기화{% elif lang == 'en' %}Reset{% elif lang == 'ja' %}リセット{% else %}重置{% endif %}</button>
+    <button class="timer-ctrl-btn" id="timer-close">{% if lang == 'ko' %}닫기{% elif lang == 'en' %}Close{% elif lang == 'ja' %}閉じる{% else %}关闭{% endif %}</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var LANG = '{{ lang }}';
+  var RECIPE_PATH = '{{ recipe_path }}';
+  var IS_AUTH = {{ 'true' if current_user.is_authenticated else 'false' }};
+
+  /* Step checkboxes */
+  var STORAGE_KEY = 'steps-{{ cat_id }}-{{ sub_id }}-{{ recipe.id }}';
+
+  function loadStepState() {
+    try { var r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : {}; } catch (e) { return {}; }
+  }
+  function saveStepState(s) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch (e) {}
+  }
+
+  var stepState = loadStepState();
+  var stepItems = document.querySelectorAll('#step-list .step-item');
+
+  stepItems.forEach(function (item) {
+    var id = item.getAttribute('data-step-id');
+    if (stepState[id]) item.classList.add('done');
+    item.addEventListener('click', function () {
+      item.classList.toggle('done');
+      stepState[id] = item.classList.contains('done');
+      saveStepState(stepState);
+    });
+  });
+
+  document.getElementById('reset-steps-btn').addEventListener('click', function () {
+    stepItems.forEach(function (item) { item.classList.remove('done'); });
+    stepState = {};
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  });
+
+  /* Toast helper */
+  var toast = document.getElementById('toast');
+  var toastTimer;
+  function showToast(msg) {
+    clearTimeout(toastTimer);
+    toast.textContent = msg;
+    toast.classList.add('show');
+    toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2200);
+  }
+
+  var TOAST_MSGS = {
+    copied:  { ko: '링크를 복사했어요', en: 'Link copied', ja: 'リンクをコピーしました', zh: '已复制链接' },
+    saved:   { ko: '저장됐어요', en: 'Saved', ja: '保存しました', zh: '已收藏' },
+    unsaved: { ko: '즐겨찾기 해제', en: 'Removed from favorites', ja: '保存を解除しました', zh: '已取消收藏' },
+    cooked:  { ko: '요리 완료 기록!', en: 'Cooking logged!', ja: '調理記録完了！', zh: '烹饪记录成功！' },
+    login:   { ko: '로그인이 필요합니다', en: 'Please log in first', ja: 'ログインが必要です', zh: '请先登录' },
+  };
+
+  /* Favorites */
+  var favBtn = document.getElementById('fav-btn');
+  var favLabel = favBtn.querySelector('.fav-label');
+  var FAV_KEY = 'easyrecipe-favorites';
+
+  var FAV_LABELS = {
+    saved:   { ko: '저장됨', en: 'Saved', ja: '保存済み', zh: '已收藏' },
+    unsaved: { ko: '저장', en: 'Save', ja: '保存', zh: '収藏' },
+  };
+
+  function localFavToggle() {
+    try {
+      var favs = JSON.parse(localStorage.getItem(FAV_KEY) || '[]');
+      var idx = favs.indexOf(RECIPE_PATH);
+      if (idx === -1) {
+        favs.push(RECIPE_PATH);
+        localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+        favBtn.classList.add('active');
+        favLabel.textContent = FAV_LABELS.saved[LANG];
+        showToast(TOAST_MSGS.saved[LANG]);
+      } else {
+        favs.splice(idx, 1);
+        localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+        favBtn.classList.remove('active');
+        favLabel.textContent = FAV_LABELS.unsaved[LANG];
+        showToast(TOAST_MSGS.unsaved[LANG]);
+      }
+    } catch (e) {}
+  }
+
+  favBtn.addEventListener('click', function () {
+    if (!IS_AUTH) { localFavToggle(); return; }
+    fetch('/api/favorite', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ path: RECIPE_PATH }),
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.favorited) {
+        favBtn.classList.add('active');
+        favLabel.textContent = FAV_LABELS.saved[LANG];
+        showToast(TOAST_MSGS.saved[LANG]);
+      } else {
+        favBtn.classList.remove('active');
+        favLabel.textContent = FAV_LABELS.unsaved[LANG];
+        showToast(TOAST_MSGS.unsaved[LANG]);
+      }
+    });
+  });
+
+  /* Cook button */
+  var cookBtn = document.getElementById('cook-btn');
+  if (cookBtn) {
+    cookBtn.addEventListener('click', function () {
+      fetch('/api/cook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path: RECIPE_PATH }),
+      })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        cookBtn.classList.add('cooked');
+        var labels = {
+          ko: data.count + '회 완료',
+          en: 'Cooked ' + data.count + '×',
+          ja: data.count + '回調理',
+          zh: '已做' + data.count + '次',
+        };
+        cookBtn.textContent = labels[LANG] || labels.en;
+        showToast(TOAST_MSGS.cooked[LANG]);
+      });
+    });
+  }
+
+  /* Servings adjuster */
+  var BASE = 2, current = 2;
+  var origAmounts = [];
+  document.querySelectorAll('.ing-amount').forEach(function (el) {
+    origAmounts.push(el.textContent.trim());
+  });
+
+  function parseAmt(str) {
+    var m = str.match(/^(\d+(?:\/\d+)?|\d*\.?\d+)([\s\S]*)$/);
+    if (!m) return null;
+    var numStr = m[1].trim(), rest = m[2];
+    var num = numStr.indexOf('/') !== -1
+      ? (function (s) { var p = s.split('/'); return parseFloat(p[0]) / parseFloat(p[1]); })(numStr)
+      : parseFloat(numStr);
+    return isNaN(num) ? null : { num: num, rest: rest };
+  }
+  function fmtNum(n) { var r = Math.round(n * 10) / 10; return r % 1 === 0 ? String(r) : r.toFixed(1); }
+
+  function updateServings() {
+    var factor = current / BASE;
+    document.querySelectorAll('.ing-amount').forEach(function (el, i) {
+      var p = parseAmt(origAmounts[i]);
+      if (p) el.textContent = fmtNum(p.num * factor) + p.rest;
+    });
+    document.getElementById('servings-num').textContent = current;
+  }
+  document.getElementById('servings-minus').addEventListener('click', function () {
+    if (current > 1) { current--; updateServings(); }
+  });
+  document.getElementById('servings-plus').addEventListener('click', function () {
+    if (current < 10) { current++; updateServings(); }
+  });
+
+  /* Notes (autosave) */
+  var noteTextarea = document.getElementById('note-textarea');
+  if (noteTextarea) {
+    var noteStatus = document.getElementById('note-status');
+    var noteTimer;
+    var NOTE_SAVING = { ko: '저장 중..', en: 'Saving...', ja: '保存中..', zh: '保存中..' };
+    var NOTE_SAVED  = { ko: '저장됨', en: 'Saved', ja: '保存済み', zh: '已保存' };
+
+    noteTextarea.addEventListener('input', function () {
+      clearTimeout(noteTimer);
+      noteStatus.textContent = NOTE_SAVING[LANG];
+      noteTimer = setTimeout(function () {
+        fetch('/api/note', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ path: RECIPE_PATH, content: noteTextarea.value }),
+        })
+        .then(function (r) { return r.json(); })
+        .then(function () { noteStatus.textContent = NOTE_SAVED[LANG]; });
+      }, 800);
+    });
+  }
+
+  /* Share */
+  var shareBtn = document.getElementById('share-btn');
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); showToast(TOAST_MSGS.copied[LANG]); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+  shareBtn.addEventListener('click', function () {
+    var url = window.location.href;
+    if (navigator.share) {
+      navigator.share({ title: document.title, url: url }).catch(function () {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(function () { showToast(TOAST_MSGS.copied[LANG]); })
+        .catch(function () { fallbackCopy(url); });
+    } else { fallbackCopy(url); }
+  });
+
+  /* Copy ingredients */
+  var copyIngBtn = document.getElementById('copy-ing-btn');
+  if (copyIngBtn) {
+    copyIngBtn.addEventListener('click', function () {
+      var lines = [];
+      document.querySelectorAll('.ingredient-item').forEach(function (item) {
+        var name = item.querySelector('.ing-name');
+        var amt = item.querySelector('.ing-amount');
+        if (name) {
+          var line = name.textContent.trim();
+          if (amt && amt.textContent.trim()) line += ': ' + amt.textContent.trim();
+          lines.push(line);
+        }
+      });
+      var text = lines.join('\n');
+      var originalText = copyIngBtn.textContent.trim();
+      var copiedLabel = copyIngBtn.getAttribute('data-copied');
+      function onCopied() {
+        copyIngBtn.textContent = copiedLabel;
+        setTimeout(function () { copyIngBtn.textContent = originalText; }, 1800);
+      }
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(onCopied).catch(function () { fallbackCopy(text); onCopied(); });
+      } else {
+        fallbackCopy(text); onCopied();
+      }
+    });
+  }
+
+  /* Ingredient checklist */
+  var ING_KEY = 'ing-{{ cat_id }}-{{ sub_id }}-{{ recipe.id }}';
+  function loadIngState() {
+    try { var r = localStorage.getItem(ING_KEY); return r ? JSON.parse(r) : {}; } catch (e) { return {}; }
+  }
+  function saveIngState(s) {
+    try { localStorage.setItem(ING_KEY, JSON.stringify(s)); } catch (e) {}
+  }
+  var ingState = loadIngState();
+  var ingItems = document.querySelectorAll('.ingredient-item');
+  ingItems.forEach(function (item, i) {
+    var id = 'ing-' + i;
+    if (ingState[id]) item.classList.add('checked');
+    item.addEventListener('click', function () {
+      item.classList.toggle('checked');
+      ingState[id] = item.classList.contains('checked');
+      saveIngState(ingState);
+    });
+  });
+
+  /* Timer */
+  var RECIPE_MINUTES = {{ recipe.time }};
+  var timerPanel = document.getElementById('timer-panel');
+  var timerDisplay = document.getElementById('timer-display');
+  var timerStartBtn = document.getElementById('timer-start');
+  var timerResetBtn = document.getElementById('timer-reset');
+  var timerCloseBtn = document.getElementById('timer-close');
+  var timerBtnEl = document.getElementById('timer-btn');
+  var timerTotal = RECIPE_MINUTES * 60;
+  var timerRemaining = timerTotal;
+  var timerInterval = null;
+  var timerRunning = false;
+  var T_LABELS = {
+    start: { ko: '시작', en: 'Start', ja: '開始', zh: '开始' },
+    pause: { ko: '일시정지', en: 'Pause', ja: '一時停止', zh: '暂停' },
+    done:  { ko: '완료!', en: 'Done!', ja: '完了!', zh: '完成!' }
+  };
+  function fmtTimer(s) {
+    var m = Math.floor(s / 60), sec = s % 60;
+    return (m < 10 ? '0' : '') + m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+  function stopTimer() {
+    clearInterval(timerInterval); timerInterval = null; timerRunning = false;
+    timerBtnEl.classList.remove('running');
+    timerStartBtn.textContent = T_LABELS.start[LANG] || 'Start';
+  }
+  timerDisplay.textContent = fmtTimer(timerRemaining);
+  timerBtnEl.addEventListener('click', function () { timerPanel.classList.toggle('show'); });
+  timerStartBtn.addEventListener('click', function () {
+    if (timerRunning) { stopTimer(); return; }
+    if (timerRemaining <= 0) return;
+    timerRunning = true;
+    timerBtnEl.classList.add('running');
+    timerStartBtn.textContent = T_LABELS.pause[LANG] || 'Pause';
+    timerInterval = setInterval(function () {
+      timerRemaining--;
+      timerDisplay.textContent = fmtTimer(timerRemaining);
+      if (timerRemaining <= 0) {
+        stopTimer();
+        timerDisplay.textContent = T_LABELS.done[LANG] || 'Done!';
+        showToast(T_LABELS.done[LANG] || 'Done!');
+      }
+    }, 1000);
+  });
+  timerResetBtn.addEventListener('click', function () {
+    stopTimer(); timerRemaining = timerTotal; timerDisplay.textContent = fmtTimer(timerRemaining);
+  });
+  timerCloseBtn.addEventListener('click', function () { timerPanel.classList.remove('show'); });
+
+  /* Recently viewed */
+  (function () {
+    var RV_KEY = 'easyrecipe-recently';
+    var entry = {
+      path: '{{ cat_id }}/{{ sub_id }}/{{ recipe.id }}',
+      name: {{ recipe.name | tojson }},
+      cat_name: {{ cat.name | tojson }},
+      cat_color: '{{ cat.color }}',
+      sub_name: {{ sub.name | tojson }},
+      time: {{ recipe.time }},
+      difficulty: {{ recipe.difficulty }},
+    };
+    try {
+      var list = JSON.parse(localStorage.getItem(RV_KEY) || '[]');
+      list = list.filter(function (x) { return x.path !== entry.path; });
+      list.unshift(entry);
+      if (list.length > 6) list = list.slice(0, 6);
+      localStorage.setItem(RV_KEY, JSON.stringify(list));
+    } catch (e) {}
+  })();
+
+})();
+</script>
+
+{% endblock %}

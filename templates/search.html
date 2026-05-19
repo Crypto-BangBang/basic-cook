@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% block title %}
+  {% if q %}{{ q }} —{% endif %}
+  {% if lang == 'ko' %}검색{% elif lang == 'en' %}Search{% elif lang == 'ja' %}検索{% else %}搜索{% endif %}
+  — {{ ui.site_title[lang] }}
+{% endblock %}
+
+{% block content %}
+
+<section class="page-hero" style="--cat-color: #c9a84c">
+  <div class="container">
+    <div class="page-hero-inner">
+      <div style="width:100%">
+        <h1 class="page-hero-title" style="margin-bottom:24px">
+          {% if lang == 'ko' %}레시피 검색{% elif lang == 'en' %}Recipe Search{% elif lang == 'ja' %}レシピ検索{% else %}食谱搜索{% endif %}
+        </h1>
+        <form action="/search" method="get" class="search-form" style="max-width:640px">
+          <input type="hidden" name="lang" value="{{ lang }}">
+          <div class="search-bar">
+            <input type="text" name="q" class="search-input"
+                   placeholder="{{ search_placeholder }}"
+                   value="{{ q }}">
+            <button type="submit" class="search-btn">{{ search_btn }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    {% if not q %}
+      <div class="search-empty">
+        <p>
+          {% if lang == 'ko' %}재료명이나 요리 이름을 입력해 검색해 보세요.
+          {% elif lang == 'en' %}Enter an ingredient or recipe name to search.
+          {% elif lang == 'ja' %}食材名や料理名を入力して検索してください。
+          {% else %}请输入食材名或菜名进行搜索。
+          {% endif %}
+        </p>
+      </div>
+
+    {% elif results|length == 0 %}
+      <div class="search-empty">
+        <p>
+          {% if lang == 'ko' %}"{{ q }}"에 대한 검색 결과가 없어요.
+          {% elif lang == 'en' %}No results found for "{{ q }}".
+          {% elif lang == 'ja' %}"{{ q }}" の検索結果はありません。
+          {% else %}"{{ q }}"没有搜索结果。
+          {% endif %}
+        </p>
+      </div>
+
+    {% else %}
+      <div class="search-results-bar">
+        <p class="search-results-header">
+          {% if lang == 'ko' %}"{{ q }}" 검색 결과 <span id="visible-count">{{ results|length }}</span>건
+          {% elif lang == 'en' %}<span id="visible-count">{{ results|length }}</span> result{% if results|length != 1 %}s{% endif %} for "{{ q }}"
+          {% elif lang == 'ja' %}"{{ q }}" の検索結果 <span id="visible-count">{{ results|length }}</span>件
+          {% else %}"{{ q }}" 的搜索结果共 <span id="visible-count">{{ results|length }}</span> 条
+          {% endif %}
+        </p>
+
+        <div class="search-filters">
+          <div class="filter-group">
+            <span class="filter-label">
+              {% if lang == 'ko' %}난이도{% elif lang == 'en' %}Difficulty{% elif lang == 'ja' %}難易度{% else %}难度{% endif %}
+            </span>
+            <button class="filter-btn active" data-filter="diff" data-value="all">
+              {% if lang == 'ko' %}전체{% elif lang == 'en' %}All{% elif lang == 'ja' %}全て{% else %}全部{% endif %}
+            </button>
+            <button class="filter-btn" data-filter="diff" data-value="1">
+              {% if lang == 'ko' %}쉬움{% elif lang == 'en' %}Easy{% elif lang == 'ja' %}かんたん{% else %}简单{% endif %}
+            </button>
+            <button class="filter-btn" data-filter="diff" data-value="2">
+              {% if lang == 'ko' %}보통{% elif lang == 'en' %}Medium{% elif lang == 'ja' %}ふつう{% else %}中等{% endif %}
+            </button>
+            <button class="filter-btn" data-filter="diff" data-value="3">
+              {% if lang == 'ko' %}어려움{% elif lang == 'en' %}Hard{% elif lang == 'ja' %}むずかしい{% else %}较难{% endif %}
+            </button>
+          </div>
+
+          <div class="filter-group">
+            <span class="filter-label">
+              {% if lang == 'ko' %}조리 시간{% elif lang == 'en' %}Time{% elif lang == 'ja' %}調理時間{% else %}烹饪时间{% endif %}
+            </span>
+            <button class="filter-btn active" data-filter="time" data-value="all">
+              {% if lang == 'ko' %}전체{% elif lang == 'en' %}All{% elif lang == 'ja' %}全て{% else %}全部{% endif %}
+            </button>
+            <button class="filter-btn" data-filter="time" data-value="30">
+              {% if lang == 'ko' %}30분 이내{% elif lang == 'en' %}≤ 30 min{% elif lang == 'ja' %}30分以内{% else %}30分内{% endif %}
+            </button>
+            <button class="filter-btn" data-filter="time" data-value="60">
+              {% if lang == 'ko' %}60분 이내{% elif lang == 'en' %}≤ 60 min{% elif lang == 'ja' %}60分以内{% else %}60分内{% endif %}
+            </button>
+            <button class="filter-btn" data-filter="time" data-value="61">
+              {% if lang == 'ko' %}60분 초과{% elif lang == 'en' %}&gt; 60 min{% elif lang == 'ja' %}60分超{% else %}60分以上{% endif %}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="recipe-grid" id="results-grid">
+        {% for item in results %}
+        {% set recipe = item.recipe %}
+        {% set cat = item.cat %}
+        {% set sub = item.sub %}
+        <a href="/category/{{ item.cat_id }}/{{ item.sub_id }}/{{ recipe.id }}?lang={{ lang }}"
+           class="recipe-card"
+           style="--cat-color: {{ cat.color if cat else '#c9a84c' }}"
+           data-diff="{{ recipe.difficulty }}"
+           data-time="{{ recipe.time }}">
+          <div class="recipe-card-header">
+            <span class="meta-tag time">{{ recipe.time }}{% if lang == 'ko' %}분{% elif lang == 'ja' %}分{% elif lang == 'zh' %}分钟{% else %}min{% endif %}</span>
+            <span class="meta-tag diff diff-{{ recipe.difficulty }}">{{ difficulty[recipe.difficulty][lang] }}</span>
+          </div>
+          <div class="recipe-card-body">
+            <p class="search-breadcrumb">
+              {{ cat.name[lang] if cat else item.cat_id }} · {{ sub.name[lang] if sub else item.sub_id }}
+            </p>
+            <h3 class="recipe-name">{{ recipe.name[lang] }}</h3>
+            <p class="recipe-desc">{{ recipe.desc.get(lang, recipe.desc.get('ko', '')) }}</p>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+
+      <div class="search-no-filter-result" id="no-filter-result" style="display:none">
+        <p>
+          {% if lang == 'ko' %}해당 조건에 맞는 결과가 없어요.
+          {% elif lang == 'en' %}No results match the selected filters.
+          {% elif lang == 'ja' %}条件に合う結果がありません。
+          {% else %}没有符合条件的结果。
+          {% endif %}
+        </p>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<script>
+(function () {
+  var diffFilter = 'all';
+  var timeFilter = 'all';
+
+  function applyFilters() {
+    var cards = document.querySelectorAll('#results-grid .recipe-card');
+    var visible = 0;
+    cards.forEach(function (card) {
+      var d = parseInt(card.getAttribute('data-diff'));
+      var t = parseInt(card.getAttribute('data-time'));
+      var diffOk = diffFilter === 'all' || d === parseInt(diffFilter);
+      var timeOk = timeFilter === 'all'
+        || (timeFilter === '30' && t <= 30)
+        || (timeFilter === '60' && t <= 60)
+        || (timeFilter === '61' && t > 60);
+      if (diffOk && timeOk) { card.style.display = ''; visible++; }
+      else card.style.display = 'none';
+    });
+    var countEl = document.getElementById('visible-count');
+    if (countEl) countEl.textContent = visible;
+    var noResult = document.getElementById('no-filter-result');
+    if (noResult) noResult.style.display = visible === 0 ? '' : 'none';
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var group = btn.getAttribute('data-filter');
+      var val = btn.getAttribute('data-value');
+      document.querySelectorAll('.filter-btn[data-filter="' + group + '"]')
+        .forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      if (group === 'diff') diffFilter = val;
+      else timeFilter = val;
+      applyFilters();
+    });
+  });
+})();
+</script>
+
+{% endblock %}

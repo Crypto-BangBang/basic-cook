@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}{{ seasonal_ui.title[lang] }} — {{ ui.site_title[lang] }}{% endblock %}
+
+{% block content %}
+
+<section class="seasonal-hero">
+  <div class="container">
+    <h1 class="seasonal-hero-title">{{ seasonal_ui.title[lang] }}</h1>
+    <p class="seasonal-hero-sub">{{ seasonal_ui.subtitle[lang] }}</p>
+    <nav class="season-tab-nav">
+      {% for key in seasons_order %}
+      {% set season = seasonal[key] %}
+      <button class="season-tab {% if loop.first %}active{% endif %}" data-season="{{ key }}">
+        {{ season.name[lang] }}
+      </button>
+      {% endfor %}
+    </nav>
+  </div>
+</section>
+
+{% for key in seasons_order %}
+{% set season = seasonal[key] %}
+<section class="season-section {% if not loop.first %}hidden{% endif %}" id="season-{{ key }}">
+  <div class="container">
+    <p class="season-desc">{{ season.desc[lang] }}</p>
+    <div class="recipe-grid">
+      {% for item in season.enriched_recipes %}
+      {% if item.recipe %}
+      <a href="/category/{{ item.cat_id }}/{{ item.sub_id }}/{{ item.recipe.id }}?lang={{ lang }}"
+         class="recipe-card"
+         style="--cat-color: {{ item.cat.color }}"
+         data-recipe-path="{{ item.cat_id }}/{{ item.sub_id }}/{{ item.recipe.id }}">
+        <div class="recipe-card-header">
+          <span class="meta-tag time">{{ item.recipe.time }}{% if lang == 'ko' %}분{% elif lang == 'ja' %}分{% elif lang == 'zh' %}分钟{% else %}min{% endif %}</span>
+          <span class="meta-tag diff diff-{{ item.recipe.difficulty }}">{{ difficulty[item.recipe.difficulty][lang] }}</span>
+        </div>
+        <div class="recipe-card-body">
+          <p class="season-recipe-cat">{{ item.cat.name[lang] }} · {{ item.sub.name[lang] }}</p>
+          <h3 class="recipe-name">{{ item.recipe.name[lang] }}</h3>
+          <p class="recipe-desc">{{ item.recipe.desc.get(lang, item.recipe.desc.get('ko', '')) }}</p>
+        </div>
+      </a>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endfor %}
+
+<script>
+(function () {
+  var tabs = document.querySelectorAll('.season-tab');
+  var sections = document.querySelectorAll('.season-section');
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var target = tab.getAttribute('data-season');
+      tabs.forEach(function (t) { t.classList.remove('active'); });
+      sections.forEach(function (s) { s.classList.add('hidden'); });
+      tab.classList.add('active');
+      document.getElementById('season-' + target).classList.remove('hidden');
+    });
+  });
+
+  var FAV_KEY = 'easyrecipe-favorites';
+  function getFavs() {
+    try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); } catch (e) { return []; }
+  }
+  var favs = getFavs();
+  document.querySelectorAll('.recipe-card[data-recipe-path]').forEach(function (card) {
+    if (favs.indexOf(card.getAttribute('data-recipe-path')) !== -1) {
+      card.classList.add('is-fav');
+    }
+  });
+})();
+</script>
+
+{% endblock %}

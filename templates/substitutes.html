@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}{{ subs_ui.page_title[lang] }} — {{ ui.site_title[lang] }}{% endblock %}
+
+{% block content %}
+
+<section class="subs-hero">
+  <div class="container">
+    <h1 class="tools-hero-title">{{ subs_ui.page_title[lang] }}</h1>
+    <p class="tools-hero-sub">{{ subs_ui.page_subtitle[lang] }}</p>
+    <nav class="subs-group-nav" id="group-nav">
+      {% for g in groups_order %}
+      <button class="subs-group-btn active" data-group="{{ g }}">
+        {{ subs_ui.groups[g][lang] }}
+      </button>
+      {% endfor %}
+    </nav>
+  </div>
+</section>
+
+{% for g in groups_order %}
+<section class="subs-section" id="group-{{ g }}" data-group-section="{{ g }}">
+  <div class="container">
+    <h2 class="subs-section-title">{{ subs_ui.groups[g][lang] }}</h2>
+    <div class="subs-grid">
+      {% for sub_entry in substitutes if sub_entry.group == g %}
+      <div class="sub-original-card">
+        <div class="sub-original-name">{{ sub_entry.original[lang] }}</div>
+        {% for s in sub_entry.subs %}
+        <div class="sub-item">
+          <span class="sub-item-name">{{ s.item[lang] }}</span>
+          <span class="sub-item-ratio">{{ s.ratio[lang] }}</span>
+          <span class="sub-item-note">{{ s.note[lang] }}</span>
+          <span class="sub-item-best">
+            {{ subs_ui.best_for_label[lang] }}: {{ s.best_for[lang] }}
+          </span>
+        </div>
+        {% endfor %}
+        <p class="sub-card-tip">{{ subs_ui.tip_label[lang] }}: {{ sub_entry.tip[lang] }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endfor %}
+
+<script>
+(function () {
+  var btns = document.querySelectorAll('#group-nav .subs-group-btn');
+  var sections = document.querySelectorAll('[data-group-section]');
+
+  function filterGroups(activeGroup) {
+    sections.forEach(function (sec) {
+      if (activeGroup === 'all' || sec.getAttribute('data-group-section') === activeGroup) {
+        sec.style.display = '';
+      } else {
+        sec.style.display = 'none';
+      }
+    });
+    btns.forEach(function (b) {
+      if (activeGroup === 'all') {
+        b.classList.add('active');
+      } else {
+        b.classList.toggle('active', b.getAttribute('data-group') === activeGroup);
+      }
+    });
+  }
+
+  btns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var g = btn.getAttribute('data-group');
+      var isActive = btn.classList.contains('active');
+      // If all buttons active and one is clicked: show only that group
+      var allActive = Array.from(btns).every(function (b) { return b.classList.contains('active'); });
+      if (allActive) {
+        filterGroups(g);
+      } else if (isActive) {
+        // Toggle off: if only one active, reset to all
+        var activeCount = Array.from(btns).filter(function (b) { return b.classList.contains('active'); }).length;
+        if (activeCount <= 1) {
+          filterGroups('all');
+        } else {
+          btn.classList.remove('active');
+          var sec = document.getElementById('group-' + g);
+          if (sec) sec.style.display = 'none';
+        }
+      } else {
+        filterGroups(g);
+      }
+    });
+  });
+})();
+</script>
+
+{% endblock %}

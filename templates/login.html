@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}
+  {% if lang == 'ko' %}로그인{% elif lang == 'en' %}Login{% elif lang == 'ja' %}ログイン{% else %}登录{% endif %}
+   — {{ ui.site_title[lang] }}
+{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+  <div class="auth-card">
+    <h1 class="auth-title">
+      {% if lang == 'ko' %}로그인{% elif lang == 'en' %}Login{% elif lang == 'ja' %}ログイン{% else %}登录{% endif %}
+    </h1>
+    <p class="auth-sub">
+      {% if lang == 'ko' %}즐겨찾기와 요리 일지를 기기 간에 동기화해요.
+      {% elif lang == 'en' %}Sync your favorites and cooking log across devices.
+      {% elif lang == 'ja' %}お気に入りと料理日記をデバイス間で同期します。
+      {% else %}在设备之间同步您的收藏和烹饪日志。
+      {% endif %}
+    </p>
+
+    {% if error %}
+    <div class="auth-error">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" class="auth-form">
+      <label class="auth-label">
+        {% if lang == 'ko' %}이메일{% elif lang == 'en' %}Email{% elif lang == 'ja' %}メール{% else %}邮箱{% endif %}
+        <input type="email" name="email" class="auth-input" required autofocus>
+      </label>
+      <label class="auth-label">
+        {% if lang == 'ko' %}비밀번호{% elif lang == 'en' %}Password{% elif lang == 'ja' %}パスワード{% else %}密码{% endif %}
+        <input type="password" name="password" class="auth-input" required>
+      </label>
+      <button type="submit" class="auth-btn">
+        {% if lang == 'ko' %}로그인{% elif lang == 'en' %}Login{% elif lang == 'ja' %}ログイン{% else %}登录{% endif %}
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      {% if lang == 'ko' %}아직 계정이 없으신가요?
+      {% elif lang == 'en' %}Don't have an account?
+      {% elif lang == 'ja' %}アカウントがない方は
+      {% else %}还没有账号？
+      {% endif %}
+      <a href="{{ url_for('auth.register', lang=lang) }}" class="auth-link">
+        {% if lang == 'ko' %}회원가입{% elif lang == 'en' %}Sign up{% elif lang == 'ja' %}新規登録{% else %}注册{% endif %}
+      </a>
+    </p>
+  </div>
+</section>
+{% endblock %}
