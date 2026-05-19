@@ -5,7 +5,7 @@ RECIPES_EXTRA = {
             "id": "omurice",
             "name": {"ko": "오므라이스", "en": "Omurice", "ja": "オムライス", "zh": "蛋包饭"},
             "time": 20, "difficulty": 2,
-            "desc": {"ko": "케첩볶음밥을 얇은 계란으로 감싼 인기 메뉴", "en": "Ketchup fried rice wrapped in a thin egg omelette"},
+            "desc": {"ko": "케첩볶음밥을 얇은 계란으로 감싼 인기 메뉴", "en": "Ketchup fried rice wrapped in a thin egg omelette", "ja": "ケチャップチャーハンを薄い卵で包んだ人気メニュー", "zh": "番茄酱炒饭用薄蛋皮包裹的人气料理"},
             "ingredients": [
                 {"name": "밥", "amount": "1공기"},
                 {"name": "계란", "amount": "3개"},
@@ -27,7 +27,7 @@ RECIPES_EXTRA = {
             "id": "butter-rice",
             "name": {"ko": "버터 간장밥", "en": "Butter Soy Rice", "ja": "バター醤油ご飯", "zh": "黄油酱油饭"},
             "time": 5, "difficulty": 1,
-            "desc": {"ko": "3분이면 완성, 밥도둑 중의 밥도둑", "en": "Three-ingredient rice bowl ready in 3 minutes"},
+            "desc": {"ko": "3분이면 완성, 밥도둑 중의 밥도둑", "en": "Three-ingredient rice bowl ready in 3 minutes", "ja": "3分で完成、ご飯泥棒の中のご飯泥棒", "zh": "3分钟完成，最完美的下饭菜"},
             "ingredients": [
                 {"name": "따뜻한 밥", "amount": "1공기"},
                 {"name": "버터", "amount": "1큰술"},
@@ -48,7 +48,7 @@ RECIPES_EXTRA = {
             "id": "sundubu-jjigae",
             "name": {"ko": "순두부찌개", "en": "Sundubu Jjigae", "ja": "スンドゥブチゲ", "zh": "嫩豆腐汤"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "부드러운 순두부와 칼칼한 국물의 조화", "en": "Silky tofu in a fiery, comforting broth"},
+            "desc": {"ko": "부드러운 순두부와 칼칼한 국물의 조화", "en": "Silky tofu in a fiery, comforting broth", "ja": "なめらかな豆腐とピリ辛スープの調和", "zh": "嫩滑豆腐与辛辣汤底的完美结合"},
             "ingredients": [
                 {"name": "순두부", "amount": "1팩"},
                 {"name": "바지락 또는 새우", "amount": "80g"},
@@ -71,7 +71,7 @@ RECIPES_EXTRA = {
             "id": "yukgaejang",
             "name": {"ko": "육개장", "en": "Yukgaejang", "ja": "ユッケジャン", "zh": "辣牛肉汤"},
             "time": 50, "difficulty": 2,
-            "desc": {"ko": "소고기와 고사리가 어우러진 칼칼한 탕", "en": "Spicy shredded beef soup with fernbrake and vegetables"},
+            "desc": {"ko": "소고기와 고사리가 어우러진 칼칼한 탕", "en": "Spicy shredded beef soup with fernbrake and vegetables", "ja": "牛肉とわらびが絡み合うピリ辛スープ", "zh": "牛肉与蕨菜交融的辛辣汤"},
             "ingredients": [
                 {"name": "소고기 (양지 또는 사태)", "amount": "200g"},
                 {"name": "고사리 (삶은 것)", "amount": "80g"},
@@ -95,7 +95,7 @@ RECIPES_EXTRA = {
             "id": "gyeran-jjim",
             "name": {"ko": "계란찜", "en": "Korean Steamed Egg", "ja": "韓国風茶碗蒸し", "zh": "韩式蒸蛋"},
             "time": 15, "difficulty": 1,
-            "desc": {"ko": "뚝배기에서 부풀어 오르는 폭신한 계란찜", "en": "Puffed, souffle-like steamed egg in a clay pot"},
+            "desc": {"ko": "뚝배기에서 부풀어 오르는 폭신한 계란찜", "en": "Puffed, souffle-like steamed egg in a clay pot", "ja": "土鍋でふっくら膨らむふわふわ蒸し卵", "zh": "在砂锅中蓬松膨起的软嫩蒸蛋"},
             "ingredients": [
                 {"name": "계란", "amount": "3개"},
                 {"name": "멸치육수 또는 물", "amount": "180ml"},
@@ -114,7 +114,7 @@ RECIPES_EXTRA = {
             "id": "dubu-jorim",
             "name": {"ko": "두부조림", "en": "Braised Spicy Tofu", "ja": "豆腐の煮付け", "zh": "辣炖豆腐"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "양념이 배어 쫄깃해진 두부, 밥 한 공기 순삭", "en": "Tofu soaked in spicy-sweet sauce — a rice stealer"},
+            "desc": {"ko": "양념이 배어 쫄깃해진 두부, 밥 한 공기 순삭", "en": "Tofu soaked in spicy-sweet sauce — a rice stealer", "ja": "タレが染み込んでもちもちになった豆腐、ご飯が止まらない", "zh": "酱汁渗透后劲道十足的豆腐，一碗饭瞬间见底"},
             "ingredients": [
                 {"name": "두부 (부침용)", "amount": "1모"},
                 {"name": "고춧가루", "amount": "1큰술"},
@@ -138,7 +138,7 @@ RECIPES_EXTRA = {
             "id": "japchae-egg",
             "name": {"ko": "미역줄기볶음", "en": "Stir-fried Wakame Stem", "ja": "わかめの茎の炒め物", "zh": "炒裙带菜茎"},
             "time": 15, "difficulty": 1,
-            "desc": {"ko": "바다향 가득한 저칼로리 밑반찬", "en": "Low-calorie sea vegetable side with ocean flavor"},
+            "desc": {"ko": "바다향 가득한 저칼로리 밑반찬", "en": "Low-calorie sea vegetable side with ocean flavor", "ja": "海の香りが豊かな低カロリーの副菜", "zh": "充满海洋气息的低热量小菜"},
             "ingredients": [
                 {"name": "미역줄기 (염장 or 시판)", "amount": "150g"},
                 {"name": "다진 마늘", "amount": "1작은술"},
@@ -158,7 +158,7 @@ RECIPES_EXTRA = {
             "id": "kongnamul",
             "name": {"ko": "콩나물무침", "en": "Bean Sprout Namul", "ja": "豆もやしのナムル", "zh": "豆芽凉拌"},
             "time": 10, "difficulty": 1,
-            "desc": {"ko": "아삭아삭 해장에도 좋은 국민 반찬", "en": "Crunchy, refreshing — great after a long night too"},
+            "desc": {"ko": "아삭아삭 해장에도 좋은 국민 반찬", "en": "Crunchy, refreshing — great after a long night too", "ja": "シャキシャキで二日酔いにも良い国民的おかず", "zh": "爽脆可口，解酒也很好的国民小菜"},
             "ingredients": [
                 {"name": "콩나물", "amount": "200g"},
                 {"name": "다진 마늘", "amount": "1/2작은술"},
@@ -180,7 +180,7 @@ RECIPES_EXTRA = {
             "id": "bibim-noodles",
             "name": {"ko": "비빔국수", "en": "Spicy Mixed Noodles", "ja": "ビビム麺", "zh": "拌面"},
             "time": 15, "difficulty": 1,
-            "desc": {"ko": "새콤달콤 매콤한 여름 국수, 10분이면 완성", "en": "Tangy, spicy, sweet — summer in a bowl"},
+            "desc": {"ko": "새콤달콤 매콤한 여름 국수, 10분이면 완성", "en": "Tangy, spicy, sweet — summer in a bowl", "ja": "酸っぱくて甘くて辛い夏の麺、10分で完成", "zh": "酸甜辣的夏日面条，10分钟完成"},
             "ingredients": [
                 {"name": "소면 또는 중면", "amount": "1인분"},
                 {"name": "고추장", "amount": "1.5큰술"},
@@ -202,7 +202,7 @@ RECIPES_EXTRA = {
             "id": "tteokbokki",
             "name": {"ko": "떡볶이", "en": "Tteokbokki", "ja": "トッポキ", "zh": "炒年糕"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "국민 분식의 대명사, 쫄깃한 떡과 달콤 매콤한 소스", "en": "Korea's most beloved street food — chewy rice cakes in spicy sauce"},
+            "desc": {"ko": "국민 분식의 대명사, 쫄깃한 떡과 달콤 매콤한 소스", "en": "Korea's most beloved street food — chewy rice cakes in spicy sauce", "ja": "国民的粉食の代名詞、もちもちの餅と甘辛ソース", "zh": "国民小吃的代名词，劲道年糕配甜辣酱汁"},
             "ingredients": [
                 {"name": "떡볶이 떡", "amount": "200g"},
                 {"name": "어묵", "amount": "1장"},
@@ -229,7 +229,7 @@ RECIPES_EXTRA = {
             "id": "chow-mein",
             "name": {"ko": "볶음면 (차오미엔)", "en": "Chow Mein", "ja": "チャーメン", "zh": "炒面"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "굵은 면을 채소와 함께 센불에서 볶는 중식 볶음면", "en": "Thick noodles stir-fried with vegetables over high heat"},
+            "desc": {"ko": "굵은 면을 채소와 함께 센불에서 볶는 중식 볶음면", "en": "Thick noodles stir-fried with vegetables over high heat", "ja": "太麺を野菜と一緒に強火で炒める中華炒め麺", "zh": "粗面条与蔬菜在大火中爆炒的中式炒面"},
             "ingredients": [
                 {"name": "중화면 (볶음용)", "amount": "2인분"},
                 {"name": "숙주나물", "amount": "한 줌"},
@@ -251,7 +251,7 @@ RECIPES_EXTRA = {
             "id": "wonton-soup",
             "name": {"ko": "완탕면", "en": "Wonton Noodle Soup", "ja": "ワンタン麺", "zh": "云吞面"},
             "time": 30, "difficulty": 2,
-            "desc": {"ko": "부드러운 완탕과 맑은 국물의 홍콩식 면 요리", "en": "Silky wontons in a clear, delicate Hong Kong-style broth"},
+            "desc": {"ko": "부드러운 완탕과 맑은 국물의 홍콩식 면 요리", "en": "Silky wontons in a clear, delicate Hong Kong-style broth", "ja": "なめらかなワンタンと澄んだスープの香港式麺料理", "zh": "嫩滑云吞配清澈汤底的香港风味面食"},
             "ingredients": [
                 {"name": "완탕피", "amount": "15장"},
                 {"name": "새우+돼지고기 (다진 것)", "amount": "각 50g"},
@@ -274,7 +274,7 @@ RECIPES_EXTRA = {
             "id": "yangzhou-rice",
             "name": {"ko": "양저우볶음밥", "en": "Yangzhou Fried Rice", "ja": "揚州チャーハン", "zh": "扬州炒饭"},
             "time": 20, "difficulty": 2,
-            "desc": {"ko": "새우·햄·완두콩이 어우러진 화려한 중국식 볶음밥", "en": "The classic Chinese fried rice with shrimp, ham, and peas"},
+            "desc": {"ko": "새우·햄·완두콩이 어우러진 화려한 중국식 볶음밥", "en": "The classic Chinese fried rice with shrimp, ham, and peas", "ja": "エビ・ハム・グリーンピースが調和した華やかな中国式炒飯", "zh": "虾仁、火腿、豌豆齐聚的华丽中式炒饭"},
             "ingredients": [
                 {"name": "밥 (찬밥)", "amount": "1공기"},
                 {"name": "새우", "amount": "5마리"},
@@ -297,7 +297,7 @@ RECIPES_EXTRA = {
             "id": "claypot-rice",
             "name": {"ko": "라프메이판 (소시지 솥밥)", "en": "Lap Mei Fan (Sausage Clay Pot Rice)", "ja": "臘味飯", "zh": "腊味饭"},
             "time": 35, "difficulty": 2,
-            "desc": {"ko": "중국식 소시지와 함께 솥에서 지은 향기로운 밥", "en": "Aromatic rice cooked with Chinese sausage in a pot"},
+            "desc": {"ko": "중국식 소시지와 함께 솥에서 지은 향기로운 밥", "en": "Aromatic rice cooked with Chinese sausage in a pot", "ja": "中国式ソーセージと一緒に炊いた香り豊かなご飯", "zh": "与腊肠一起煮出的香气四溢的米饭"},
             "ingredients": [
                 {"name": "쌀", "amount": "1컵"},
                 {"name": "중국식 소시지 (라장)", "amount": "2개"},
@@ -320,7 +320,7 @@ RECIPES_EXTRA = {
             "id": "chive-pork",
             "name": {"ko": "부추잡채", "en": "Pork with Garlic Chives", "ja": "ニラと豚肉の炒め物", "zh": "韭菜炒肉"},
             "time": 15, "difficulty": 1,
-            "desc": {"ko": "부추 향기와 돼지고기의 조합, 술안주로도 최고", "en": "Fragrant garlic chives with pork — great with rice or beer"},
+            "desc": {"ko": "부추 향기와 돼지고기의 조합, 술안주로도 최고", "en": "Fragrant garlic chives with pork — great with rice or beer", "ja": "ニラの香りと豚肉の組み合わせ、おつまみにも最高", "zh": "韭菜香气与猪肉的组合，佐酒下饭两相宜"},
             "ingredients": [
                 {"name": "부추", "amount": "1단"},
                 {"name": "돼지고기 (앞다리살)", "amount": "120g"},
@@ -341,7 +341,7 @@ RECIPES_EXTRA = {
             "id": "kung-pao-chicken",
             "name": {"ko": "궁보기정 (쿵파오 치킨)", "en": "Kung Pao Chicken", "ja": "宮保鶏丁", "zh": "宫保鸡丁"},
             "time": 25, "difficulty": 2,
-            "desc": {"ko": "얼얼하고 달콤한 사천식 닭고기 볶음", "en": "Sichuan classic — spicy, sweet, and numbing"},
+            "desc": {"ko": "얼얼하고 달콤한 사천식 닭고기 볶음", "en": "Sichuan classic — spicy, sweet, and numbing", "ja": "しびれるように甘い四川式鶏肉炒め", "zh": "麻辣甜香的四川风味炒鸡丁"},
             "ingredients": [
                 {"name": "닭가슴살", "amount": "200g"},
                 {"name": "땅콩", "amount": "3큰술"},
@@ -366,7 +366,7 @@ RECIPES_EXTRA = {
             "id": "hot-sour-soup",
             "name": {"ko": "산라탕 (신 매운 수프)", "en": "Hot and Sour Soup", "ja": "酸辣湯", "zh": "酸辣汤"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "새콤하고 매콤한 중식 대표 수프, 후추가 핵심", "en": "Tangy and spicy — black pepper gives this soup its kick"},
+            "desc": {"ko": "새콤하고 매콤한 중식 대표 수프, 후추가 핵심", "en": "Tangy and spicy — black pepper gives this soup its kick", "ja": "酸っぱくて辛い中華の代表スープ、黒コショウが命", "zh": "酸辣兼具的中式代表汤品，黑胡椒是关键"},
             "ingredients": [
                 {"name": "두부", "amount": "1/4모"},
                 {"name": "목이버섯 (건조)", "amount": "5g"},
@@ -390,7 +390,7 @@ RECIPES_EXTRA = {
             "id": "winter-melon-soup",
             "name": {"ko": "동과탕 (동아 수프)", "en": "Winter Melon Soup", "ja": "冬瓜スープ", "zh": "冬瓜汤"},
             "time": 25, "difficulty": 1,
-            "desc": {"ko": "부드럽고 담백한 중국 가정식 수프", "en": "Mild, delicate Chinese home-style soup"},
+            "desc": {"ko": "부드럽고 담백한 중국 가정식 수프", "en": "Mild, delicate Chinese home-style soup", "ja": "なめらかであっさりとした中国家庭料理のスープ", "zh": "顺滑清淡的中国家常汤"},
             "ingredients": [
                 {"name": "동아 (동과)", "amount": "300g"},
                 {"name": "돼지고기 또는 닭고기", "amount": "100g"},
@@ -413,7 +413,7 @@ RECIPES_EXTRA = {
             "id": "har-gow",
             "name": {"ko": "하가우 (새우만두)", "en": "Har Gow", "ja": "エビ餃子", "zh": "虾饺"},
             "time": 50, "difficulty": 3,
-            "desc": {"ko": "반투명한 피가 특징인 홍콩식 딤섬의 꽃", "en": "The crown jewel of Hong Kong dim sum — translucent skin"},
+            "desc": {"ko": "반투명한 피가 특징인 홍콩식 딤섬의 꽃", "en": "The crown jewel of Hong Kong dim sum — translucent skin", "ja": "半透明の皮が特徴の香港式点心の花形", "zh": "半透明外皮为特色的香港点心之冠"},
             "ingredients": [
                 {"name": "밀전분 (전분+밀가루)", "amount": "80g+20g"},
                 {"name": "끓는 물", "amount": "100ml"},
@@ -433,7 +433,7 @@ RECIPES_EXTRA = {
             "id": "egg-tart",
             "name": {"ko": "에그 타르트 (단타)", "en": "Egg Tart", "ja": "エッグタルト", "zh": "蛋挞"},
             "time": 45, "difficulty": 2,
-            "desc": {"ko": "바삭한 타르트 껍질과 부드러운 커스터드, 홍콩 길거리 간식", "en": "Flaky pastry with silky egg custard — a Hong Kong classic"},
+            "desc": {"ko": "바삭한 타르트 껍질과 부드러운 커스터드, 홍콩 길거리 간식", "en": "Flaky pastry with silky egg custard — a Hong Kong classic", "ja": "サクサクのタルト生地と滑らかなカスタード、香港の街角おやつ", "zh": "酥脆挞皮配顺滑蛋奶冻，香港街头经典小吃"},
             "ingredients": [
                 {"name": "시판 타르트 반죽 또는 파이지", "amount": "1팩"},
                 {"name": "계란", "amount": "2개"},
@@ -457,7 +457,7 @@ RECIPES_EXTRA = {
             "id": "vongole",
             "name": {"ko": "봉골레 파스타", "en": "Spaghetti alle Vongole", "ja": "ボンゴレパスタ", "zh": "蛤蜊意面"},
             "time": 25, "difficulty": 2,
-            "desc": {"ko": "조개의 바다향이 올리브오일에 녹아드는 이탈리안 클래식", "en": "Clam broth meets olive oil in this Italian seaside classic"},
+            "desc": {"ko": "조개의 바다향이 올리브오일에 녹아드는 이탈리안 클래식", "en": "Clam broth meets olive oil in this Italian seaside classic", "ja": "貝の海の香りがオリーブオイルに溶け込むイタリアンクラシック", "zh": "蛤蜊海鲜味融入橄榄油的意大利经典料理"},
             "ingredients": [
                 {"name": "스파게티 면", "amount": "100g"},
                 {"name": "모시조개 또는 바지락", "amount": "200g"},
@@ -479,7 +479,7 @@ RECIPES_EXTRA = {
             "id": "mushroom-cream-pasta",
             "name": {"ko": "버섯 크림파스타", "en": "Mushroom Cream Pasta", "ja": "きのこクリームパスタ", "zh": "奶油蘑菇意面"},
             "time": 25, "difficulty": 1,
-            "desc": {"ko": "버섯의 깊은 풍미가 살아있는 크리미한 파스타", "en": "Rich cream sauce with deep mushroom flavor"},
+            "desc": {"ko": "버섯의 깊은 풍미가 살아있는 크리미한 파스타", "en": "Rich cream sauce with deep mushroom flavor", "ja": "キノコの深い風味が生きたクリーミーなパスタ", "zh": "蘑菇深厚风味与奶油酱汁完美融合的意面"},
             "ingredients": [
                 {"name": "펜네 또는 링귀네", "amount": "100g"},
                 {"name": "양송이버섯", "amount": "100g"},
@@ -504,7 +504,7 @@ RECIPES_EXTRA = {
             "id": "meatballs",
             "name": {"ko": "미트볼 토마토 소스", "en": "Meatballs in Tomato Sauce", "ja": "ミートボールトマトソース", "zh": "番茄肉丸"},
             "time": 40, "difficulty": 2,
-            "desc": {"ko": "부드럽고 촉촉한 미트볼에 진한 토마토 소스", "en": "Juicy meatballs simmered in rich tomato sauce"},
+            "desc": {"ko": "부드럽고 촉촉한 미트볼에 진한 토마토 소스", "en": "Juicy meatballs simmered in rich tomato sauce", "ja": "柔らかくしっとりしたミートボールに濃厚トマトソース", "zh": "软嫩多汁的肉丸配浓郁番茄酱"},
             "ingredients": [
                 {"name": "소·돼지 혼합 다짐육", "amount": "250g"},
                 {"name": "빵가루", "amount": "3큰술"},
@@ -527,7 +527,7 @@ RECIPES_EXTRA = {
             "id": "pork-chop",
             "name": {"ko": "포크찹 (두꺼운 돼지목살 구이)", "en": "Pork Chop", "ja": "ポークチョップ", "zh": "猪排"},
             "time": 25, "difficulty": 2,
-            "desc": {"ko": "두껍게 썬 돼지목살을 겉은 바삭, 속은 촉촉하게", "en": "Thick pork chop — crispy outside, juicy inside"},
+            "desc": {"ko": "두껍게 썬 돼지목살을 겉은 바삭, 속은 촉촉하게", "en": "Thick pork chop — crispy outside, juicy inside", "ja": "厚切り豚首肉を外はカリカリ、中はしっとりに", "zh": "厚切猪颈肉，外酥里嫩"},
             "ingredients": [
                 {"name": "돼지목살 (2cm 두께)", "amount": "1장"},
                 {"name": "소금·후추", "amount": "넉넉히"},
@@ -550,7 +550,7 @@ RECIPES_EXTRA = {
             "id": "caprese",
             "name": {"ko": "카프레제", "en": "Caprese Salad", "ja": "カプレーゼ", "zh": "卡普里沙拉"},
             "time": 10, "difficulty": 1,
-            "desc": {"ko": "모짜렐라·토마토·바질의 이탈리아 3색 샐러드", "en": "Italian tricolor of mozzarella, tomato, and basil"},
+            "desc": {"ko": "모짜렐라·토마토·바질의 이탈리아 3색 샐러드", "en": "Italian tricolor of mozzarella, tomato, and basil", "ja": "モッツァレラ・トマト・バジルのイタリア3色サラダ", "zh": "马苏里拉、番茄、罗勒的意大利三色沙拉"},
             "ingredients": [
                 {"name": "생모짜렐라 치즈", "amount": "125g"},
                 {"name": "토마토", "amount": "1개"},
@@ -571,7 +571,7 @@ RECIPES_EXTRA = {
             "id": "coleslaw",
             "name": {"ko": "코울슬로", "en": "Coleslaw", "ja": "コールスロー", "zh": "卷心菜沙拉"},
             "time": 15, "difficulty": 1,
-            "desc": {"ko": "아삭하고 새콤달콤한 양배추 샐러드, 프라이드치킨 단짝", "en": "Crisp, tangy slaw — perfect alongside fried chicken"},
+            "desc": {"ko": "아삭하고 새콤달콤한 양배추 샐러드, 프라이드치킨 단짝", "en": "Crisp, tangy slaw — perfect alongside fried chicken", "ja": "シャキシャキ甘酸っぱいキャベツサラダ、フライドチキンの相棒", "zh": "爽脆酸甜的卷心菜沙拉，炸鸡的最佳拍档"},
             "ingredients": [
                 {"name": "양배추", "amount": "1/4개"},
                 {"name": "당근", "amount": "1/4개"},
@@ -594,7 +594,7 @@ RECIPES_EXTRA = {
             "id": "croque-monsieur",
             "name": {"ko": "크로크무슈", "en": "Croque Monsieur", "ja": "クロックムッシュ", "zh": "法式火腿芝士三明治"},
             "time": 15, "difficulty": 1,
-            "desc": {"ko": "구운 햄 치즈 샌드위치의 프랑스 버전, 베샤멜이 핵심", "en": "The French way to do a ham and cheese — béchamel makes it"},
+            "desc": {"ko": "구운 햄 치즈 샌드위치의 프랑스 버전, 베샤멜이 핵심", "en": "The French way to do a ham and cheese — béchamel makes it", "ja": "焼いたハムチーズサンドイッチのフランス版、ベシャメルが命", "zh": "烤火腿芝士三明治的法式版本，白酱是关键"},
             "ingredients": [
                 {"name": "식빵 또는 바게트 슬라이스", "amount": "2장"},
                 {"name": "슬라이스 햄", "amount": "2장"},
@@ -616,7 +616,7 @@ RECIPES_EXTRA = {
             "id": "pancakes",
             "name": {"ko": "아메리칸 팬케이크", "en": "American Pancakes", "ja": "アメリカンパンケーキ", "zh": "美式松饼"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "두툼하고 폭신한 미국식 팬케이크, 주말 아침 최고", "en": "Thick, fluffy pancakes — the ideal weekend breakfast"},
+            "desc": {"ko": "두툼하고 폭신한 미국식 팬케이크, 주말 아침 최고", "en": "Thick, fluffy pancakes — the ideal weekend breakfast", "ja": "厚くてふわふわのアメリカ式パンケーキ、週末の朝に最高", "zh": "厚实蓬松的美式松饼，周末早餐的最佳选择"},
             "ingredients": [
                 {"name": "박력분", "amount": "150g"},
                 {"name": "설탕", "amount": "2큰술"},
@@ -640,7 +640,7 @@ RECIPES_EXTRA = {
             "id": "madeleine",
             "name": {"ko": "마들렌", "en": "Madeleine", "ja": "マドレーヌ", "zh": "玛德琳"},
             "time": 40, "difficulty": 2,
-            "desc": {"ko": "조개 모양 프랑스 구움 과자, 레몬향이 포인트", "en": "French shell-shaped cake with a hint of lemon"},
+            "desc": {"ko": "조개 모양 프랑스 구움 과자, 레몬향이 포인트", "en": "French shell-shaped cake with a hint of lemon", "ja": "貝殻型フランスの焼き菓子、レモンの香りがポイント", "zh": "贝壳形法式烘焙小点，柠檬香气是亮点"},
             "ingredients": [
                 {"name": "박력분", "amount": "100g"},
                 {"name": "버터 (녹인 것)", "amount": "90g"},
@@ -662,7 +662,7 @@ RECIPES_EXTRA = {
             "id": "cheesecake-nobake",
             "name": {"ko": "노오븐 치즈케이크", "en": "No-Bake Cheesecake", "ja": "ノーベイクチーズケーキ", "zh": "免烤芝士蛋糕"},
             "time": 30, "difficulty": 1,
-            "desc": {"ko": "오븐 없이 냉장고에서 굳히는 간단 치즈케이크", "en": "Set in the fridge, not the oven — foolproof cheesecake"},
+            "desc": {"ko": "오븐 없이 냉장고에서 굳히는 간단 치즈케이크", "en": "Set in the fridge, not the oven — foolproof cheesecake", "ja": "オーブンなしで冷蔵庫で固める簡単チーズケーキ", "zh": "无需烤箱，放冰箱冷藏凝固的简单芝士蛋糕"},
             "ingredients": [
                 {"name": "크림치즈", "amount": "200g"},
                 {"name": "생크림", "amount": "150ml"},
@@ -688,7 +688,7 @@ RECIPES_EXTRA = {
             "id": "maki-sushi",
             "name": {"ko": "마끼 (김초밥)", "en": "Maki Roll", "ja": "巻き寿司", "zh": "卷寿司"},
             "time": 40, "difficulty": 2,
-            "desc": {"ko": "김에 밥과 재료를 돌돌 만 기본 스시", "en": "The classic nori roll — once you learn it, it's addictive"},
+            "desc": {"ko": "김에 밥과 재료를 돌돌 만 기본 스시", "en": "The classic nori roll — once you learn it, it's addictive", "ja": "海苔にご飯と具材を巻いた基本の寿司", "zh": "用海苔将米饭和食材卷起来的基础寿司"},
             "ingredients": [
                 {"name": "스시 밥", "amount": "1공기"},
                 {"name": "김 (초밥용)", "amount": "2장"},
@@ -710,7 +710,7 @@ RECIPES_EXTRA = {
             "id": "inari-sushi",
             "name": {"ko": "이나리즈시 (유부초밥)", "en": "Inari Sushi", "ja": "いなり寿司", "zh": "稻荷寿司"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "달콤한 유부 안에 스시 밥을 채운 간편 초밥", "en": "Sweet tofu pockets filled with seasoned sushi rice"},
+            "desc": {"ko": "달콤한 유부 안에 스시 밥을 채운 간편 초밥", "en": "Sweet tofu pockets filled with seasoned sushi rice", "ja": "甘い油揚げの中に酢飯を詰めた手軽な寿司", "zh": "甜味油豆腐袋内装满醋饭的简便寿司"},
             "ingredients": [
                 {"name": "스시 밥", "amount": "1공기"},
                 {"name": "유부초밥용 유부 (시판)", "amount": "10개"},
@@ -731,7 +731,7 @@ RECIPES_EXTRA = {
             "id": "miso-ramen",
             "name": {"ko": "미소 라멘", "en": "Miso Ramen", "ja": "味噌ラーメン", "zh": "味噌拉面"},
             "time": 30, "difficulty": 2,
-            "desc": {"ko": "된장의 깊은 감칠맛이 살아있는 진한 라멘", "en": "Rich miso broth with deep, savory complexity"},
+            "desc": {"ko": "된장의 깊은 감칠맛이 살아있는 진한 라멘", "en": "Rich miso broth with deep, savory complexity", "ja": "味噌の深い旨みが生きた濃厚ラーメン", "zh": "味噌深厚鲜味满溢的浓郁拉面"},
             "ingredients": [
                 {"name": "생라멘 면", "amount": "1인분"},
                 {"name": "닭육수", "amount": "2.5컵"},
@@ -753,7 +753,7 @@ RECIPES_EXTRA = {
             "id": "soba",
             "name": {"ko": "자루소바 (냉소바)", "en": "Zaru Soba", "ja": "ざるそば", "zh": "冷荞麦面"},
             "time": 15, "difficulty": 1,
-            "desc": {"ko": "메밀향이 살아있는 시원한 냉소바", "en": "Chilled buckwheat noodles with fragrant dipping broth"},
+            "desc": {"ko": "메밀향이 살아있는 시원한 냉소바", "en": "Chilled buckwheat noodles with fragrant dipping broth", "ja": "そばの香りが生きた冷たいざるそば", "zh": "保留荞麦香气的清凉冷荞麦面"},
             "ingredients": [
                 {"name": "소바 면", "amount": "1인분"},
                 {"name": "쯔유", "amount": "4큰술"},
@@ -777,7 +777,7 @@ RECIPES_EXTRA = {
             "id": "kaisen-don",
             "name": {"ko": "카이센동 (해산물 덮밥)", "en": "Kaisen Don", "ja": "海鮮丼", "zh": "海鲜盖饭"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "신선한 회를 스시 밥 위에 올리면 끝, 간단 고급 요리", "en": "Fresh sashimi over seasoned rice — effortlessly luxurious"},
+            "desc": {"ko": "신선한 회를 스시 밥 위에 올리면 끝, 간단 고급 요리", "en": "Fresh sashimi over seasoned rice — effortlessly luxurious", "ja": "新鮮な刺身を酢飯の上に乗せるだけ、簡単高級料理", "zh": "新鲜刺身盖在醋饭上即完成，简单又高档"},
             "ingredients": [
                 {"name": "스시 밥", "amount": "1공기"},
                 {"name": "연어·참치·광어 (회용)", "amount": "각 50g"},
@@ -798,7 +798,7 @@ RECIPES_EXTRA = {
             "id": "tendon",
             "name": {"ko": "텐동 (튀김 덮밥)", "en": "Tendon", "ja": "天丼", "zh": "天妇罗盖饭"},
             "time": 30, "difficulty": 2,
-            "desc": {"ko": "바삭한 튀김 위에 달콤한 텐동 소스가 흐르는 덮밥", "en": "Crispy tempura over rice with sweet-savory tendon sauce"},
+            "desc": {"ko": "바삭한 튀김 위에 달콤한 텐동 소스가 흐르는 덮밥", "en": "Crispy tempura over rice with sweet-savory tendon sauce", "ja": "サクサクの天ぷらに甘い天丼ソースがかかった丼", "zh": "酥脆天妇罗上浇淋甜咸天丼酱汁的盖饭"},
             "ingredients": [
                 {"name": "밥", "amount": "1공기"},
                 {"name": "새우·연근·고구마 등 튀김 재료", "amount": "적당량"},
@@ -822,7 +822,7 @@ RECIPES_EXTRA = {
             "id": "vegetable-tempura",
             "name": {"ko": "야채튀김", "en": "Vegetable Tempura", "ja": "野菜の天ぷら", "zh": "蔬菜天妇罗"},
             "time": 25, "difficulty": 2,
-            "desc": {"ko": "제철 채소의 맛을 살린 바삭한 튀김", "en": "Seasonal vegetables in the lightest, crispiest batter"},
+            "desc": {"ko": "제철 채소의 맛을 살린 바삭한 튀김", "en": "Seasonal vegetables in the lightest, crispiest batter", "ja": "旬の野菜の味を生かしたサクサクの天ぷら", "zh": "保留时令蔬菜本味的酥脆天妇罗"},
             "ingredients": [
                 {"name": "단호박·고구마·연근·표고버섯 등", "amount": "각 1/4개 또는 2-3개"},
                 {"name": "박력분", "amount": "1컵"},
@@ -843,7 +843,7 @@ RECIPES_EXTRA = {
             "id": "hire-katsu",
             "name": {"ko": "히레카츠 (안심 돈가스)", "en": "Hire Katsu (Pork Tenderloin Cutlet)", "ja": "ヒレカツ", "zh": "猪里脊排"},
             "time": 25, "difficulty": 2,
-            "desc": {"ko": "지방이 없는 안심으로 만드는 부드러운 돈가스", "en": "Tender, lean pork cutlet — lighter than regular katsu"},
+            "desc": {"ko": "지방이 없는 안심으로 만드는 부드러운 돈가스", "en": "Tender, lean pork cutlet — lighter than regular katsu", "ja": "脂身のないヒレ肉で作る柔らかいとんかつ", "zh": "用无脂里脊肉制作的嫩滑猪排"},
             "ingredients": [
                 {"name": "돼지 안심", "amount": "150g"},
                 {"name": "박력분", "amount": "3큰술"},
@@ -867,7 +867,7 @@ RECIPES_EXTRA = {
             "id": "miso-glazed-eggplant",
             "name": {"ko": "가지 된장구이 (나스 덴가쿠)", "en": "Miso-Glazed Eggplant", "ja": "なすの田楽", "zh": "味噌烤茄子"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "달콤한 미소 글레이즈가 가지에 배어든 고급 반찬", "en": "Sweet miso glaze soaked into silky eggplant"},
+            "desc": {"ko": "달콤한 미소 글레이즈가 가지에 배어든 고급 반찬", "en": "Sweet miso glaze soaked into silky eggplant", "ja": "甘い味噌グレーズがナスに染み込んだ高級副菜", "zh": "甜味噌酱汁渗透茄子的高档配菜"},
             "ingredients": [
                 {"name": "가지", "amount": "2개"},
                 {"name": "미소 (된장)", "amount": "2큰술"},
@@ -889,7 +889,7 @@ RECIPES_EXTRA = {
             "id": "sukiyaki",
             "name": {"ko": "스키야키", "en": "Sukiyaki", "ja": "すき焼き", "zh": "寿喜烧"},
             "time": 30, "difficulty": 2,
-            "desc": {"ko": "달콤한 간장 국물에 소고기와 채소를 끓여 먹는 일본 전골", "en": "Japanese hot pot with beef and vegetables in a sweet soy broth"},
+            "desc": {"ko": "달콤한 간장 국물에 소고기와 채소를 끓여 먹는 일본 전골", "en": "Japanese hot pot with beef and vegetables in a sweet soy broth", "ja": "甘い醤油だしで牛肉と野菜を煮て食べる日本の鍋料理", "zh": "在甜酱油汤底中煮牛肉和蔬菜的日式火锅"},
             "ingredients": [
                 {"name": "소고기 (얇게 썬 것)", "amount": "200g"},
                 {"name": "두부", "amount": "1/2모"},

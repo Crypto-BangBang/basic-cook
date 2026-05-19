@@ -4,7 +4,7 @@ RECIPES_WEST = {
             "id": "tomato-pasta",
             "name": {"ko": "토마토파스타", "en": "Tomato Pasta", "ja": "トマトパスタ", "zh": "番茄意面"},
             "time": 25, "difficulty": 1,
-            "desc": {"ko": "파스타의 기본, 토마토 소스 하나만 잘 만들어도 절반은 성공", "en": "Master the tomato sauce and you've mastered pasta"},
+            "desc": {"ko": "파스타의 기본, 토마토 소스 하나만 잘 만들어도 절반은 성공", "en": "Master the tomato sauce and you've mastered pasta", "ja": "パスタの基本、トマトソースさえ上手く作れれば半分は成功", "zh": "意面基础，番茄酱做好就成功一半"},
             "ingredients": [
                 {"name": "스파게티 면", "amount": "100g"},
                 {"name": "홀토마토 캔", "amount": "1/2캔(200g)"},
@@ -26,7 +26,7 @@ RECIPES_WEST = {
             "id": "carbonara",
             "name": {"ko": "까르보나라", "en": "Carbonara", "ja": "カルボナーラ", "zh": "培根蛋黄意面"},
             "time": 25, "difficulty": 2,
-            "desc": {"ko": "생크림 없이 계란과 치즈만으로 크리미하게", "en": "Creamy without cream — eggs and cheese are the secret"},
+            "desc": {"ko": "생크림 없이 계란과 치즈만으로 크리미하게", "en": "Creamy without cream — eggs and cheese are the secret", "ja": "生クリームなしで卵とチーズだけでクリーミーに", "zh": "不用奶油，只用鸡蛋和芝士就能做出丝滑口感"},
             "ingredients": [
                 {"name": "스파게티 면", "amount": "100g"},
                 {"name": "베이컨 또는 판체타", "amount": "80g"},
@@ -48,7 +48,7 @@ RECIPES_WEST = {
             "id": "aglio-olio",
             "name": {"ko": "알리오올리오", "en": "Aglio e Olio", "ja": "アーリオオーリオ", "zh": "蒜油意面"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "마늘과 올리브오일만으로 이렇게 맛있을 수가", "en": "Just garlic and olive oil — impossibly good"},
+            "desc": {"ko": "마늘과 올리브오일만으로 이렇게 맛있을 수가", "en": "Just garlic and olive oil — impossibly good", "ja": "ニンニクとオリーブオイルだけでこんなに美味しいなんて", "zh": "只用大蒜和橄榄油竟然这么好吃"},
             "ingredients": [
                 {"name": "스파게티 면", "amount": "100g"},
                 {"name": "마늘", "amount": "5쪽"},
@@ -71,7 +71,7 @@ RECIPES_WEST = {
             "id": "pan-steak",
             "name": {"ko": "팬 스테이크", "en": "Pan Steak", "ja": "パンステーキ", "zh": "煎牛排"},
             "time": 20, "difficulty": 2,
-            "desc": {"ko": "집에서도 레스토랑 스테이크 가능, 버터 베이스팅이 핵심", "en": "Restaurant-quality steak at home — butter basting is everything"},
+            "desc": {"ko": "집에서도 레스토랑 스테이크 가능, 버터 베이스팅이 핵심", "en": "Restaurant-quality steak at home — butter basting is everything", "ja": "家でもレストランのステーキが可能、バターバスティングが命", "zh": "在家也能做出餐厅级牛排，黄油浇汁是关键"},
             "ingredients": [
                 {"name": "소고기 (등심 or 채끝)", "amount": "200g (2.5cm 두께)"},
                 {"name": "버터", "amount": "2큰술"},
@@ -92,7 +92,7 @@ RECIPES_WEST = {
             "id": "hamburg-steak",
             "name": {"ko": "함박스테이크", "en": "Hamburg Steak", "ja": "ハンバーグ", "zh": "汉堡肉饼"},
             "time": 35, "difficulty": 2,
-            "desc": {"ko": "폭신폭신한 고기 패티에 데미글라스 소스", "en": "Juicy meat patty with rich demi-glace sauce"},
+            "desc": {"ko": "폭신폭신한 고기 패티에 데미글라스 소스", "en": "Juicy meat patty with rich demi-glace sauce", "ja": "ふわふわ肉パティにデミグラスソース", "zh": "蓬松多汁的肉饼配浓郁德式酱汁"},
             "ingredients": [
                 {"name": "소·돼지 혼합 다짐육", "amount": "250g"},
                 {"name": "양파", "amount": "1/4개"},
@@ -114,7 +114,7 @@ RECIPES_WEST = {
             "id": "chicken-steak",
             "name": {"ko": "허브 치킨 스테이크", "en": "Herb Chicken Steak", "ja": "ハーブチキン", "zh": "香草鸡排"},
             "time": 25, "difficulty": 1,
-            "desc": {"ko": "촉촉하고 향긋한 허브 닭가슴살 구이", "en": "Juicy herbed chicken breast that stays moist"},
+            "desc": {"ko": "촉촉하고 향긋한 허브 닭가슴살 구이", "en": "Juicy herbed chicken breast that stays moist", "ja": "しっとり香り豊かなハーブ鶏胸肉グリル", "zh": "湿润芳香的香草烤鸡胸"},
             "ingredients": [
                 {"name": "닭가슴살", "amount": "1장"},
                 {"name": "올리브오일", "amount": "2큰술"},
@@ -137,7 +137,7 @@ RECIPES_WEST = {
             "id": "caesar-salad",
             "name": {"ko": "시저 샐러드", "en": "Caesar Salad", "ja": "シーザーサラダ", "zh": "凯撒沙拉"},
             "time": 15, "difficulty": 1,
-            "desc": {"ko": "드레싱만 잘 만들면 나머지는 쉬운 명품 샐러드", "en": "Get the dressing right and the rest is effortless"},
+            "desc": {"ko": "드레싱만 잘 만들면 나머지는 쉬운 명품 샐러드", "en": "Get the dressing right and the rest is effortless", "ja": "ドレッシングさえ上手く作れば残りは簡単な名品サラダ", "zh": "酱汁做好了，其余轻而易举的名品沙拉"},
             "ingredients": [
                 {"name": "로메인 상추", "amount": "4-5장"},
                 {"name": "마요네즈", "amount": "3큰술"},
@@ -158,7 +158,7 @@ RECIPES_WEST = {
             "id": "french-onion-soup",
             "name": {"ko": "프렌치 어니언 수프", "en": "French Onion Soup", "ja": "フレンチオニオンスープ", "zh": "法式洋葱汤"},
             "time": 50, "difficulty": 2,
-            "desc": {"ko": "양파를 충분히 볶는 것이 핵심, 기다림이 맛을 만들어요", "en": "The long-cooked onions are the magic — patience pays off"},
+            "desc": {"ko": "양파를 충분히 볶는 것이 핵심, 기다림이 맛을 만들어요", "en": "The long-cooked onions are the magic — patience pays off", "ja": "玉ねぎをしっかり炒めることが大事、待つことが味を作る", "zh": "洋葱充分炒制是关键，等待成就美味"},
             "ingredients": [
                 {"name": "양파", "amount": "3개"},
                 {"name": "버터", "amount": "2큰술"},
@@ -180,7 +180,7 @@ RECIPES_WEST = {
             "id": "cream-soup",
             "name": {"ko": "크림 감자 수프", "en": "Cream of Potato Soup", "ja": "ポタージュ", "zh": "奶油土豆汤"},
             "time": 30, "difficulty": 1,
-            "desc": {"ko": "부드럽고 따뜻한 포타주, 믹서기만 있으면 OK", "en": "Velvety smooth potage — just need a blender"},
+            "desc": {"ko": "부드럽고 따뜻한 포타주, 믹서기만 있으면 OK", "en": "Velvety smooth potage — just need a blender", "ja": "なめらかで温かいポタージュ、ミキサーがあればOK", "zh": "顺滑温暖的浓汤，有搅拌机就行"},
             "ingredients": [
                 {"name": "감자", "amount": "2개"},
                 {"name": "양파", "amount": "1/4개"},
@@ -203,7 +203,7 @@ RECIPES_WEST = {
             "id": "blt-sandwich",
             "name": {"ko": "BLT 샌드위치", "en": "BLT Sandwich", "ja": "BLTサンドイッチ", "zh": "BLT三明治"},
             "time": 10, "difficulty": 1,
-            "desc": {"ko": "베이컨·상추·토마토의 완벽한 조합", "en": "Bacon, lettuce, tomato — the ultimate classic"},
+            "desc": {"ko": "베이컨·상추·토마토의 완벽한 조합", "en": "Bacon, lettuce, tomato — the ultimate classic", "ja": "ベーコン・レタス・トマトの完璧な組み合わせ", "zh": "培根、生菜、番茄的完美组合"},
             "ingredients": [
                 {"name": "식빵", "amount": "2장"},
                 {"name": "베이컨", "amount": "3장"},
@@ -224,7 +224,7 @@ RECIPES_WEST = {
             "id": "french-toast",
             "name": {"ko": "프렌치 토스트", "en": "French Toast", "ja": "フレンチトースト", "zh": "法式吐司"},
             "time": 15, "difficulty": 1,
-            "desc": {"ko": "달걀물에 흠뻑 적신 촉촉한 아침 식사", "en": "Eggy, custardy breakfast that feels luxurious"},
+            "desc": {"ko": "달걀물에 흠뻑 적신 촉촉한 아침 식사", "en": "Eggy, custardy breakfast that feels luxurious", "ja": "卵液にたっぷり浸したしっとりした朝食", "zh": "充分浸泡蛋液的湿润早餐"},
             "ingredients": [
                 {"name": "두꺼운 식빵", "amount": "2장"},
                 {"name": "계란", "amount": "2개"},
@@ -246,7 +246,7 @@ RECIPES_WEST = {
             "id": "egg-toast",
             "name": {"ko": "에그 토스트", "en": "Korean Egg Toast", "ja": "エッグトースト", "zh": "鸡蛋吐司"},
             "time": 10, "difficulty": 1,
-            "desc": {"ko": "길거리 간식을 집에서, 계란+야채 토스트", "en": "Korean street food classic made at home"},
+            "desc": {"ko": "길거리 간식을 집에서, 계란+야채 토스트", "en": "Korean street food classic made at home", "ja": "屋台のおやつを家で、卵＋野菜トースト", "zh": "路边小吃在家做，鸡蛋蔬菜吐司"},
             "ingredients": [
                 {"name": "식빵", "amount": "2장"},
                 {"name": "계란", "amount": "2개"},
@@ -271,7 +271,7 @@ RECIPES_WEST = {
             "id": "banana-bread",
             "name": {"ko": "바나나 브레드", "en": "Banana Bread", "ja": "バナナブレッド", "zh": "香蕉面包"},
             "time": 65, "difficulty": 2,
-            "desc": {"ko": "검게 익은 바나나일수록 달콤, 실패 없는 홈베이킹", "en": "The blacker the bananas, the sweeter the bread"},
+            "desc": {"ko": "검게 익은 바나나일수록 달콤, 실패 없는 홈베이킹", "en": "The blacker the bananas, the sweeter the bread", "ja": "黒く熟したバナナほど甘くなる、失敗なしのホームベーキング", "zh": "香蕉越黑越甜，不会失败的家庭烘焙"},
             "ingredients": [
                 {"name": "잘 익은 바나나", "amount": "3개"},
                 {"name": "박력분", "amount": "200g"},
@@ -293,7 +293,7 @@ RECIPES_WEST = {
             "id": "chocolate-brownie",
             "name": {"ko": "초코 브라우니", "en": "Chocolate Brownie", "ja": "チョコブラウニー", "zh": "巧克力布朗尼"},
             "time": 45, "difficulty": 1,
-            "desc": {"ko": "겉은 바삭, 속은 촉촉한 홈베이킹의 최강자", "en": "Crispy edges, fudgy center — the best beginner bake"},
+            "desc": {"ko": "겉은 바삭, 속은 촉촉한 홈베이킹의 최강자", "en": "Crispy edges, fudgy center — the best beginner bake", "ja": "外はカリカリ、中はしっとりのホームベーキング最強", "zh": "外酥内润的家庭烘焙之王"},
             "ingredients": [
                 {"name": "다크 초콜릿 또는 코코아파우더", "amount": "70g"},
                 {"name": "버터", "amount": "80g"},
@@ -315,7 +315,7 @@ RECIPES_WEST = {
             "id": "scone",
             "name": {"ko": "스콘", "en": "Scone", "ja": "スコーン", "zh": "司康"},
             "time": 40, "difficulty": 2,
-            "desc": {"ko": "버터 향 가득한 영국식 스콘, 클로티드 크림과 함께", "en": "Buttery British scones — best with clotted cream"},
+            "desc": {"ko": "버터 향 가득한 영국식 스콘, 클로티드 크림과 함께", "en": "Buttery British scones — best with clotted cream", "ja": "バターの香りいっぱいのイギリス式スコーン、クロテッドクリームと一緒に", "zh": "奶油香十足的英式司康，搭配凝脂奶油更完美"},
             "ingredients": [
                 {"name": "박력분", "amount": "200g"},
                 {"name": "버터 (차가운 것)", "amount": "50g"},

@@ -4,7 +4,7 @@ RECIPES_CN = {
             "id": "jjajangmyeon",
             "name": {"ko": "짜장면", "en": "Jjajangmyeon", "ja": "チャジャンミョン", "zh": "炸酱面"},
             "time": 30, "difficulty": 2,
-            "desc": {"ko": "춘장으로 만드는 한국식 짜장면", "en": "Korean-style black bean paste noodles"},
+            "desc": {"ko": "춘장으로 만드는 한국식 짜장면", "en": "Korean-style black bean paste noodles", "ja": "チュンジャンで作る韓国式炸醤麺", "zh": "用韩式春酱制作的韩式炸酱面"},
             "ingredients": [
                 {"name": "생면 또는 건면", "amount": "2인분"},
                 {"name": "춘장", "amount": "3큰술"},
@@ -27,7 +27,7 @@ RECIPES_CN = {
             "id": "jjamppong",
             "name": {"ko": "짬뽕", "en": "Jjamppong", "ja": "チャンポン", "zh": "炒码面"},
             "time": 35, "difficulty": 2,
-            "desc": {"ko": "불향 가득한 매콤한 해물 면", "en": "Spicy seafood noodle soup with wok char"},
+            "desc": {"ko": "불향 가득한 매콤한 해물 면", "en": "Spicy seafood noodle soup with wok char", "ja": "炎の香りいっぱいの辛い海鮮麺", "zh": "充满锅气的香辣海鲜面"},
             "ingredients": [
                 {"name": "생면", "amount": "2인분"},
                 {"name": "오징어", "amount": "1/2마리"},
@@ -51,7 +51,7 @@ RECIPES_CN = {
             "id": "mul-mandu",
             "name": {"ko": "물만두", "en": "Boiled Dumplings", "ja": "水餃子", "zh": "水饺"},
             "time": 30, "difficulty": 2,
-            "desc": {"ko": "직접 빚으면 더 맛있는 집만두", "en": "Homemade dumplings — so much better than frozen"},
+            "desc": {"ko": "직접 빚으면 더 맛있는 집만두", "en": "Homemade dumplings — so much better than frozen", "ja": "手作りすればもっと美味しい家庭の餃子", "zh": "自己包的饺子更好吃，远胜冷冻水饺"},
             "ingredients": [
                 {"name": "만두피 (시판)", "amount": "20장"},
                 {"name": "돼지고기 (다진 것)", "amount": "150g"},
@@ -75,7 +75,7 @@ RECIPES_CN = {
             "id": "egg-fried-rice",
             "name": {"ko": "계란볶음밥", "en": "Egg Fried Rice", "ja": "卵チャーハン", "zh": "蛋炒饭"},
             "time": 15, "difficulty": 1,
-            "desc": {"ko": "중식의 기본 중의 기본, 센 불이 핵심", "en": "The foundation of Chinese cooking — high heat is everything"},
+            "desc": {"ko": "중식의 기본 중의 기본, 센 불이 핵심", "en": "The foundation of Chinese cooking — high heat is everything", "ja": "中華料理の基本中の基本、強火が命", "zh": "中式料理的基础，大火是关键"},
             "ingredients": [
                 {"name": "밥", "amount": "1공기"},
                 {"name": "계란", "amount": "2개"},
@@ -96,7 +96,7 @@ RECIPES_CN = {
             "id": "shrimp-fried-rice",
             "name": {"ko": "새우볶음밥", "en": "Shrimp Fried Rice", "ja": "エビチャーハン", "zh": "虾仁炒饭"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "새우의 감칠맛이 더해진 고급스러운 볶음밥", "en": "Elevated fried rice with the rich flavor of shrimp"},
+            "desc": {"ko": "새우의 감칠맛이 더해진 고급스러운 볶음밥", "en": "Elevated fried rice with the rich flavor of shrimp", "ja": "エビの旨味が加わった上品な炒飯", "zh": "加入虾仁鲜味的高档炒饭"},
             "ingredients": [
                 {"name": "밥", "amount": "1공기"},
                 {"name": "새우 (냉동 가능)", "amount": "8마리"},
@@ -118,7 +118,7 @@ RECIPES_CN = {
             "id": "three-delights-rice",
             "name": {"ko": "삼선볶음밥", "en": "Three Delights Fried Rice", "ja": "三鮮チャーハン", "zh": "三鲜炒饭"},
             "time": 25, "difficulty": 2,
-            "desc": {"ko": "새우·오징어·채소의 삼박자가 맞는 고급 볶음밥", "en": "Premium fried rice with shrimp, squid, and vegetables"},
+            "desc": {"ko": "새우·오징어·채소의 삼박자가 맞는 고급 볶음밥", "en": "Premium fried rice with shrimp, squid, and vegetables", "ja": "エビ・イカ・野菜の三拍子が揃った高級炒飯", "zh": "虾仁、鱿鱼、蔬菜三鲜齐备的高档炒饭"},
             "ingredients": [
                 {"name": "밥", "amount": "1공기"},
                 {"name": "새우", "amount": "5마리"},
@@ -142,7 +142,7 @@ RECIPES_CN = {
             "id": "mapo-tofu",
             "name": {"ko": "마파두부", "en": "Mapo Tofu", "ja": "麻婆豆腐", "zh": "麻婆豆腐"},
             "time": 20, "difficulty": 2,
-            "desc": {"ko": "얼얼하고 칼칼한 사천식 두부 요리", "en": "Numbingly spicy Sichuan tofu dish"},
+            "desc": {"ko": "얼얼하고 칼칼한 사천식 두부 요리", "en": "Numbingly spicy Sichuan tofu dish", "ja": "しびれるほど辛い四川式豆腐料理", "zh": "麻辣刺激的四川风味豆腐料理"},
             "ingredients": [
                 {"name": "두부 (연두부)", "amount": "1모"},
                 {"name": "돼지고기 (다진 것)", "amount": "80g"},
@@ -164,7 +164,7 @@ RECIPES_CN = {
             "id": "tangsuyuk",
             "name": {"ko": "탕수육", "en": "Sweet & Sour Pork", "ja": "酢豚", "zh": "糖醋肉"},
             "time": 45, "difficulty": 3,
-            "desc": {"ko": "바삭한 튀김에 새콤달콤 소스, 부먹 vs 찍먹 논쟁의 주인공", "en": "Crispy fried pork with tangy sweet sauce — pour or dip?"},
+            "desc": {"ko": "바삭한 튀김에 새콤달콤 소스, 부먹 vs 찍먹 논쟁의 주인공", "en": "Crispy fried pork with tangy sweet sauce — pour or dip?", "ja": "カリカリ揚げに甘酸っぱいソース、ソースかけ vs つけ派論争の主役", "zh": "酥脆炸肉配酸甜酱汁，浇汁派vs蘸汁派论战的主角"},
             "ingredients": [
                 {"name": "돼지고기 (안심)", "amount": "200g"},
                 {"name": "전분", "amount": "4큰술"},
@@ -187,7 +187,7 @@ RECIPES_CN = {
             "id": "gganpunggi",
             "name": {"ko": "깐풍기", "en": "Dry Braised Spicy Chicken", "ja": "乾焼チキン", "zh": "干烹鸡"},
             "time": 35, "difficulty": 2,
-            "desc": {"ko": "매콤달콤 소스가 닭에 쫙 배인 인기 중식 메뉴", "en": "Spicy-sweet sauce clings to every piece of chicken"},
+            "desc": {"ko": "매콤달콤 소스가 닭에 쫙 배인 인기 중식 메뉴", "en": "Spicy-sweet sauce clings to every piece of chicken", "ja": "甘辛ソースが鶏肉にしっかり染み込んだ人気中華メニュー", "zh": "甜辣酱汁浸透每一块鸡肉的人气中式菜肴"},
             "ingredients": [
                 {"name": "닭다리살", "amount": "250g"},
                 {"name": "전분", "amount": "3큰술"},
@@ -212,7 +212,7 @@ RECIPES_CN = {
             "id": "egg-drop-soup",
             "name": {"ko": "계란탕", "en": "Egg Drop Soup", "ja": "玉子スープ", "zh": "蛋花汤"},
             "time": 15, "difficulty": 1,
-            "desc": {"ko": "중식당 단골 수프, 집에서 5분이면 완성", "en": "Chinese restaurant staple ready in 5 minutes at home"},
+            "desc": {"ko": "중식당 단골 수프, 집에서 5분이면 완성", "en": "Chinese restaurant staple ready in 5 minutes at home", "ja": "中華レストランの定番スープ、家で5分で完成", "zh": "中餐馆常备汤品，在家5分钟完成"},
             "ingredients": [
                 {"name": "계란", "amount": "2개"},
                 {"name": "닭육수 또는 물", "amount": "2컵"},
@@ -232,7 +232,7 @@ RECIPES_CN = {
             "id": "corn-soup",
             "name": {"ko": "옥수수 크림수프", "en": "Cream of Corn Soup", "ja": "コーンスープ", "zh": "奶油玉米汤"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "달콤하고 부드러운 크림옥수수수프", "en": "Sweet, creamy corn soup that's impossibly easy"},
+            "desc": {"ko": "달콤하고 부드러운 크림옥수수수프", "en": "Sweet, creamy corn soup that's impossibly easy", "ja": "甘くてなめらかなクリームコーンスープ", "zh": "甜美顺滑的奶油玉米汤"},
             "ingredients": [
                 {"name": "옥수수 크림 캔", "amount": "1캔(425g)"},
                 {"name": "닭육수 또는 물", "amount": "1.5컵"},
@@ -251,7 +251,7 @@ RECIPES_CN = {
             "id": "seafood-hotpot",
             "name": {"ko": "해물탕", "en": "Spicy Seafood Hotpot", "ja": "海鮮チゲ", "zh": "海鲜火锅"},
             "time": 30, "difficulty": 2,
-            "desc": {"ko": "신선한 해물이 가득, 시원하고 매운 탕", "en": "Packed with fresh seafood — spicy and deeply savory"},
+            "desc": {"ko": "신선한 해물이 가득, 시원하고 매운 탕", "en": "Packed with fresh seafood — spicy and deeply savory", "ja": "新鮮な海鮮たっぷり、さっぱり辛い鍋", "zh": "新鲜海鲜满满，清爽又辛辣的火锅"},
             "ingredients": [
                 {"name": "새우·오징어·홍합", "amount": "각 적당량"},
                 {"name": "고추장", "amount": "1큰술"},
@@ -275,7 +275,7 @@ RECIPES_CN = {
             "id": "steamed-dumplings",
             "name": {"ko": "찐만두", "en": "Steamed Dumplings", "ja": "蒸し餃子", "zh": "蒸饺"},
             "time": 40, "difficulty": 2,
-            "desc": {"ko": "쫄깃한 피와 육즙이 가득한 찐만두", "en": "Juicy dumplings with chewy steamed wrappers"},
+            "desc": {"ko": "쫄깃한 피와 육즙이 가득한 찐만두", "en": "Juicy dumplings with chewy steamed wrappers", "ja": "もちもちの皮と肉汁たっぷりの蒸し餃子", "zh": "劲道外皮包裹满满肉汁的蒸饺"},
             "ingredients": [
                 {"name": "만두피 (두꺼운 것)", "amount": "20장"},
                 {"name": "돼지고기 (다진 것)", "amount": "150g"},
@@ -296,7 +296,7 @@ RECIPES_CN = {
             "id": "spring-rolls",
             "name": {"ko": "춘권", "en": "Spring Rolls", "ja": "春巻き", "zh": "春卷"},
             "time": 40, "difficulty": 2,
-            "desc": {"ko": "바삭한 튀김옷 속에 각종 채소가 가득", "en": "Crispy shells packed with colorful vegetables"},
+            "desc": {"ko": "바삭한 튀김옷 속에 각종 채소가 가득", "en": "Crispy shells packed with colorful vegetables", "ja": "サクサクの揚げ衣の中に様々な野菜が入った春巻き", "zh": "酥脆外皮内包满各种蔬菜的春卷"},
             "ingredients": [
                 {"name": "춘권피", "amount": "10장"},
                 {"name": "돼지고기 (채썰기)", "amount": "80g"},

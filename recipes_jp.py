@@ -4,7 +4,7 @@ RECIPES_JP = {
             "id": "salmon-sushi",
             "name": {"ko": "연어초밥", "en": "Salmon Sushi", "ja": "サーモン寿司", "zh": "三文鱼寿司"},
             "time": 35, "difficulty": 2,
-            "desc": {"ko": "집에서 만드는 연어초밥, 밥 온도가 핵심", "en": "Homemade salmon sushi — rice temperature is everything"},
+            "desc": {"ko": "집에서 만드는 연어초밥, 밥 온도가 핵심", "en": "Homemade salmon sushi — rice temperature is everything", "ja": "家で作るサーモン寿司、ご飯の温度が命", "zh": "在家制作三文鱼寿司，米饭温度是关键"},
             "ingredients": [
                 {"name": "밥 (따뜻한 것)", "amount": "1공기"},
                 {"name": "식초", "amount": "2큰술"},
@@ -25,7 +25,7 @@ RECIPES_JP = {
             "id": "tuna-sushi",
             "name": {"ko": "참치초밥", "en": "Tuna Sushi", "ja": "マグロ寿司", "zh": "金枪鱼寿司"},
             "time": 35, "difficulty": 2,
-            "desc": {"ko": "초밥의 클래식, 참치 아카미로 만드는 정통 초밥", "en": "The classic — authentic nigiri with tuna akami"},
+            "desc": {"ko": "초밥의 클래식, 참치 아카미로 만드는 정통 초밥", "en": "The classic — authentic nigiri with tuna akami", "ja": "寿司の定番、マグロの赤身で作る本格握り寿司", "zh": "寿司经典之作，用金枪鱼赤身做的正宗握寿司"},
             "ingredients": [
                 {"name": "밥 (따뜻한 것)", "amount": "1공기"},
                 {"name": "스시식초", "amount": "3큰술"},
@@ -45,7 +45,7 @@ RECIPES_JP = {
             "id": "tamago-sushi",
             "name": {"ko": "계란초밥 (타마고)", "en": "Tamago Sushi", "ja": "玉子寿司", "zh": "厚蛋烧寿司"},
             "time": 25, "difficulty": 2,
-            "desc": {"ko": "달콤하고 폭신한 두꺼운 달걀말이 초밥", "en": "Sweet and fluffy thick omelette on sushi rice"},
+            "desc": {"ko": "달콤하고 폭신한 두꺼운 달걀말이 초밥", "en": "Sweet and fluffy thick omelette on sushi rice", "ja": "甘くてふんわりした厚焼き玉子の寿司", "zh": "甜软蓬松的厚蛋烧寿司"},
             "ingredients": [
                 {"name": "계란", "amount": "3개"},
                 {"name": "설탕", "amount": "1.5큰술"},
@@ -68,7 +68,7 @@ RECIPES_JP = {
             "id": "shoyu-ramen",
             "name": {"ko": "간장 라멘", "en": "Shoyu Ramen", "ja": "醤油ラーメン", "zh": "酱油拉面"},
             "time": 35, "difficulty": 2,
-            "desc": {"ko": "깊고 담백한 간장 베이스 라멘, 집에서도 충분히 가능", "en": "Deep, clean soy-based ramen you can make at home"},
+            "desc": {"ko": "깊고 담백한 간장 베이스 라멘, 집에서도 충분히 가능", "en": "Deep, clean soy-based ramen you can make at home", "ja": "深くあっさりした醤油ベースのラーメン、家でも十分作れる", "zh": "深厚清爽的酱油底拉面，在家也能轻松完成"},
             "ingredients": [
                 {"name": "생라멘 면 또는 중면", "amount": "1인분"},
                 {"name": "닭육수 또는 시판 육수", "amount": "2.5컵"},
@@ -90,7 +90,7 @@ RECIPES_JP = {
             "id": "curry-udon",
             "name": {"ko": "카레 우동", "en": "Curry Udon", "ja": "カレーうどん", "zh": "咖喱乌冬面"},
             "time": 25, "difficulty": 1,
-            "desc": {"ko": "걸쭉한 카레 국물에 쫄깃한 우동면, 간단하고 든든", "en": "Thick curry broth with chewy udon — simple and satisfying"},
+            "desc": {"ko": "걸쭉한 카레 국물에 쫄깃한 우동면, 간단하고 든든", "en": "Thick curry broth with chewy udon — simple and satisfying", "ja": "とろりカレースープにもちもちうどん麺、簡単でボリューム満点", "zh": "浓稠咖喱汤底配劲道乌冬面，简单又饱腹"},
             "ingredients": [
                 {"name": "우동 면 (냉동 가능)", "amount": "1인분"},
                 {"name": "시판 카레 루", "amount": "1조각"},
@@ -111,7 +111,7 @@ RECIPES_JP = {
             "id": "cold-udon",
             "name": {"ko": "냉우동 (자루우동)", "en": "Cold Udon", "ja": "ざるうどん", "zh": "冷乌冬面"},
             "time": 15, "difficulty": 1,
-            "desc": {"ko": "여름에 먹는 시원한 쯔유 우동", "en": "Chilled udon with dipping broth for hot days"},
+            "desc": {"ko": "여름에 먹는 시원한 쯔유 우동", "en": "Chilled udon with dipping broth for hot days", "ja": "夏に食べる冷たいつゆうどん", "zh": "夏日必吃的清凉蘸汁乌冬面"},
             "ingredients": [
                 {"name": "우동 면", "amount": "1인분"},
                 {"name": "쯔유 (시판)", "amount": "3큰술"},
@@ -134,7 +134,7 @@ RECIPES_JP = {
             "id": "katsudon",
             "name": {"ko": "가츠동", "en": "Katsudon", "ja": "カツ丼", "zh": "炸猪排饭"},
             "time": 35, "difficulty": 2,
-            "desc": {"ko": "바삭한 돈가츠를 달걀로 감싸 밥 위에 올린 일본식 덮밥", "en": "Crispy pork cutlet simmered with egg over rice"},
+            "desc": {"ko": "바삭한 돈가츠를 달걀로 감싸 밥 위에 올린 일본식 덮밥", "en": "Crispy pork cutlet simmered with egg over rice", "ja": "カリカリのトンカツを卵でとじてご飯の上にのせた丼", "zh": "酥脆猪排裹上鸡蛋盖在米饭上的日式盖饭"},
             "ingredients": [
                 {"name": "돈가츠 (시판 또는 직접 튀긴 것)", "amount": "1장"},
                 {"name": "밥", "amount": "1공기"},
@@ -156,7 +156,7 @@ RECIPES_JP = {
             "id": "oyakodon",
             "name": {"ko": "오야코동", "en": "Oyakodon", "ja": "親子丼", "zh": "亲子丼"},
             "time": 25, "difficulty": 1,
-            "desc": {"ko": "닭고기와 계란의 조합, 이름이 부모와 자식이라는 뜻", "en": "Chicken and egg together — ooya(parent) + ko(child)"},
+            "desc": {"ko": "닭고기와 계란의 조합, 이름이 부모와 자식이라는 뜻", "en": "Chicken and egg together — ooya(parent) + ko(child)", "ja": "鶏肉と卵の組み合わせ、名前は親と子という意味", "zh": "鸡肉与鸡蛋的组合，名字意为亲子"},
             "ingredients": [
                 {"name": "닭다리살", "amount": "150g"},
                 {"name": "계란", "amount": "2개"},
@@ -178,7 +178,7 @@ RECIPES_JP = {
             "id": "gyudon",
             "name": {"ko": "규동", "en": "Gyudon", "ja": "牛丼", "zh": "牛肉盖饭"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "달콤한 간장 소스 소고기덮밥, 요시노야의 그 맛", "en": "Sweet soy beef bowl — the iconic Yoshinoya taste"},
+            "desc": {"ko": "달콤한 간장 소스 소고기덮밥, 요시노야의 그 맛", "en": "Sweet soy beef bowl — the iconic Yoshinoya taste", "ja": "甘い醤油ソースの牛丼、吉野家のあの味", "zh": "甜酱油牛肉盖饭，吉野家的经典味道"},
             "ingredients": [
                 {"name": "소고기 (불고기용 또는 얇게 썬 것)", "amount": "150g"},
                 {"name": "양파", "amount": "1/2개"},
@@ -202,7 +202,7 @@ RECIPES_JP = {
             "id": "shrimp-tempura",
             "name": {"ko": "새우튀김 (에비텐)", "en": "Shrimp Tempura", "ja": "エビ天ぷら", "zh": "虾天妇罗"},
             "time": 25, "difficulty": 2,
-            "desc": {"ko": "얇고 바삭한 튀김옷이 핵심, 반죽을 과하게 섞지 마세요", "en": "Light, crispy batter is everything — don't overmix"},
+            "desc": {"ko": "얇고 바삭한 튀김옷이 핵심, 반죽을 과하게 섞지 마세요", "en": "Light, crispy batter is everything — don't overmix", "ja": "薄くサクサクの衣が命、生地を混ぜすぎないで", "zh": "薄而酥脆的面衣是关键，面糊不要过度搅拌"},
             "ingredients": [
                 {"name": "큰 새우", "amount": "8마리"},
                 {"name": "박력분", "amount": "1컵"},
@@ -223,7 +223,7 @@ RECIPES_JP = {
             "id": "yakitori",
             "name": {"ko": "닭꼬치 (야키토리)", "en": "Yakitori", "ja": "焼き鳥", "zh": "日式烤鸡串"},
             "time": 25, "difficulty": 1,
-            "desc": {"ko": "달콤 짭짤한 타레 소스를 발라 구운 닭꼬치", "en": "Chicken skewers glazed with sweet-salty tare sauce"},
+            "desc": {"ko": "달콤 짭짤한 타레 소스를 발라 구운 닭꼬치", "en": "Chicken skewers glazed with sweet-salty tare sauce", "ja": "甘じょっぱいタレを塗って焼いた焼き鳥", "zh": "涂上甜咸照烧酱烤制的日式鸡肉串"},
             "ingredients": [
                 {"name": "닭다리살", "amount": "200g"},
                 {"name": "대파", "amount": "1/2대"},
@@ -244,7 +244,7 @@ RECIPES_JP = {
             "id": "grilled-salmon",
             "name": {"ko": "연어 구이 (시오야키)", "en": "Salt-Grilled Salmon", "ja": "鮭の塩焼き", "zh": "盐烤三文鱼"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "소금만 뿌려 구워도 이렇게 맛있는 일본식 생선구이", "en": "Just salt and heat — Japanese simplicity at its best"},
+            "desc": {"ko": "소금만 뿌려 구워도 이렇게 맛있는 일본식 생선구이", "en": "Just salt and heat — Japanese simplicity at its best", "ja": "塩を振って焼くだけでこんなに美味しい日本式魚の塩焼き", "zh": "只撒盐烤制却如此美味的日式烤鱼"},
             "ingredients": [
                 {"name": "연어 (토막)", "amount": "1토막"},
                 {"name": "소금", "amount": "1작은술"},
@@ -265,7 +265,7 @@ RECIPES_JP = {
             "id": "miso-soup",
             "name": {"ko": "미소시루", "en": "Miso Soup", "ja": "味噌汁", "zh": "味噌汤"},
             "time": 10, "difficulty": 1,
-            "desc": {"ko": "일본 가정식의 기본 중의 기본, 5분이면 완성", "en": "The cornerstone of Japanese home cooking — done in 5 minutes"},
+            "desc": {"ko": "일본 가정식의 기본 중의 기본, 5분이면 완성", "en": "The cornerstone of Japanese home cooking — done in 5 minutes", "ja": "日本家庭料理の基本中の基本、5分で完成", "zh": "日本家庭料理的基础中的基础，5分钟完成"},
             "ingredients": [
                 {"name": "다시마·가쓰오부시 육수 또는 시판 다시", "amount": "2컵"},
                 {"name": "된장 (미소)", "amount": "1.5큰술"},
@@ -285,7 +285,7 @@ RECIPES_JP = {
             "id": "chawanmushi",
             "name": {"ko": "차완무시", "en": "Chawanmushi", "ja": "茶碗蒸し", "zh": "茶碗蒸"},
             "time": 35, "difficulty": 2,
-            "desc": {"ko": "달걀을 부드럽게 찐 일본식 계란찜, 다시가 핵심", "en": "Silky steamed egg custard — dashi makes the difference"},
+            "desc": {"ko": "달걀을 부드럽게 찐 일본식 계란찜, 다시가 핵심", "en": "Silky steamed egg custard — dashi makes the difference", "ja": "卵を柔らかく蒸した日本式茶碗蒸し、出汁が命", "zh": "柔滑蒸蛋的日式茶碗蒸，出汁是关键"},
             "ingredients": [
                 {"name": "계란", "amount": "2개"},
                 {"name": "다시 육수", "amount": "300ml"},
@@ -306,7 +306,7 @@ RECIPES_JP = {
             "id": "tonjiru",
             "name": {"ko": "돼지고기 된장국 (톤지루)", "en": "Tonjiru", "ja": "豚汁", "zh": "猪肉味噌汤"},
             "time": 30, "difficulty": 1,
-            "desc": {"ko": "돼지고기와 채소가 가득한 든든한 일본식 된장국", "en": "Hearty miso soup packed with pork and root vegetables"},
+            "desc": {"ko": "돼지고기와 채소가 가득한 든든한 일본식 된장국", "en": "Hearty miso soup packed with pork and root vegetables", "ja": "豚肉と野菜たっぷりの食べ応えある日本式味噌汁", "zh": "猪肉和蔬菜满满的日式味噌汤"},
             "ingredients": [
                 {"name": "돼지고기 (얇게 썬 것)", "amount": "100g"},
                 {"name": "무", "amount": "1/6개"},

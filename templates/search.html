@@ -121,7 +121,7 @@
               {{ cat.name[lang] if cat else item.cat_id }} · {{ sub.name[lang] if sub else item.sub_id }}
             </p>
             <h3 class="recipe-name">{{ recipe.name[lang] }}</h3>
-            <p class="recipe-desc">{{ recipe.desc.get(lang, recipe.desc.get('ko', '')) }}</p>
+            <p class="recipe-desc">{{ recipe.desc.get(lang, recipe.desc.get('en', recipe.desc.get('ko', ''))) }}</p>
           </div>
         </a>
         {% endfor %}

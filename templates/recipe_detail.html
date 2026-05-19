@@ -5,12 +5,12 @@
 <meta property="og:type"         content="article">
 <meta property="og:site_name"    content="Basic Cook">
 <meta property="og:title"        content="{{ recipe.name[lang] }} — Basic Cook">
-<meta property="og:description"  content="{{ recipe.desc.get(lang, recipe.desc.get('ko', '')) }}">
+<meta property="og:description"  content="{{ recipe.desc.get(lang, recipe.desc.get('en', recipe.desc.get('ko', ''))) }}">
 <meta property="og:url"          content="{{ request.url }}">
 <meta property="og:image"        content="{{ url_for('static', filename='images/' + cat_id + '-' + sub_id + '.jpg', _external=True) }}">
 <meta name="twitter:card"        content="summary_large_image">
 <meta name="twitter:title"       content="{{ recipe.name[lang] }} — Basic Cook">
-<meta name="twitter:description" content="{{ recipe.desc.get(lang, recipe.desc.get('ko', '')) }}">
+<meta name="twitter:description" content="{{ recipe.desc.get(lang, recipe.desc.get('en', recipe.desc.get('ko', ''))) }}">
 <meta name="twitter:image"       content="{{ url_for('static', filename='images/' + cat_id + '-' + sub_id + '.jpg', _external=True) }}">
 {% endblock %}
 
@@ -61,7 +61,7 @@
       <div>
         <p class="detail-breadcrumb">{{ cat.name[lang] }} · {{ sub.name[lang] }}</p>
         <h1 class="page-hero-title">{{ recipe.name[lang] }}</h1>
-        <p class="detail-desc">{{ recipe.desc.get(lang, recipe.desc.get('ko', '')) }}</p>
+        <p class="detail-desc">{{ recipe.desc.get(lang, recipe.desc.get('en', recipe.desc.get('ko', ''))) }}</p>
         <div class="detail-badges">
           <span class="meta-tag time">{{ recipe.time }}{% if lang == 'ko' %}분{% elif lang == 'ja' %}分{% elif lang == 'zh' %}分钟{% else %}min{% endif %}</span>
           <span class="meta-tag diff diff-{{ recipe.difficulty }}">{{ difficulty[recipe.difficulty][lang] }}</span>
@@ -132,7 +132,7 @@
         {% for step in recipe.steps %}
         <li class="step-item" data-step-id="step-{{ loop.index }}">
           <span class="step-num">{{ loop.index }}</span>
-          <span class="step-text">{{ step.get(lang, step.get('ko', '')) }}</span>
+          <span class="step-text">{{ step.get(lang, step.get('en', step.get('ko', ''))) }}</span>
         </li>
         {% endfor %}
       </ol>

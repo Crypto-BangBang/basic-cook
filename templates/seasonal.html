@@ -37,7 +37,7 @@
         <div class="recipe-card-body">
           <p class="season-recipe-cat">{{ item.cat.name[lang] }} · {{ item.sub.name[lang] }}</p>
           <h3 class="recipe-name">{{ item.recipe.name[lang] }}</h3>
-          <p class="recipe-desc">{{ item.recipe.desc.get(lang, item.recipe.desc.get('ko', '')) }}</p>
+          <p class="recipe-desc">{{ item.recipe.desc.get(lang, item.recipe.desc.get('en', item.recipe.desc.get('ko', ''))) }}</p>
         </div>
       </a>
       {% endif %}

@@ -4,7 +4,7 @@ RECIPES_KR = {
             "id": "kimchi-fried-rice",
             "name": {"ko": "김치볶음밥", "en": "Kimchi Fried Rice", "ja": "キムチチャーハン", "zh": "泡菜炒饭"},
             "time": 15, "difficulty": 1,
-            "desc": {"ko": "남은 밥과 김치로 15분 안에 뚝딱", "en": "Quick one-pan meal with leftover rice and kimchi"},
+            "desc": {"ko": "남은 밥과 김치로 15분 안에 뚝딱", "en": "Quick one-pan meal with leftover rice and kimchi", "ja": "残りご飯とキムチで15分で完成", "zh": "剩饭和泡菜15分钟搞定"},
             "ingredients": [
                 {"name": "밥", "amount": "1공기"},
                 {"name": "묵은 김치", "amount": "100g"},
@@ -25,7 +25,7 @@ RECIPES_KR = {
             "id": "bibimbap",
             "name": {"ko": "비빔밥", "en": "Bibimbap", "ja": "ビビンバ", "zh": "拌饭"},
             "time": 30, "difficulty": 2,
-            "desc": {"ko": "각종 나물과 고추장으로 비벼 먹는 한식의 대표", "en": "Classic Korean mixed rice bowl with vegetables and gochujang"},
+            "desc": {"ko": "각종 나물과 고추장으로 비벼 먹는 한식의 대표", "en": "Classic Korean mixed rice bowl with vegetables and gochujang", "ja": "ナムルとコチュジャンを混ぜる韓国の定番ご飯", "zh": "各种凉拌菜和辣椒酱拌在一起的韩国代表性料理"},
             "ingredients": [
                 {"name": "밥", "amount": "1공기"},
                 {"name": "시금치", "amount": "한 줌"},
@@ -47,7 +47,7 @@ RECIPES_KR = {
             "id": "chicken-porridge",
             "name": {"ko": "닭죽", "en": "Chicken Porridge", "ja": "鶏のお粥", "zh": "鸡肉粥"},
             "time": 45, "difficulty": 1,
-            "desc": {"ko": "속이 편한 든든한 한 그릇, 몸이 안 좋을 때 최고", "en": "Comforting rice porridge great for sick days"},
+            "desc": {"ko": "속이 편한 든든한 한 그릇, 몸이 안 좋을 때 최고", "en": "Comforting rice porridge great for sick days", "ja": "体に優しい一杯、体調が悪い時に最適", "zh": "温暖肠胃的一碗，身体不适时的最佳选择"},
             "ingredients": [
                 {"name": "쌀", "amount": "1/2컵"},
                 {"name": "닭가슴살", "amount": "100g"},
@@ -70,7 +70,7 @@ RECIPES_KR = {
             "id": "doenjang-jjigae",
             "name": {"ko": "된장찌개", "en": "Doenjang Jjigae", "ja": "テンジャンチゲ", "zh": "大酱汤"},
             "time": 20, "difficulty": 1,
-            "desc": {"ko": "한국인의 소울푸드, 집된장이 없어도 시판 된장으로 OK", "en": "Korea's soul food stew — easy with store-bought doenjang"},
+            "desc": {"ko": "한국인의 소울푸드, 집된장이 없어도 시판 된장으로 OK", "en": "Korea's soul food stew — easy with store-bought doenjang", "ja": "韓国人のソウルフード、市販の味噌でも美味しく作れる", "zh": "韩国人的灵魂食物，用市售大酱也能轻松完成"},
             "ingredients": [
                 {"name": "된장", "amount": "2큰술"},
                 {"name": "두부", "amount": "1/2모"},
@@ -92,7 +92,7 @@ RECIPES_KR = {
             "id": "kimchi-jjigae",
             "name": {"ko": "김치찌개", "en": "Kimchi Jjigae", "ja": "キムチチゲ", "zh": "泡菜汤"},
             "time": 25, "difficulty": 1,
-            "desc": {"ko": "익은 김치일수록 맛있는 국민 찌개", "en": "The more fermented the kimchi, the better this stew gets"},
+            "desc": {"ko": "익은 김치일수록 맛있는 국민 찌개", "en": "The more fermented the kimchi, the better this stew gets", "ja": "キムチが熟すほど美味しくなる国民的チゲ", "zh": "泡菜越熟越好吃的国民汤锅"},
             "ingredients": [
                 {"name": "묵은 김치", "amount": "150g"},
                 {"name": "돼지고기 (목살 or 삼겹살)", "amount": "100g"},
@@ -114,7 +114,7 @@ RECIPES_KR = {
             "id": "egg-soup",
             "name": {"ko": "계란국", "en": "Korean Egg Soup", "ja": "卵のスープ", "zh": "鸡蛋汤"},
             "time": 10, "difficulty": 1,
-            "desc": {"ko": "10분이면 완성, 초보자도 절대 실패 없는 국", "en": "10-minute soup that's impossible to mess up"},
+            "desc": {"ko": "10분이면 완성, 초보자도 절대 실패 없는 국", "en": "10-minute soup that's impossible to mess up", "ja": "10分で完成、初心者でも失敗なしのスープ", "zh": "10分钟完成，初学者也不会失败的汤"},
             "ingredients": [
                 {"name": "계란", "amount": "2개"},
                 {"name": "멸치다시마육수", "amount": "2컵"},
@@ -137,7 +137,7 @@ RECIPES_KR = {
             "id": "jeyuk-bokkeum",
             "name": {"ko": "제육볶음", "en": "Spicy Stir-fried Pork", "ja": "チェユクポックム", "zh": "辣炒猪肉"},
             "time": 25, "difficulty": 1,
-            "desc": {"ko": "밥도둑 1위, 고추장 양념 돼지고기 볶음", "en": "Spicy gochujang pork that goes perfectly with rice"},
+            "desc": {"ko": "밥도둑 1위, 고추장 양념 돼지고기 볶음", "en": "Spicy gochujang pork that goes perfectly with rice", "ja": "ご飯泥棒1位、コチュジャン味付け豚肉炒め", "zh": "最配饭的下饭菜冠军，辣椒酱炒猪肉"},
             "ingredients": [
                 {"name": "돼지고기 (앞다리살)", "amount": "200g"},
                 {"name": "고추장", "amount": "2큰술"},
@@ -160,7 +160,7 @@ RECIPES_KR = {
             "id": "bulgogi",
             "name": {"ko": "소불고기", "en": "Beef Bulgogi", "ja": "プルコギ", "zh": "韩式烤牛肉"},
             "time": 30, "difficulty": 2,
-            "desc": {"ko": "달콤한 간장 양념 소고기, 외국인도 반하는 맛", "en": "Sweet soy-marinated beef loved by everyone"},
+            "desc": {"ko": "달콤한 간장 양념 소고기, 외국인도 반하는 맛", "en": "Sweet soy-marinated beef loved by everyone", "ja": "甘い醤油タレの牛肉、外国人もとりこになる味", "zh": "甜甜酱油腌制的牛肉，连外国人都为之着迷"},
             "ingredients": [
                 {"name": "소고기 (불고기용)", "amount": "200g"},
                 {"name": "배 또는 사과", "amount": "1/4개 (갈아서)"},
@@ -182,7 +182,7 @@ RECIPES_KR = {
             "id": "dak-galbi",
             "name": {"ko": "닭갈비", "en": "Spicy Stir-fried Chicken", "ja": "タッカルビ", "zh": "辣炒鸡肋"},
             "time": 30, "difficulty": 2,
-            "desc": {"ko": "춘천 명물, 고추장 양념 닭볶음", "en": "Spicy gochujang chicken stir-fry from Chuncheon"},
+            "desc": {"ko": "춘천 명물, 고추장 양념 닭볶음", "en": "Spicy gochujang chicken stir-fry from Chuncheon", "ja": "春川名物、コチュジャン味付け鶏肉炒め", "zh": "春川名产，辣椒酱味炒鸡"},
             "ingredients": [
                 {"name": "닭다리살 또는 닭가슴살", "amount": "250g"},
                 {"name": "고추장", "amount": "2큰술"},
@@ -207,7 +207,7 @@ RECIPES_KR = {
             "id": "gyeran-mari",
             "name": {"ko": "계란말이", "en": "Korean Rolled Omelette", "ja": "卵焼き（韓国風）", "zh": "韩式鸡蛋卷"},
             "time": 15, "difficulty": 2,
-            "desc": {"ko": "도시락 단골 반찬, 예쁘게 마는 게 포인트", "en": "Classic lunchbox side — the roll is the challenge"},
+            "desc": {"ko": "도시락 단골 반찬, 예쁘게 마는 게 포인트", "en": "Classic lunchbox side — the roll is the challenge", "ja": "お弁当の定番おかず、きれいに巻くのがポイント", "zh": "便当常客，漂亮地卷起来才是关键"},
             "ingredients": [
                 {"name": "계란", "amount": "3개"},
                 {"name": "당근", "amount": "1/8개"},
@@ -228,7 +228,7 @@ RECIPES_KR = {
             "id": "spinach-namul",
             "name": {"ko": "시금치나물", "en": "Spinach Namul", "ja": "ほうれん草のナムル", "zh": "菠菜凉拌"},
             "time": 10, "difficulty": 1,
-            "desc": {"ko": "데쳐서 무치면 끝, 가장 쉬운 나물 반찬", "en": "Blanch and toss — the easiest Korean side dish"},
+            "desc": {"ko": "데쳐서 무치면 끝, 가장 쉬운 나물 반찬", "en": "Blanch and toss — the easiest Korean side dish", "ja": "茹でて和えるだけ、最も簡単なナムル料理", "zh": "焯熟拌一拌就完成，最简单的小菜"},
             "ingredients": [
                 {"name": "시금치", "amount": "200g"},
                 {"name": "다진 마늘", "amount": "1/2작은술"},
@@ -247,7 +247,7 @@ RECIPES_KR = {
             "id": "cucumber-salad",
             "name": {"ko": "오이무침", "en": "Spicy Cucumber Salad", "ja": "きゅうりのピリ辛和え", "zh": "拌黄瓜"},
             "time": 10, "difficulty": 1,
-            "desc": {"ko": "아삭하고 매콤한 여름 반찬의 대명사", "en": "Crisp, spicy cucumber — perfect summer side dish"},
+            "desc": {"ko": "아삭하고 매콤한 여름 반찬의 대명사", "en": "Crisp, spicy cucumber — perfect summer side dish", "ja": "シャキシャキ辛い夏の副菜の代名詞", "zh": "爽脆微辣，夏日小菜的代名词"},
             "ingredients": [
                 {"name": "오이", "amount": "1개"},
                 {"name": "소금", "amount": "1작은술 (절임용)"},
@@ -271,7 +271,7 @@ RECIPES_KR = {
             "id": "japchae",
             "name": {"ko": "잡채", "en": "Japchae", "ja": "チャプチェ", "zh": "杂菜"},
             "time": 40, "difficulty": 2,
-            "desc": {"ko": "명절 단골 메뉴, 색색의 채소와 당면의 조화", "en": "Festive glass noodles with colorful vegetables"},
+            "desc": {"ko": "명절 단골 메뉴, 색색의 채소와 당면의 조화", "en": "Festive glass noodles with colorful vegetables", "ja": "お祭りの定番メニュー、色鮮やかな野菜と春雨の調和", "zh": "节日必备，色彩丰富的蔬菜与粉丝的完美搭配"},
             "ingredients": [
                 {"name": "당면", "amount": "100g"},
                 {"name": "소고기 (채 썰기)", "amount": "80g"},
@@ -294,7 +294,7 @@ RECIPES_KR = {
             "id": "instant-ramen",
             "name": {"ko": "라면", "en": "Korean Instant Ramen", "ja": "ラーメン", "zh": "方便面"},
             "time": 5, "difficulty": 1,
-            "desc": {"ko": "실패 없는 국민 야식, 물 양이 핵심", "en": "Korea's favorite late-night snack — water ratio is everything"},
+            "desc": {"ko": "실패 없는 국민 야식, 물 양이 핵심", "en": "Korea's favorite late-night snack — water ratio is everything", "ja": "失敗なしの国民的夜食、水の量が命", "zh": "不会失败的国民宵夜，水的用量是关键"},
             "ingredients": [
                 {"name": "라면", "amount": "1개"},
                 {"name": "물", "amount": "550ml"},
@@ -312,7 +312,7 @@ RECIPES_KR = {
             "id": "kalguksu",
             "name": {"ko": "칼국수", "en": "Knife-cut Noodle Soup", "ja": "カルグクス", "zh": "刀切面"},
             "time": 35, "difficulty": 2,
-            "desc": {"ko": "쫄깃한 면과 진한 국물, 손칼국수의 정석", "en": "Chewy hand-cut noodles in a deep savory broth"},
+            "desc": {"ko": "쫄깃한 면과 진한 국물, 손칼국수의 정석", "en": "Chewy hand-cut noodles in a deep savory broth", "ja": "もちもちの麺と濃いスープ、手打ち麺の王道", "zh": "劲道面条配浓郁汤底，手切面的正统做法"},
             "ingredients": [
                 {"name": "칼국수 면 (시판)", "amount": "2인분"},
                 {"name": "멸치다시마육수", "amount": "4컵"},
