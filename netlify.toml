@@ -1,10 +1,11 @@
 [build]
-  command = "pip install flask flask-sqlalchemy flask-login python-dotenv serverless-wsgi pg8000 werkzeug -t netlify/functions/packages"
+  command = "pip install flask flask-sqlalchemy flask-login python-dotenv serverless-wsgi pg8000 werkzeug -t vendor"
   publish = "."
 
 [functions]
   directory = "netlify/functions"
   included_files = [
+    "vendor/**",
     "app.py", "auth.py", "models.py", "recipe_data.py",
     "recipes_kr.py", "recipes_jp.py", "recipes_cn.py", "recipes_west.py",
     "recipes_extra.py", "recipes_extra2.py", "recipes_extra3.py",

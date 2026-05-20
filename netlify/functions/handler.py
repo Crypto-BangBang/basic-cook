@@ -2,7 +2,8 @@ import sys
 import os
 
 func_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(func_dir, 'packages'))
+vendor_dir = os.path.join(func_dir, 'vendor')
+sys.path.insert(0, vendor_dir)
 sys.path.insert(0, func_dir)
 
 import serverless_wsgi
