@@ -91,14 +91,6 @@
       </div>
 
       <div class="nav-right">
-        <!-- Search icon -->
-        <button class="search-icon-btn" id="search-icon-btn" aria-label="Search">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <circle cx="8.5" cy="8.5" r="5.5"/>
-            <line x1="13" y1="13" x2="18" y2="18"/>
-          </svg>
-        </button>
-
         <!-- Language switcher -->
         <div class="lang-switcher">
           {% set lang_labels = {"ko": "한국어", "en": "EN", "ja": "日本語", "zh": "中文"} %}
@@ -119,25 +111,6 @@
       </div>
     </div>
   </nav>
-
-  <!-- Search overlay -->
-  <div class="search-overlay" id="search-overlay">
-    <div class="search-overlay-inner">
-      <button class="search-overlay-close" id="search-overlay-close" aria-label="Close">
-        <svg viewBox="0 0 14 14" width="16" height="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/></svg>
-      </button>
-      <form action="/search" method="get" class="search-overlay-form">
-        <input type="hidden" name="lang" value="{{ lang }}">
-        <div class="search-bar">
-          <input type="text" name="q" class="search-input search-overlay-input" id="search-overlay-input"
-                 placeholder="{% if lang=='ko' %}재료나 요리 이름으로 검색{% elif lang=='en' %}Search recipes or ingredients{% elif lang=='ja' %}食材や料理名で検索{% else %}搜索食谱或食材{% endif %}">
-          <button type="submit" class="search-btn">
-            {% if lang=='ko' %}검색{% elif lang=='en' %}Search{% elif lang=='ja' %}検索{% else %}搜索{% endif %}
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
 
   <!-- Mobile menu -->
   <div class="mobile-menu" id="mobile-menu">
@@ -206,22 +179,6 @@
       }
     });
 
-    /* ── Search overlay ── */
-    var searchIcon = document.getElementById('search-icon-btn');
-    var overlay = document.getElementById('search-overlay');
-    var overlayInput = document.getElementById('search-overlay-input');
-    var overlayClose = document.getElementById('search-overlay-close');
-
-    function openSearch() {
-      overlay.classList.add('open');
-      setTimeout(function () { overlayInput.focus(); }, 80);
-    }
-    function closeSearch() { overlay.classList.remove('open'); }
-
-    searchIcon.addEventListener('click', openSearch);
-    overlayClose.addEventListener('click', closeSearch);
-    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeSearch(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSearch(); });
   })();
   </script>
 
