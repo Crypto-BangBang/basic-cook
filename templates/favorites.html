@@ -19,102 +19,60 @@
 <section class="section">
   <div class="container">
 
-    {% if server_mode %}
-      {# Logged-in: server-rendered favorites #}
-      {% if fav_recipes %}
-      <div class="recipe-grid">
-        {% for item in fav_recipes %}
-        <a href="/category/{{ item.cat_id }}/{{ item.sub_id }}/{{ item.recipe.id }}?lang={{ lang }}"
-           class="recipe-card"
-           style="--cat-color: {{ item.cat.color }}">
-          <div class="recipe-card-header">
-            <span class="meta-tag time">{{ item.recipe.time }}{% if lang == 'ko' %}분{% elif lang == 'ja' %}分{% elif lang == 'zh' %}分钟{% else %}min{% endif %}</span>
-            <span class="meta-tag diff diff-{{ item.recipe.difficulty }}">{{ difficulty[item.recipe.difficulty][lang] }}</span>
-          </div>
-          <div class="recipe-card-body">
-            <p class="search-breadcrumb">{{ item.cat.name[lang] }} · {{ item.sub.name[lang] }}</p>
-            <h3 class="recipe-name">{{ item.recipe.name[lang] }}</h3>
-            <p class="recipe-desc">{{ item.recipe.desc.get(lang, item.recipe.desc.get('en', item.recipe.desc.get('ko', ''))) }}</p>
-          </div>
-        </a>
-        {% endfor %}
-      </div>
-      {% else %}
-      <div class="empty-state">
-        <p class="empty-msg">
-          {% if lang == 'ko' %}아직 즐겨찾기한 레시피가 없어요. 레시피 상세 페이지에서 저장해보세요!
-          {% elif lang == 'en' %}No favorites yet. Save recipes from the detail page!
-          {% elif lang == 'ja' %}お気に入りがまだありません。レシピページから保存してみてください！
-          {% else %}暂无收藏。在食谱详情页面中保存食谱吧！
-          {% endif %}
-        </p>
-      </div>
-      {% endif %}
-
-    {% else %}
-      {# Guest: localStorage-based, JS populated #}
-      <div class="recipe-grid" id="fav-grid"></div>
-      <div class="empty-state" id="fav-empty" style="display:none">
-        <p class="empty-msg">
-          {% if lang == 'ko' %}아직 즐겨찾기한 레시피가 없어요.
-          {% elif lang == 'en' %}No favorites yet.
-          {% elif lang == 'ja' %}お気に入りがまだありません。
-          {% else %}暂无收藏。
-          {% endif %}
-        </p>
-      </div>
-      <p class="fav-login-hint">
-        {% if lang == 'ko' %}<a href="{{ url_for('auth.login', lang=lang) }}" class="fav-login-link">로그인</a>하면 기기 간 동기화가 돼요.
-        {% elif lang == 'en' %}<a href="{{ url_for('auth.login', lang=lang) }}" class="fav-login-link">Log in</a> to sync favorites across devices.
-        {% elif lang == 'ja' %}<a href="{{ url_for('auth.login', lang=lang) }}" class="fav-login-link">ログイン</a>するとデバイス間で同期できます。
-        {% else %}<a href="{{ url_for('auth.login', lang=lang) }}" class="fav-login-link">登录</a>以跨设备同步收藏。
+    <div class="recipe-grid" id="fav-grid"></div>
+    <div class="empty-state" id="fav-empty" style="display:none">
+      <p class="empty-msg">
+        {% if lang == 'ko' %}아직 즐겨찾기한 레시피가 없어요.
+        {% elif lang == 'en' %}No favorites yet.
+        {% elif lang == 'ja' %}お気に入りがまだありません。
+        {% else %}暂无收藏。
         {% endif %}
       </p>
+    </div>
 
-      <script>
-      (function () {
-        var LANG = '{{ lang }}';
-        var ALL = {{ all_recipes | tojson }};
-        var DIFF = {{ difficulty | tojson }};
-        var FAV_KEY = 'easyrecipe-favorites';
+    <script>
+    (function () {
+      var LANG = '{{ lang }}';
+      var ALL = {{ all_recipes | tojson }};
+      var DIFF = {{ difficulty | tojson }};
+      var FAV_KEY = 'easyrecipe-favorites';
 
-        function getFavs() {
-          try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); } catch (e) { return []; }
-        }
+      function getFavs() {
+        try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); } catch (e) { return []; }
+      }
 
-        var favs = getFavs();
-        var matched = ALL.filter(function (r) { return favs.indexOf(r.path) !== -1; });
-        var grid = document.getElementById('fav-grid');
-        var empty = document.getElementById('fav-empty');
+      var favs = getFavs();
+      var matched = ALL.filter(function (r) { return favs.indexOf(r.path) !== -1; });
+      var grid = document.getElementById('fav-grid');
+      var empty = document.getElementById('fav-empty');
 
-        if (matched.length === 0) { empty.style.display = 'block'; return; }
+      if (matched.length === 0) { empty.style.display = 'block'; return; }
 
-        var timeUnit = { ko: '분', en: 'min', ja: '分', zh: '分钟' }[LANG] || 'min';
-        matched.forEach(function (item) {
-          var diff = (DIFF[String(item.difficulty)] || {})[LANG] || '';
-          var name = item.name[LANG] || item.name['ko'] || '';
-          var desc = item.desc[LANG] || item.desc['ko'] || '';
-          var catName = item.cat_name[LANG] || item.cat_name['ko'] || '';
-          var subName = item.sub_name[LANG] || item.sub_name['ko'] || '';
-          var a = document.createElement('a');
-          a.href = '/category/' + item.cat_id + '/' + item.sub_id + '/' + item.recipe_id + '?lang=' + LANG;
-          a.className = 'recipe-card';
-          a.style.cssText = '--cat-color:' + item.cat_color;
-          a.innerHTML =
-            '<div class="recipe-card-header">' +
-              '<span class="meta-tag time">' + item.time + timeUnit + '</span>' +
-              '<span class="meta-tag diff diff-' + item.difficulty + '">' + diff + '</span>' +
-            '</div>' +
-            '<div class="recipe-card-body">' +
-              '<p class="search-breadcrumb">' + catName + ' · ' + subName + '</p>' +
-              '<h3 class="recipe-name">' + name + '</h3>' +
-              '<p class="recipe-desc">' + desc + '</p>' +
-            '</div>';
-          grid.appendChild(a);
-        });
-      })();
-      </script>
-    {% endif %}
+      var timeUnit = { ko: '분', en: 'min', ja: '分', zh: '分钟' }[LANG] || 'min';
+      matched.forEach(function (item) {
+        var diff = (DIFF[String(item.difficulty)] || {})[LANG] || '';
+        var name = item.name[LANG] || item.name['ko'] || '';
+        var desc = item.desc[LANG] || item.desc['ko'] || '';
+        var catName = item.cat_name[LANG] || item.cat_name['ko'] || '';
+        var subName = item.sub_name[LANG] || item.sub_name['ko'] || '';
+        var a = document.createElement('a');
+        a.href = '/category/' + item.cat_id + '/' + item.sub_id + '/' + item.recipe_id + '?lang=' + LANG;
+        a.className = 'recipe-card';
+        a.style.cssText = '--cat-color:' + item.cat_color;
+        a.innerHTML =
+          '<div class="recipe-card-header">' +
+            '<span class="meta-tag time">' + item.time + timeUnit + '</span>' +
+            '<span class="meta-tag diff diff-' + item.difficulty + '">' + diff + '</span>' +
+          '</div>' +
+          '<div class="recipe-card-body">' +
+            '<p class="search-breadcrumb">' + catName + ' · ' + subName + '</p>' +
+            '<h3 class="recipe-name">' + name + '</h3>' +
+            '<p class="recipe-desc">' + desc + '</p>' +
+          '</div>';
+        grid.appendChild(a);
+      });
+    })();
+    </script>
 
   </div>
 </section>

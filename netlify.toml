@@ -1,11 +1,6 @@
 [build]
-  command = "pip install flask flask-sqlalchemy flask-login python-dotenv werkzeug beautifulsoup4 && python generate.py"
+  command = "pip install flask python-dotenv werkzeug beautifulsoup4 && python generate.py"
   publish = "build"
-
-[[redirects]]
-  from = "/random"
-  to = "/"
-  status = 302
 
 [[redirects]]
   from = "/*"

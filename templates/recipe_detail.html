@@ -21,31 +21,14 @@
     <div class="detail-top-bar">
       <a href="/category/{{ cat_id }}/{{ sub_id }}?lang={{ lang }}" class="back-link">{{ ui.back[lang] }}</a>
       <div class="detail-top-actions">
-        <button class="fav-btn {% if is_fav %}active{% endif %}" id="fav-btn"
-                data-path="{{ recipe_path }}"
-                data-auth="{{ 'true' if current_user.is_authenticated else 'false' }}"
-                data-login-url="{{ url_for('auth.login', lang=lang) }}">
+        <button class="fav-btn" id="fav-btn" data-path="{{ recipe_path }}">
           <svg class="fav-icon" viewBox="0 0 24 24" width="14" height="14">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
           </svg>
           <span class="fav-label">
-            {% if is_fav %}
-              {% if lang == 'ko' %}저장됨{% elif lang == 'en' %}Saved{% elif lang == 'ja' %}保存済み{% else %}已收藏{% endif %}
-            {% else %}
-              {% if lang == 'ko' %}저장{% elif lang == 'en' %}Save{% elif lang == 'ja' %}保存{% else %}收藏{% endif %}
-            {% endif %}
+            {% if lang == 'ko' %}저장{% elif lang == 'en' %}Save{% elif lang == 'ja' %}保存{% else %}收藏{% endif %}
           </span>
         </button>
-        {% if current_user.is_authenticated %}
-        <button class="cook-btn {% if cook_log %}cooked{% endif %}" id="cook-btn"
-                data-path="{{ recipe_path }}">
-          {% if cook_log %}
-            {% if lang == 'ko' %}{{ cook_log.count }}회 완료{% elif lang == 'en' %}Cooked {{ cook_log.count }}×{% elif lang == 'ja' %}{{ cook_log.count }}回調理{% else %}已做{{ cook_log.count }}次{% endif %}
-          {% else %}
-            {% if lang == 'ko' %}요리 완료{% elif lang == 'en' %}Cooked it!{% elif lang == 'ja' %}調理完了！{% else %}完成烹饪{% endif %}
-          {% endif %}
-        </button>
-        {% endif %}
         <button class="share-btn" id="share-btn">
           {% if lang == 'ko' %}공유{% elif lang == 'en' %}Share{% elif lang == 'ja' %}共有{% else %}分享{% endif %}
         </button>
@@ -108,17 +91,6 @@
         {% endfor %}
       </ul>
 
-      {% if current_user.is_authenticated %}
-      <div class="note-section">
-        <h3 class="note-title">
-          {% if lang == 'ko' %}나의 메모{% elif lang == 'en' %}My Notes{% elif lang == 'ja' %}メモ{% else %}我的笔记{% endif %}
-        </h3>
-        <textarea class="note-textarea" id="note-textarea"
-                  data-path="{{ recipe_path }}"
-                  placeholder="{% if lang == 'ko' %}이 레시피에 메모를 남겨보세요 (예: 마늘 두 배로){% elif lang == 'en' %}Leave a note about this recipe (e.g. double the garlic){% elif lang == 'ja' %}このレシピについてメモを残そう（例：にんにく2倍）{% else %}记录这道菜的备注（例：多加蒜）{% endif %}">{{ note_content }}</textarea>
-        <p class="note-status" id="note-status"></p>
-      </div>
-      {% endif %}
     </div>
 
     <div class="detail-col steps-col">
@@ -157,7 +129,6 @@
 (function () {
   var LANG = '{{ lang }}';
   var RECIPE_PATH = '{{ recipe_path }}';
-  var IS_AUTH = {{ 'true' if current_user.is_authenticated else 'false' }};
 
   /* Step checkboxes */
   var STORAGE_KEY = 'steps-{{ cat_id }}-{{ sub_id }}-{{ recipe.id }}';
@@ -202,8 +173,6 @@
     copied:  { ko: '링크를 복사했어요', en: 'Link copied', ja: 'リンクをコピーしました', zh: '已复制链接' },
     saved:   { ko: '저장됐어요', en: 'Saved', ja: '保存しました', zh: '已收藏' },
     unsaved: { ko: '즐겨찾기 해제', en: 'Removed from favorites', ja: '保存を解除しました', zh: '已取消收藏' },
-    cooked:  { ko: '요리 완료 기록!', en: 'Cooking logged!', ja: '調理記録完了！', zh: '烹饪记录成功！' },
-    login:   { ko: '로그인이 필요합니다', en: 'Please log in first', ja: 'ログインが必要です', zh: '请先登录' },
   };
 
   /* Favorites */
@@ -236,50 +205,7 @@
     } catch (e) {}
   }
 
-  favBtn.addEventListener('click', function () {
-    if (!IS_AUTH) { localFavToggle(); return; }
-    fetch('/api/favorite', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ path: RECIPE_PATH }),
-    })
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      if (data.favorited) {
-        favBtn.classList.add('active');
-        favLabel.textContent = FAV_LABELS.saved[LANG];
-        showToast(TOAST_MSGS.saved[LANG]);
-      } else {
-        favBtn.classList.remove('active');
-        favLabel.textContent = FAV_LABELS.unsaved[LANG];
-        showToast(TOAST_MSGS.unsaved[LANG]);
-      }
-    });
-  });
-
-  /* Cook button */
-  var cookBtn = document.getElementById('cook-btn');
-  if (cookBtn) {
-    cookBtn.addEventListener('click', function () {
-      fetch('/api/cook', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ path: RECIPE_PATH }),
-      })
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        cookBtn.classList.add('cooked');
-        var labels = {
-          ko: data.count + '회 완료',
-          en: 'Cooked ' + data.count + '×',
-          ja: data.count + '回調理',
-          zh: '已做' + data.count + '次',
-        };
-        cookBtn.textContent = labels[LANG] || labels.en;
-        showToast(TOAST_MSGS.cooked[LANG]);
-      });
-    });
-  }
+  favBtn.addEventListener('click', localFavToggle);
 
   /* Servings adjuster */
   var BASE = 2, current = 2;
@@ -313,29 +239,6 @@
   document.getElementById('servings-plus').addEventListener('click', function () {
     if (current < 10) { current++; updateServings(); }
   });
-
-  /* Notes (autosave) */
-  var noteTextarea = document.getElementById('note-textarea');
-  if (noteTextarea) {
-    var noteStatus = document.getElementById('note-status');
-    var noteTimer;
-    var NOTE_SAVING = { ko: '저장 중..', en: 'Saving...', ja: '保存中..', zh: '保存中..' };
-    var NOTE_SAVED  = { ko: '저장됨', en: 'Saved', ja: '保存済み', zh: '已保存' };
-
-    noteTextarea.addEventListener('input', function () {
-      clearTimeout(noteTimer);
-      noteStatus.textContent = NOTE_SAVING[LANG];
-      noteTimer = setTimeout(function () {
-        fetch('/api/note', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ path: RECIPE_PATH, content: noteTextarea.value }),
-        })
-        .then(function (r) { return r.json(); })
-        .then(function () { noteStatus.textContent = NOTE_SAVED[LANG]; });
-      }, 800);
-    });
-  }
 
   /* Share */
   var shareBtn = document.getElementById('share-btn');

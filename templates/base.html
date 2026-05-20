@@ -112,19 +112,6 @@
           {% endfor %}
         </div>
 
-        <!-- Profile / Login -->
-        {% if current_user.is_authenticated %}
-          <a href="/profile?lang={{ lang }}"
-             class="nav-profile-btn {% if request.endpoint=='profile' %}active{% endif %}">
-            <span class="nav-avatar">{{ current_user.username[0] | upper }}</span>
-            <span class="nav-profile-name">{{ current_user.username }}</span>
-          </a>
-        {% else %}
-          <a href="{{ url_for('auth.login', lang=lang) }}" class="nav-login-btn">
-            {% if lang=='ko' %}로그인{% elif lang=='en' %}Login{% elif lang=='ja' %}ログイン{% else %}登录{% endif %}
-          </a>
-        {% endif %}
-
         <!-- Hamburger (mobile) -->
         <button class="hamburger-btn" id="hamburger-btn" aria-label="menu">
           <span></span><span></span><span></span>
@@ -173,21 +160,6 @@
       <a href="/favorites?lang={{ lang }}" class="mobile-nav-link {% if request.endpoint=='favorites' %}active{% endif %}">
         {% if lang=='ko' %}즐겨찾기{% elif lang=='en' %}Favorites{% elif lang=='ja' %}お気に入り{% else %}收藏{% endif %}
       </a>
-      {% if current_user.is_authenticated %}
-      <a href="/profile?lang={{ lang }}" class="mobile-nav-link {% if request.endpoint=='profile' %}active{% endif %}">
-        {{ current_user.username }}
-      </a>
-      <a href="{{ url_for('auth.logout', lang=lang) }}" class="mobile-nav-link">
-        {% if lang=='ko' %}로그아웃{% elif lang=='en' %}Logout{% elif lang=='ja' %}ログアウト{% else %}退出{% endif %}
-      </a>
-      {% else %}
-      <a href="{{ url_for('auth.login', lang=lang) }}" class="mobile-nav-link">
-        {% if lang=='ko' %}로그인{% elif lang=='en' %}Login{% elif lang=='ja' %}ログイン{% else %}登录{% endif %}
-      </a>
-      <a href="{{ url_for('auth.register', lang=lang) }}" class="mobile-nav-link">
-        {% if lang=='ko' %}회원가입{% elif lang=='en' %}Sign Up{% elif lang=='ja' %}新規登録{% else %}注册{% endif %}
-      </a>
-      {% endif %}
     </div>
     <div class="mobile-lang">
       {% set lang_labels = {"ko": "한국어", "en": "EN", "ja": "日本語", "zh": "中文"} %}

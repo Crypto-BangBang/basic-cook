@@ -12,26 +12,17 @@
 
 <div class="container">
   {% for week in weeks %}
-  {% set week_recipes = week.enriched_recipes | selectattr('recipe') | list %}
-  {% set week_done = week_recipes | length > 0 and (week_recipes | selectattr('completed') | list | length) == week_recipes | length %}
   <div class="course-week">
     <div class="week-number">{{ '%02d' % loop.index }}</div>
     <div class="week-content">
-      <h2 class="week-title">
-        {{ week.title[lang] }}
-        {% if week_done %}<span class="week-done-badge">✓</span>{% endif %}
-      </h2>
+      <h2 class="week-title">{{ week.title[lang] }}</h2>
       <p class="week-desc">{{ week.desc[lang] }}</p>
       <div class="week-goal">{{ course_ui.goal_label[lang] }}: {{ week.goal[lang] }}</div>
       <div class="week-recipes">
         {% for item in week.enriched_recipes %}
         {% if item.recipe %}
         <a href="/category/{{ item.cat_id }}/{{ item.sub_id }}/{{ item.recipe.id }}?lang={{ lang }}"
-           class="week-recipe-card {% if item.completed %}completed{% endif %}"
-           data-course-path="{{ item.recipe_path }}">
-          {% if item.completed %}
-          <span class="course-check">&#10003;</span>
-          {% endif %}
+           class="week-recipe-card">
           <span class="week-recipe-name">{{ item.recipe.name[lang] }}</span>
           <div class="week-recipe-meta">
             <span class="meta-tag time">
@@ -49,17 +40,5 @@
   </div>
   {% endfor %}
 </div>
-
-{% if not current_user.is_authenticated %}
-<div class="container" style="padding-bottom: 48px">
-  <p class="fav-login-hint">
-    {% if lang == 'ko' %}<a href="{{ url_for('auth.login', lang=lang) }}" class="fav-login-link">로그인</a>하면 코스 진도가 저장돼요.
-    {% elif lang == 'en' %}<a href="{{ url_for('auth.login', lang=lang) }}" class="fav-login-link">Log in</a> to save your course progress.
-    {% elif lang == 'ja' %}<a href="{{ url_for('auth.login', lang=lang) }}" class="fav-login-link">ログイン</a>するとコースの進捗が保存されます。
-    {% else %}<a href="{{ url_for('auth.login', lang=lang) }}" class="fav-login-link">登录</a>以保存课程进度。
-    {% endif %}
-  </p>
-</div>
-{% endif %}
 
 {% endblock %}

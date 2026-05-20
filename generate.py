@@ -120,10 +120,6 @@ with app.test_client() as c:
             save(f'/{lang}/{page}',
                  c.get(f'/{page}?lang={lang}').data)
 
-        # Auth pages (GET only)
-        for page in ['login', 'register']:
-            save(f'/{lang}/{page}', c.get(f'/{page}').data)
-
         # Search page (empty — client-side search via search_data.json)
         save(f'/{lang}/search',
              c.get(f'/search?lang={lang}').data)
