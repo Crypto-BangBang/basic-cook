@@ -3,8 +3,8 @@ import re
 import shutil
 import json
 
-os.environ.setdefault('DATABASE_URL', 'sqlite:///build.db')
-os.environ.setdefault('SECRET_KEY', 'build-static-key')
+os.environ['DATABASE_URL'] = 'sqlite:///build.db'
+os.environ['SECRET_KEY'] = 'build-static-key'
 
 from app import app
 from recipe_data import CATEGORIES
