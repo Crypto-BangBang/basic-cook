@@ -1,0 +1,12 @@
+[build]
+  command = "echo 'no build'"
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/app"
+  status = 200
+  force = true
