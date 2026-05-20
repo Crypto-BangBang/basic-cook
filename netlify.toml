@@ -1,12 +1,13 @@
 [build]
-  command = "echo 'no build'"
-  publish = "."
+  command = "pip install flask flask-sqlalchemy flask-login python-dotenv werkzeug beautifulsoup4 && python generate.py"
+  publish = "build"
 
-[functions]
-  directory = "netlify/functions"
+[[redirects]]
+  from = "/random"
+  to = "/"
+  status = 302
 
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/handler"
-  status = 200
-  force = true
+  to = "/index.html"
+  status = 404

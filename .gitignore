@@ -37,6 +37,8 @@ Thumbs.db
 # Netlify build artifacts
 netlify/functions/packages/
 vendor/
+build/
+build.db
 
 # Logs
 *.log
