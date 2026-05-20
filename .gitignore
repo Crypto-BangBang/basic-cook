@@ -34,6 +34,9 @@ Thumbs.db
 *.swp
 *.swo
 
+# Netlify build artifacts
+netlify/functions/packages/
+
 # Logs
 *.log
 flask_err.txt

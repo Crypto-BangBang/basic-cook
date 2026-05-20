@@ -1,7 +1,9 @@
 import sys
 import os
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+func_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(func_dir, 'packages'))
+sys.path.insert(0, func_dir)
 
 import serverless_wsgi
 from app import app as flask_app

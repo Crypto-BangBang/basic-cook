@@ -1,12 +1,20 @@
 [build]
-  command = "echo 'no build'"
+  command = "pip install flask flask-sqlalchemy flask-login python-dotenv serverless-wsgi pg8000 werkzeug -t netlify/functions/packages"
   publish = "."
 
 [functions]
   directory = "netlify/functions"
+  included_files = [
+    "app.py", "auth.py", "models.py", "recipe_data.py",
+    "recipes_kr.py", "recipes_jp.py", "recipes_cn.py", "recipes_west.py",
+    "recipes_extra.py", "recipes_extra2.py", "recipes_extra3.py",
+    "tools_data.py", "substitutes_data.py", "course_data.py",
+    "seasonal_data.py", "ingredient_i18n.py",
+    "templates/**", "static/**"
+  ]
 
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/app"
+  to = "/.netlify/functions/handler"
   status = 200
   force = true
