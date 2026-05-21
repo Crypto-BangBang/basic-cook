@@ -9,14 +9,35 @@
     <h1 class="hero-title">{{ ui.tagline[lang] }}</h1>
     <div class="hero-cta-row">
       <a href="#categories" class="hero-cta">{{ ui.explore[lang] }}</a>
-      <a href="/random?lang={{ lang }}" class="hero-cta-ghost">
+      <button class="hero-cta-ghost" id="random-btn">
         {% if lang == 'ko' %}오늘 뭐 먹지?{% elif lang == 'en' %}Surprise me{% elif lang == 'ja' %}おまかせ{% else %}随机推荐{% endif %}
-      </a>
+      </button>
     </div>
   </div>
   <div class="hero-bg-text">RECIPE</div>
 </section>
 
+
+<!-- Slot machine modal -->
+<div class="slot-overlay" id="slot-overlay">
+  <div class="slot-modal">
+    <button class="slot-close-btn" id="slot-close-btn">×</button>
+    <p class="slot-title">
+      {% if lang == 'ko' %}오늘의 추천 레시피{% elif lang == 'en' %}Today's Random Pick{% elif lang == 'ja' %}今日のおすすめ{% else %}今日推荐{% endif %}
+    </p>
+    <div class="slot-drum">
+      <div class="slot-display" id="slot-display">?</div>
+    </div>
+    <div class="slot-btn-row">
+      <a href="#" class="slot-go-btn" id="slot-go-btn">
+        {% if lang == 'ko' %}이 레시피로 결정!{% elif lang == 'en' %}Go cook this!{% elif lang == 'ja' %}このレシピに決定！{% else %}就这道菜！{% endif %}
+      </a>
+      <button class="slot-retry-btn" id="slot-retry-btn">
+        {% if lang == 'ko' %}다시 돌리기{% elif lang == 'en' %}Spin again{% elif lang == 'ja' %}もう一度{% else %}再转一次{% endif %}
+      </button>
+    </div>
+  </div>
+</div>
 
 <section class="section" id="categories">
   <div class="container">
@@ -48,6 +69,61 @@
 </section>
 
 <script>
+(function () {
+  /* ── Slot machine ── */
+  var LANG = '{{ lang }}';
+  var ALL_RECIPES = {{ all_recipes | tojson }};
+  var slotOverlay  = document.getElementById('slot-overlay');
+  var slotDisplay  = document.getElementById('slot-display');
+  var slotGoBtn    = document.getElementById('slot-go-btn');
+  var slotRetryBtn = document.getElementById('slot-retry-btn');
+  var slotCloseBtn = document.getElementById('slot-close-btn');
+  var spinTimer;
+
+  function getName(r) { return (r.name || {})[LANG] || r.name['ko'] || ''; }
+
+  function spin() {
+    slotDisplay.classList.remove('final');
+    slotGoBtn.style.display = 'none';
+    slotRetryBtn.style.display = 'none';
+    clearTimeout(spinTimer);
+
+    var chosen = ALL_RECIPES[Math.floor(Math.random() * ALL_RECIPES.length)];
+    var names = ALL_RECIPES.map(getName);
+    var step = 0, totalSteps = 28, delay = 55;
+
+    function tick() {
+      step++;
+      var remaining = totalSteps - step;
+      if (remaining <= 0) {
+        slotDisplay.textContent = getName(chosen);
+        slotDisplay.classList.add('final');
+        slotGoBtn.href = '/' + LANG + '/category/' + chosen.path + '/';
+        slotGoBtn.style.display = '';
+        slotRetryBtn.style.display = '';
+        return;
+      }
+      slotDisplay.textContent = names[Math.floor(Math.random() * names.length)];
+      if (remaining <= 8) delay = 55 + (8 - remaining) * 60;
+      spinTimer = setTimeout(tick, delay);
+    }
+    tick();
+  }
+
+  document.getElementById('random-btn').addEventListener('click', function () {
+    slotOverlay.classList.add('show');
+    spin();
+  });
+  slotCloseBtn.addEventListener('click', function () {
+    slotOverlay.classList.remove('show');
+    clearTimeout(spinTimer);
+  });
+  slotOverlay.addEventListener('click', function (e) {
+    if (e.target === slotOverlay) { slotOverlay.classList.remove('show'); clearTimeout(spinTimer); }
+  });
+  slotRetryBtn.addEventListener('click', spin);
+})();
+
 (function () {
   var LANG = '{{ lang }}';
   var RV_KEY = 'easyrecipe-recently';

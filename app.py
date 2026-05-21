@@ -88,7 +88,15 @@ def inject_globals():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    slim = []
+    for key, recipe_list in RECIPES.items():
+        cat_id, sub_id = key.split("/")
+        for recipe in recipe_list:
+            slim.append({
+                "path": f"{cat_id}/{sub_id}/{recipe['id']}",
+                "name": recipe["name"],
+            })
+    return render_template("index.html", all_recipes=slim)
 
 
 @app.route("/category/<cat_id>")
