@@ -18,24 +18,26 @@
 </section>
 
 
-<!-- Slot machine modal -->
+<!-- Pachinko modal -->
 <div class="slot-overlay" id="slot-overlay">
-  <div class="slot-modal">
+  <div class="slot-modal" id="slot-modal">
     <button class="slot-close-btn" id="slot-close-btn">×</button>
-    <p class="slot-title">
-      {% if lang == 'ko' %}오늘의 추천 레시피{% elif lang == 'en' %}Today's Random Pick{% elif lang == 'ja' %}今日のおすすめ{% else %}今日推荐{% endif %}
-    </p>
-    <div class="slot-drum">
-      <div class="slot-display" id="slot-display">?</div>
+    <div class="slot-header">🎰 BASIC COOK パチンコ 🎰</div>
+    <div class="slot-leds" id="slot-leds-top"></div>
+    <div class="slot-drum" id="slot-drum">
+      <div class="slot-reach" id="slot-reach">REACH!!</div>
+      <div class="slot-display" id="slot-display">？</div>
     </div>
+    <div class="slot-leds-bottom" id="slot-leds-bottom"></div>
     <div class="slot-btn-row">
       <a href="#" class="slot-go-btn" id="slot-go-btn">
-        {% if lang == 'ko' %}이 레시피로 결정!{% elif lang == 'en' %}Go cook this!{% elif lang == 'ja' %}このレシピに決定！{% else %}就这道菜！{% endif %}
+        {% if lang == 'ko' %}이 레시피로 결정!{% elif lang == 'en' %}Let's cook this!{% elif lang == 'ja' %}このレシピに決定！{% else %}就决定这道菜！{% endif %}
       </a>
       <button class="slot-retry-btn" id="slot-retry-btn">
         {% if lang == 'ko' %}다시 돌리기{% elif lang == 'en' %}Spin again{% elif lang == 'ja' %}もう一度{% else %}再转一次{% endif %}
       </button>
     </div>
+    <div class="slot-particles" id="slot-particles"></div>
   </div>
 </div>
 
@@ -70,58 +72,131 @@
 
 <script>
 (function () {
-  /* ── Slot machine ── */
+  /* ── Pachinko ── */
   var LANG = '{{ lang }}';
   var ALL_RECIPES = {{ all_recipes | tojson }};
-  var slotOverlay  = document.getElementById('slot-overlay');
-  var slotDisplay  = document.getElementById('slot-display');
-  var slotGoBtn    = document.getElementById('slot-go-btn');
-  var slotRetryBtn = document.getElementById('slot-retry-btn');
-  var slotCloseBtn = document.getElementById('slot-close-btn');
-  var spinTimer;
 
-  function getName(r) { return (r.name || {})[LANG] || r.name['ko'] || ''; }
+  var overlay  = document.getElementById('slot-overlay');
+  var modal    = document.getElementById('slot-modal');
+  var drum     = document.getElementById('slot-drum');
+  var display  = document.getElementById('slot-display');
+  var reach    = document.getElementById('slot-reach');
+  var goBtn    = document.getElementById('slot-go-btn');
+  var retryBtn = document.getElementById('slot-retry-btn');
+  var parts    = document.getElementById('slot-particles');
+  var ledsTop  = document.getElementById('slot-leds-top');
+  var ledsBot  = document.getElementById('slot-leds-bottom');
 
-  function spin() {
-    slotDisplay.classList.remove('final');
-    slotGoBtn.style.display = 'none';
-    slotRetryBtn.style.display = 'none';
-    clearTimeout(spinTimer);
+  var spinTimer, colorTimer, ledTimer;
+  var LED_N = 22;
+  var DRUM_COLORS = ['cr','cb','cg','cp','co'];
 
-    var chosen = ALL_RECIPES[Math.floor(Math.random() * ALL_RECIPES.length)];
-    var names = ALL_RECIPES.map(getName);
-    var step = 0, totalSteps = 28, delay = 55;
-
-    function tick() {
-      step++;
-      var remaining = totalSteps - step;
-      if (remaining <= 0) {
-        slotDisplay.textContent = getName(chosen);
-        slotDisplay.classList.add('final');
-        slotGoBtn.href = '/' + LANG + '/category/' + chosen.path + '/';
-        slotGoBtn.style.display = '';
-        slotRetryBtn.style.display = '';
-        return;
-      }
-      slotDisplay.textContent = names[Math.floor(Math.random() * names.length)];
-      if (remaining <= 8) delay = 55 + (8 - remaining) * 60;
-      spinTimer = setTimeout(tick, delay);
+  function makeLeds(c) {
+    for (var i = 0; i < LED_N; i++) {
+      var d = document.createElement('div'); d.className = 'slot-led'; c.appendChild(d);
     }
-    tick();
+  }
+  makeLeds(ledsTop); makeLeds(ledsBot);
+
+  var ledPos = 0;
+  function tickLeds(cls) {
+    document.querySelectorAll('.slot-led').forEach(function(l, i) {
+      var pos = i % LED_N;
+      var on = pos === ledPos % LED_N || pos === (ledPos+7)%LED_N || pos === (ledPos+14)%LED_N;
+      l.className = 'slot-led' + (on ? ' '+cls : '');
+    });
+    ledPos++;
+  }
+  function startLeds(cls, ms) {
+    clearInterval(ledTimer);
+    ledTimer = setInterval(function() { tickLeds(cls); }, ms||75);
+  }
+  function allLedsGold() {
+    clearInterval(ledTimer);
+    document.querySelectorAll('.slot-led').forEach(function(l) { l.className = 'slot-led g'; });
   }
 
-  document.getElementById('random-btn').addEventListener('click', function () {
-    slotOverlay.classList.add('show');
-    spin();
-  });
-  slotCloseBtn.addEventListener('click', function () {
-    slotOverlay.classList.remove('show');
-    clearTimeout(spinTimer);
-  });
-  slotOverlay.addEventListener('click', function (e) {
-    if (e.target === slotOverlay) { slotOverlay.classList.remove('show'); clearTimeout(spinTimer); }
-  });
-  slotRetryBtn.addEventListener('click', spin);
+  function setDrum(cls) { drum.className = 'slot-drum'+(cls?' '+cls:''); }
+  function getName(r) { return (r.name||{})[LANG]||r.name['ko']||''; }
+
+  function burst() {
+    parts.innerHTML = '';
+    var cols = ['#ffd700','#ff6b6b','#4ecdc4','#ff9f43','#a29bfe','#fd79a8','#00cec9','#e17055'];
+    var cx = modal.offsetWidth/2, cy = modal.offsetHeight/2;
+    for (var i = 0; i < 36; i++) {
+      var p = document.createElement('div'); p.className = 'slot-particle';
+      var sz = 6+Math.random()*8;
+      p.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+cx+'px;top:'+cy+'px;background:'+cols[i%cols.length]+';transform:translate(-50%,-50%)';
+      parts.appendChild(p);
+      var angle = (i/36)*Math.PI*2+(Math.random()-.5)*.4;
+      var dist  = 70+Math.random()*100;
+      var tx=cx+Math.cos(angle)*dist, ty=cy+Math.sin(angle)*dist;
+      (function(el,x,y){
+        requestAnimationFrame(function(){ requestAnimationFrame(function(){
+          el.style.transition='left .65s cubic-bezier(.2,.8,.3,1),top .65s cubic-bezier(.2,.8,.3,1),opacity .65s,transform .65s';
+          el.style.left=x+'px'; el.style.top=y+'px';
+          el.style.opacity='1'; el.style.transform='translate(-50%,-50%) scale('+(1.5+Math.random())+')';
+          setTimeout(function(){ el.style.opacity='0'; },380);
+        });});
+      })(p,tx,ty);
+    }
+  }
+
+  function resetSlot() {
+    clearTimeout(spinTimer); clearInterval(colorTimer); clearInterval(ledTimer);
+    reach.className='slot-reach'; display.className='slot-display'; display.textContent='？';
+    setDrum(''); goBtn.className='slot-go-btn'; retryBtn.className='slot-retry-btn';
+    parts.innerHTML=''; ledPos=0;
+  }
+
+  function spin() {
+    resetSlot();
+    var chosen = ALL_RECIPES[Math.floor(Math.random()*ALL_RECIPES.length)];
+    var names  = ALL_RECIPES.map(getName);
+    var step=0, colorIdx=0;
+
+    startLeds('g',65);
+    colorTimer = setInterval(function(){ setDrum(DRUM_COLORS[colorIdx++%DRUM_COLORS.length]); },180);
+
+    function phase1() {
+      step++;
+      display.textContent = names[Math.floor(Math.random()*names.length)];
+      if (step < 30) { spinTimer=setTimeout(phase1,55); return; }
+      /* → REACH!! */
+      clearInterval(colorTimer);
+      startLeds('r',45);
+      reach.classList.add('show');
+      var rFlash=true;
+      colorTimer=setInterval(function(){ setDrum(rFlash?'cr':''); rFlash=!rFlash; },140);
+      step=0;
+      function phase2() {
+        step++;
+        display.textContent=names[Math.floor(Math.random()*names.length)];
+        if (step<5) { spinTimer=setTimeout(phase2,260); return; }
+        /* → STOP! */
+        clearInterval(colorTimer);
+        reach.className='slot-reach';
+        display.textContent=getName(chosen);
+        display.classList.add('win');
+        setDrum('win');
+        startLeds('g',45);
+        modal.classList.add('shake');
+        setTimeout(function(){ modal.classList.remove('shake'); },450);
+        burst();
+        setTimeout(function(){
+          goBtn.href='/'+LANG+'/category/'+chosen.path+'/';
+          goBtn.classList.add('show'); retryBtn.classList.add('show'); allLedsGold();
+        },650);
+      }
+      spinTimer=setTimeout(phase2,280);
+    }
+    phase1();
+  }
+
+  document.getElementById('random-btn').addEventListener('click',function(){ overlay.classList.add('show'); spin(); });
+  document.getElementById('slot-close-btn').addEventListener('click',function(){ overlay.classList.remove('show'); resetSlot(); });
+  overlay.addEventListener('click',function(e){ if(e.target===overlay){ overlay.classList.remove('show'); resetSlot(); } });
+  retryBtn.addEventListener('click',spin);
 })();
 
 (function () {
