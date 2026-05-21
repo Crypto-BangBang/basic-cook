@@ -87,12 +87,7 @@ def inject_globals():
 
 @app.route("/")
 def index():
-    lang = get_lang()
-    return render_template(
-        "index.html",
-        search_placeholder=SEARCH_PLACEHOLDER[lang],
-        search_btn=SEARCH_BTN[lang],
-    )
+    return render_template("index.html")
 
 
 @app.route("/category/<cat_id>")
