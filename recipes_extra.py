@@ -658,28 +658,6 @@ RECIPES_EXTRA = {
                 {"ko": "버터 바른 틀에 80% 채워 190°C에서 12분 구워요.", "en": "Fill buttered molds 80%; bake at 190°C for 12 minutes.", "ja": "バターを塗った型に80%充填し、190°Cで12分焼きます。", "zh": "在抹了黄油的模具中填入80%，190°C烤12分钟。"},
             ],
         },
-        {
-            "id": "cheesecake-nobake",
-            "name": {"ko": "노오븐 치즈케이크", "en": "No-Bake Cheesecake", "ja": "ノーベイクチーズケーキ", "zh": "免烤芝士蛋糕"},
-            "time": 30, "difficulty": 1,
-            "desc": {"ko": "오븐 없이 냉장고에서 굳히는 간단 치즈케이크", "en": "Set in the fridge, not the oven — foolproof cheesecake", "ja": "オーブンなしで冷蔵庫で固める簡単チーズケーキ", "zh": "无需烤箱，放冰箱冷藏凝固的简单芝士蛋糕"},
-            "ingredients": [
-                {"name": "크림치즈", "amount": "200g"},
-                {"name": "생크림", "amount": "150ml"},
-                {"name": "설탕", "amount": "50g"},
-                {"name": "레몬즙", "amount": "1큰술"},
-                {"name": "소화 크래커 (바닥용)", "amount": "100g"},
-                {"name": "버터 (녹인 것)", "amount": "50g"},
-                {"name": "젤라틴 (판)", "amount": "2장"},
-            ],
-            "steps": [
-                {"ko": "크래커를 잘게 부숴 녹인 버터와 섞어 틀 바닥에 눌러요.", "en": "Crush crackers, mix with melted butter, press into the bottom of a mold.", "ja": "クラッカーを細かく砕いて溶かしバターと混ぜ、型の底に押し込みます。", "zh": "将饼干碎与融化的黄油混合，压入模具底部。"},
-                {"ko": "젤라틴을 찬물에 불려요.", "en": "Soak gelatin sheets in cold water.", "ja": "ゼラチンを冷水で戻します。", "zh": "将明胶片在冷水中泡发。"},
-                {"ko": "크림치즈·설탕·레몬즙을 부드럽게 섞어요.", "en": "Beat cream cheese with sugar and lemon juice until smooth.", "ja": "クリームチーズ・砂糖・レモン汁を滑らかになるまで混ぜます。", "zh": "将奶油奶酪、糖和柠檬汁搅拌至顺滑。"},
-                {"ko": "생크림을 70%로 휘핑하여 크림치즈에 섞어요.", "en": "Whip cream to 70%; fold into cream cheese mixture.", "ja": "生クリームを70%に泡立て、クリームチーズに混ぜます。", "zh": "将生奶油打发至70%，折叠入奶油奶酪中。"},
-                {"ko": "불린 젤라틴을 전자레인지 10초로 녹여 섞고 틀에 부어 4시간 냉장해요.", "en": "Melt gelatin and stir in; pour into mold and refrigerate 4 hours.", "ja": "戻したゼラチンを電子レンジで10秒溶かして混ぜ、型に流して4時間冷蔵します。", "zh": "将泡发的明胶用微波炉加热10秒融化后搅入，倒入模具冷藏4小时。"},
-            ],
-        },
     ],
 
     # ── 일식 추가 ────────────────────────────────────────────────
