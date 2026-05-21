@@ -409,6 +409,9 @@
   timerStartBtn.addEventListener('click', function () {
     if (timerRunning) { stopTimer(); return; }
     if (timerRemaining <= 0) return;
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
     timerRunning = true;
     timerBtnEl.classList.add('running');
     timerStartBtn.textContent = T_LABELS.pause[LANG] || 'Pause';
@@ -419,6 +422,9 @@
         stopTimer();
         timerDisplay.textContent = T_LABELS.done[LANG] || 'Done!';
         showToast(T_LABELS.done[LANG] || 'Done!');
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('Basic Cook 🍳', { body: T_LABELS.done[LANG] || 'Done!' });
+        }
       }
     }, 1000);
   });

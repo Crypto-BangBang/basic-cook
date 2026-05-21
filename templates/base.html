@@ -145,6 +145,20 @@
           {% if lang=='ko' %}검색{% elif lang=='en' %}Search{% elif lang=='ja' %}検索{% else %}搜索{% endif %}
         </button>
       </form>
+      <div class="overlay-filters" id="overlay-filters">
+        <div class="overlay-filter-group">
+          <button class="overlay-filter-btn active" data-type="diff" data-value="all">{% if lang=='ko' %}전체{% elif lang=='en' %}All{% elif lang=='ja' %}全て{% else %}全部{% endif %}</button>
+          <button class="overlay-filter-btn" data-type="diff" data-value="1">{% if lang=='ko' %}쉬움{% elif lang=='en' %}Easy{% elif lang=='ja' %}かんたん{% else %}简单{% endif %}</button>
+          <button class="overlay-filter-btn" data-type="diff" data-value="2">{% if lang=='ko' %}보통{% elif lang=='en' %}Medium{% elif lang=='ja' %}ふつう{% else %}中等{% endif %}</button>
+          <button class="overlay-filter-btn" data-type="diff" data-value="3">{% if lang=='ko' %}어려움{% elif lang=='en' %}Hard{% elif lang=='ja' %}むずかしい{% else %}较难{% endif %}</button>
+        </div>
+        <div class="overlay-filter-group">
+          <button class="overlay-filter-btn active" data-type="time" data-value="all">{% if lang=='ko' %}전체{% elif lang=='en' %}All{% elif lang=='ja' %}全て{% else %}全部{% endif %}</button>
+          <button class="overlay-filter-btn" data-type="time" data-value="30">{% if lang=='ko' %}30분 이내{% elif lang=='en' %}≤30 min{% elif lang=='ja' %}30分以内{% else %}30分内{% endif %}</button>
+          <button class="overlay-filter-btn" data-type="time" data-value="60">{% if lang=='ko' %}60분 이내{% elif lang=='en' %}≤60 min{% elif lang=='ja' %}60分以内{% else %}60分内{% endif %}</button>
+          <button class="overlay-filter-btn" data-type="time" data-value="61">{% if lang=='ko' %}60분 초과{% elif lang=='en' %}&gt;60 min{% elif lang=='ja' %}60分超{% else %}60分以上{% endif %}</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -289,10 +303,27 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') searchOverlay.classList.remove('open');
     });
+    var overlayDiff = 'all', overlayTime = 'all';
+    document.querySelectorAll('.overlay-filter-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var type = btn.getAttribute('data-type');
+        var val = btn.getAttribute('data-value');
+        document.querySelectorAll('.overlay-filter-btn[data-type="' + type + '"]')
+          .forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        if (type === 'diff') overlayDiff = val;
+        else overlayTime = val;
+      });
+    });
+
     searchOverlayForm.addEventListener('submit', function (e) {
       e.preventDefault();
       var q = searchOverlayInput.value.trim();
-      if (q) window.location.href = '/{{ lang }}/search/?q=' + encodeURIComponent(q);
+      if (!q) return;
+      var url = '/{{ lang }}/search/?q=' + encodeURIComponent(q);
+      if (overlayDiff !== 'all') url += '&diff=' + overlayDiff;
+      if (overlayTime !== 'all') url += '&time=' + overlayTime;
+      window.location.href = url;
     });
   })();
   </script>

@@ -130,8 +130,24 @@
   var stateEmpty = document.getElementById('state-empty');
   var stateNoresult = document.getElementById('state-noresult');
   var stateResults = document.getElementById('state-results');
-  var diffFilter = 'all';
-  var timeFilter = 'all';
+  var diffFilter = params.get('diff') || 'all';
+  var timeFilter = params.get('time') || 'all';
+
+  /* Pre-select filters from URL */
+  if (diffFilter !== 'all') {
+    var dbtn = document.querySelector('.filter-btn[data-filter="diff"][data-value="' + diffFilter + '"]');
+    if (dbtn) {
+      document.querySelectorAll('.filter-btn[data-filter="diff"]').forEach(function (b) { b.classList.remove('active'); });
+      dbtn.classList.add('active');
+    }
+  }
+  if (timeFilter !== 'all') {
+    var tbtn = document.querySelector('.filter-btn[data-filter="time"][data-value="' + timeFilter + '"]');
+    if (tbtn) {
+      document.querySelectorAll('.filter-btn[data-filter="time"]').forEach(function (b) { b.classList.remove('active'); });
+      tbtn.classList.add('active');
+    }
+  }
 
   var filtered = [];
   if (q) {

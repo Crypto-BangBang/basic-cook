@@ -100,6 +100,22 @@
 
     async updatePassword(newPw) { return client.auth.updateUser({ password: newPw }); },
 
+    async signInWithGoogle() {
+      return client.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: window.location.origin + '/' }
+      });
+    },
+
+    async deleteAccountData() {
+      var user = await getUser(); if (!user) return;
+      await client.from('favorites').delete().eq('user_id', user.id);
+      await client.from('cooking_logs').delete().eq('user_id', user.id);
+      await client.from('notes').delete().eq('user_id', user.id);
+      await client.from('course_progress').delete().eq('user_id', user.id);
+      await client.auth.signOut();
+    },
+
     getUsername(user) {
       return (user.user_metadata && user.user_metadata.username) || user.email.split('@')[0];
     },

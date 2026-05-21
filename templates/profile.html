@@ -82,6 +82,22 @@
       </div>
     </div>
 
+    <h2 class="section-title danger-title" style="margin-top:56px">
+      {% if lang == 'ko' %}위험 구역{% elif lang == 'en' %}Danger Zone{% elif lang == 'ja' %}危険ゾーン{% else %}危险区域{% endif %}
+    </h2>
+    <div class="settings-block danger-block">
+      <p class="danger-desc">
+        {% if lang == 'ko' %}즐겨찾기, 요리 일지, 메모, 코스 진행률이 모두 삭제되며 복구할 수 없어요.
+        {% elif lang == 'en' %}All your favorites, cooking log, notes, and course progress will be permanently deleted.
+        {% elif lang == 'ja' %}お気に入り、料理日記、メモ、コース進捗がすべて削除され、復元できません。
+        {% else %}您的所有收藏、烹饪日志、笔记和课程进度将被永久删除。
+        {% endif %}
+      </p>
+      <button type="button" class="delete-account-btn" id="delete-account-btn">
+        {% if lang == 'ko' %}계정 데이터 삭제{% elif lang == 'en' %}Delete Account Data{% elif lang == 'ja' %}アカウントデータを削除{% else %}删除账户数据{% endif %}
+      </button>
+    </div>
+
   </div>
 </section>
 
@@ -156,6 +172,14 @@
 
   document.getElementById('logout-btn').addEventListener('click', function () {
     SB.signOut().then(function () { window.location.href = '/' + LANG + '/'; });
+  });
+
+  document.getElementById('delete-account-btn').addEventListener('click', async function () {
+    var confirms = { ko: '모든 데이터가 영구 삭제돼요. 정말 삭제할까요?', en: 'All your data will be permanently deleted. Are you sure?', ja: 'すべてのデータが完全に削除されます。本当によろしいですか？', zh: '所有数据将被永久删除，确定吗？' };
+    if (!confirm(confirms[LANG] || confirms.en)) return;
+    this.disabled = true;
+    await SB.deleteAccountData();
+    window.location.href = '/' + LANG + '/';
   });
 
   document.getElementById('pw-submit').addEventListener('click', async function () {

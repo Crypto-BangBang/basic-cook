@@ -253,6 +253,16 @@ def register():
     return render_template("register.html")
 
 
+@app.route("/forgot-password")
+def forgot_password():
+    return render_template("forgot_password.html")
+
+
+@app.route("/reset-password")
+def reset_password():
+    return render_template("reset_password.html")
+
+
 @app.route("/profile")
 def profile():
     all_recipes = []
