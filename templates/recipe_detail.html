@@ -29,6 +29,9 @@
             {% if lang == 'ko' %}저장{% elif lang == 'en' %}Save{% elif lang == 'ja' %}保存{% else %}收藏{% endif %}
           </span>
         </button>
+        <button class="cook-btn" id="cook-btn" style="display:none">
+          {% if lang == 'ko' %}요리 완료{% elif lang == 'en' %}Cooked it!{% elif lang == 'ja' %}調理完了！{% else %}完成烹饪{% endif %}
+        </button>
         <button class="share-btn" id="share-btn">
           {% if lang == 'ko' %}공유{% elif lang == 'en' %}Share{% elif lang == 'ja' %}共有{% else %}分享{% endif %}
         </button>
@@ -91,6 +94,16 @@
         {% endfor %}
       </ul>
 
+      <!-- 메모 (로그인 시 표시) -->
+      <div class="note-section" id="note-section" style="display:none">
+        <h3 class="note-title">
+          {% if lang == 'ko' %}나의 메모{% elif lang == 'en' %}My Notes{% elif lang == 'ja' %}メモ{% else %}我的笔记{% endif %}
+        </h3>
+        <textarea class="note-textarea" id="note-textarea"
+                  placeholder="{% if lang == 'ko' %}이 레시피에 메모를 남겨보세요{% elif lang == 'en' %}Leave a note about this recipe{% elif lang == 'ja' %}このレシピについてメモを残そう{% else %}记录这道菜的备注{% endif %}"></textarea>
+        <p class="note-status" id="note-status"></p>
+      </div>
+
     </div>
 
     <div class="detail-col steps-col">
@@ -129,6 +142,69 @@
 (function () {
   var LANG = '{{ lang }}';
   var RECIPE_PATH = '{{ recipe_path }}';
+
+  /* ── Supabase auth-dependent features ── */
+  SB.getUser().then(async function (user) {
+    if (!user) return;
+
+    /* Favorite: sync with Supabase */
+    var isFav = await SB.isFavorite(RECIPE_PATH);
+    var favBtn = document.getElementById('fav-btn');
+    var favLabel = favBtn.querySelector('.fav-label');
+    var FAV_SAVED = { ko: '저장됨', en: 'Saved', ja: '保存済み', zh: '已收藏' };
+    var FAV_UNSAVED = { ko: '저장', en: 'Save', ja: '保存', zh: '收藏' };
+    if (isFav) { favBtn.classList.add('active'); favLabel.textContent = FAV_SAVED[LANG]; }
+
+    /* Cook button */
+    var cookBtn = document.getElementById('cook-btn');
+    var cookCount = await SB.getCookCount(RECIPE_PATH);
+    var COOK_LABELS = { ko: '{n}회 완료', en: 'Cooked {n}×', ja: '{n}回調理', zh: '已做{n}次' };
+    function setCookLabel(n) {
+      cookBtn.textContent = (n > 0 ? (COOK_LABELS[LANG] || COOK_LABELS.en).replace('{n}', n) : ({ ko: '요리 완료', en: 'Cooked it!', ja: '調理完了！', zh: '完成烹饪' }[LANG]));
+      if (n > 0) cookBtn.classList.add('cooked');
+    }
+    setCookLabel(cookCount || 0);
+    cookBtn.style.display = '';
+    cookBtn.addEventListener('click', async function () {
+      var n = await SB.logCook(RECIPE_PATH);
+      setCookLabel(n);
+      showToast(TOAST_MSGS.cooked[LANG]);
+    });
+
+    /* Notes */
+    var noteSection = document.getElementById('note-section');
+    var noteTextarea = document.getElementById('note-textarea');
+    var noteStatus = document.getElementById('note-status');
+    var content = await SB.getNote(RECIPE_PATH);
+    noteTextarea.value = content || '';
+    noteSection.style.display = '';
+    var NOTE_SAVING = { ko: '저장 중..', en: 'Saving...', ja: '保存中..', zh: '保存中..' };
+    var NOTE_SAVED = { ko: '저장됨', en: 'Saved', ja: '保存済み', zh: '已保存' };
+    var noteTimer;
+    noteTextarea.addEventListener('input', function () {
+      clearTimeout(noteTimer);
+      noteStatus.textContent = NOTE_SAVING[LANG];
+      noteTimer = setTimeout(async function () {
+        await SB.saveNote(RECIPE_PATH, noteTextarea.value);
+        noteStatus.textContent = NOTE_SAVED[LANG];
+      }, 800);
+    });
+
+    /* Override fav button to use Supabase */
+    favBtn.removeEventListener('click', localFavToggle);
+    favBtn.addEventListener('click', async function () {
+      var favorited = await SB.toggleFavorite(RECIPE_PATH);
+      if (favorited) { favBtn.classList.add('active'); favLabel.textContent = FAV_SAVED[LANG]; showToast(TOAST_MSGS.saved[LANG]); }
+      else { favBtn.classList.remove('active'); favLabel.textContent = FAV_UNSAVED[LANG]; showToast(TOAST_MSGS.unsaved[LANG]); }
+    });
+  });
+
+  var TOAST_MSGS = {
+    copied:  { ko: '링크를 복사했어요', en: 'Link copied', ja: 'リンクをコピーしました', zh: '已复制链接' },
+    saved:   { ko: '저장됐어요', en: 'Saved', ja: '保存しました', zh: '已收藏' },
+    unsaved: { ko: '즐겨찾기 해제', en: 'Removed from favorites', ja: '保存を解除しました', zh: '已取消收藏' },
+    cooked:  { ko: '요리 완료 기록!', en: 'Cooking logged!', ja: '調理記録完了！', zh: '烹饪记录成功！' },
+  };
 
   /* Step checkboxes */
   var STORAGE_KEY = 'steps-{{ cat_id }}-{{ sub_id }}-{{ recipe.id }}';

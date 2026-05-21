@@ -18,23 +18,21 @@
       {% endif %}
     </p>
 
-    {% if error %}
-    <div class="auth-error">{{ error }}</div>
-    {% endif %}
+    <div class="auth-error" id="auth-error" style="display:none"></div>
 
-    <form method="post" class="auth-form">
+    <div class="auth-form">
       <label class="auth-label">
         {% if lang == 'ko' %}이메일{% elif lang == 'en' %}Email{% elif lang == 'ja' %}メール{% else %}邮箱{% endif %}
-        <input type="email" name="email" class="auth-input" required autofocus>
+        <input type="email" id="auth-email" class="auth-input" autofocus>
       </label>
       <label class="auth-label">
         {% if lang == 'ko' %}비밀번호{% elif lang == 'en' %}Password{% elif lang == 'ja' %}パスワード{% else %}密码{% endif %}
-        <input type="password" name="password" class="auth-input" required>
+        <input type="password" id="auth-password" class="auth-input">
       </label>
-      <button type="submit" class="auth-btn">
+      <button type="button" class="auth-btn" id="auth-submit">
         {% if lang == 'ko' %}로그인{% elif lang == 'en' %}Login{% elif lang == 'ja' %}ログイン{% else %}登录{% endif %}
       </button>
-    </form>
+    </div>
 
     <p class="auth-switch">
       {% if lang == 'ko' %}아직 계정이 없으신가요?
@@ -42,10 +40,39 @@
       {% elif lang == 'ja' %}アカウントがない方は
       {% else %}还没有账号？
       {% endif %}
-      <a href="{{ url_for('auth.register', lang=lang) }}" class="auth-link">
+      <a href="/{{ lang }}/register/" class="auth-link">
         {% if lang == 'ko' %}회원가입{% elif lang == 'en' %}Sign up{% elif lang == 'ja' %}新規登録{% else %}注册{% endif %}
       </a>
     </p>
   </div>
 </section>
+
+<script>
+(function () {
+  var LANG = '{{ lang }}';
+
+  SB.getUser().then(function (user) {
+    if (user) window.location.href = '/' + LANG + '/';
+  });
+
+  document.getElementById('auth-submit').addEventListener('click', async function () {
+    var email = document.getElementById('auth-email').value.trim();
+    var password = document.getElementById('auth-password').value;
+    var errEl = document.getElementById('auth-error');
+    errEl.style.display = 'none';
+
+    var res = await SB.signIn(email, password);
+    if (res.error) {
+      errEl.textContent = res.error.message;
+      errEl.style.display = '';
+    } else {
+      window.location.href = '/' + LANG + '/';
+    }
+  });
+
+  document.getElementById('auth-password').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') document.getElementById('auth-submit').click();
+  });
+})();
+</script>
 {% endblock %}

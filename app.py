@@ -247,6 +247,41 @@ def seasonal():
                            seasons_order=seasons_order, seasonal_ui=SEASONAL_UI)
 
 
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+
+@app.route("/register")
+def register():
+    return render_template("register.html")
+
+
+@app.route("/profile")
+def profile():
+    all_recipes = []
+    for key, recipe_list in RECIPES.items():
+        cat_id, sub_id = key.split("/")
+        cat = CATEGORIES.get(cat_id)
+        if not cat:
+            continue
+        sub = next((s for s in cat["sub"] if s["id"] == sub_id), None)
+        for recipe in recipe_list:
+            all_recipes.append({
+                "path": f"{cat_id}/{sub_id}/{recipe['id']}",
+                "cat_id": cat_id, "sub_id": sub_id,
+                "recipe_id": recipe["id"],
+                "name": recipe["name"],
+                "desc": recipe.get("desc", {}),
+                "time": recipe["time"],
+                "difficulty": recipe["difficulty"],
+                "cat_name": cat["name"],
+                "cat_color": cat["color"],
+                "sub_name": sub["name"] if sub else {"ko": "", "en": "", "ja": "", "zh": ""},
+            })
+    return render_template("profile.html", all_recipes=all_recipes)
+
+
 @app.route("/robots.txt")
 def robots():
     return Response("User-agent: *\nAllow: /\n", mimetype="text/plain")

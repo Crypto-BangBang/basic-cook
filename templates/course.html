@@ -12,27 +12,39 @@
 
 <div class="container">
   {% for week in weeks %}
-  <div class="course-week">
+  <div class="course-week" id="week-{{ loop.index }}">
     <div class="week-number">{{ '%02d' % loop.index }}</div>
     <div class="week-content">
-      <h2 class="week-title">{{ week.title[lang] }}</h2>
+      <h2 class="week-title">
+        {{ week.title[lang] }}
+        <span class="week-done-badge" id="week-done-{{ loop.index }}" style="display:none">✓</span>
+      </h2>
       <p class="week-desc">{{ week.desc[lang] }}</p>
       <div class="week-goal">{{ course_ui.goal_label[lang] }}: {{ week.goal[lang] }}</div>
       <div class="week-recipes">
         {% for item in week.enriched_recipes %}
         {% if item.recipe %}
-        <a href="/category/{{ item.cat_id }}/{{ item.sub_id }}/{{ item.recipe.id }}?lang={{ lang }}"
-           class="week-recipe-card">
-          <span class="week-recipe-name">{{ item.recipe.name[lang] }}</span>
-          <div class="week-recipe-meta">
-            <span class="meta-tag time">
-              {{ item.recipe.time }}{% if lang == 'ko' %}분{% elif lang == 'ja' %}分{% elif lang == 'zh' %}分钟{% else %}min{% endif %}
-            </span>
-            <span class="meta-tag diff diff-{{ item.recipe.difficulty }}">
-              {{ difficulty[item.recipe.difficulty][lang] }}
-            </span>
-          </div>
-        </a>
+        <div class="week-recipe-card-wrap">
+          <a href="/category/{{ item.cat_id }}/{{ item.sub_id }}/{{ item.recipe.id }}?lang={{ lang }}"
+             class="week-recipe-card"
+             id="card-{{ item.cat_id }}-{{ item.sub_id }}-{{ item.recipe.id }}">
+            <span class="week-recipe-name">{{ item.recipe.name[lang] }}</span>
+            <div class="week-recipe-meta">
+              <span class="meta-tag time">
+                {{ item.recipe.time }}{% if lang == 'ko' %}분{% elif lang == 'ja' %}分{% elif lang == 'zh' %}分钟{% else %}min{% endif %}
+              </span>
+              <span class="meta-tag diff diff-{{ item.recipe.difficulty }}">
+                {{ difficulty[item.recipe.difficulty][lang] }}
+              </span>
+            </div>
+          </a>
+          <button class="course-check-btn" title="완료 토글"
+                  data-path="{{ item.cat_id }}/{{ item.sub_id }}/{{ item.recipe.id }}"
+                  data-week="{{ loop.index0 }}"
+                  data-week-total="{{ week.enriched_recipes | selectattr('recipe') | list | length }}">
+            ✓
+          </button>
+        </div>
         {% endif %}
         {% endfor %}
       </div>
@@ -40,5 +52,66 @@
   </div>
   {% endfor %}
 </div>
+
+<script>
+(function () {
+  var LANG = '{{ lang }}';
+  var weekCounts = {};
+
+  function markCard(path, done) {
+    var parts = path.split('/');
+    var cardId = 'card-' + parts[0] + '-' + parts[1] + '-' + parts[2];
+    var card = document.getElementById(cardId);
+    if (card) {
+      if (done) card.classList.add('completed');
+      else card.classList.remove('completed');
+    }
+  }
+
+  function updateWeekBadge(weekIdx, totalInWeek) {
+    var completed = document.querySelectorAll('[data-week="' + weekIdx + '"].course-done').length;
+    var badge = document.getElementById('week-done-' + (parseInt(weekIdx) + 1));
+    if (badge) badge.style.display = (completed === totalInWeek && totalInWeek > 0) ? '' : 'none';
+  }
+
+  /* Load progress from Supabase if logged in */
+  SB.getUser().then(async function (user) {
+    if (!user) return;
+    var progress = await SB.getCourseProgress();
+    if (!progress) return;
+    progress.forEach(function (path) { markCard(path, true); });
+
+    /* Mark buttons as done */
+    document.querySelectorAll('.course-check-btn').forEach(function (btn) {
+      var path = btn.getAttribute('data-path');
+      if (progress.indexOf(path) !== -1) {
+        btn.classList.add('course-done');
+        btn.style.opacity = '1';
+      }
+      updateWeekBadge(btn.getAttribute('data-week'), parseInt(btn.getAttribute('data-week-total')));
+    });
+  });
+
+  /* Toggle on click */
+  document.querySelectorAll('.course-check-btn').forEach(function (btn) {
+    btn.addEventListener('click', async function (e) {
+      e.preventDefault();
+      var user = await SB.getUser();
+      if (!user) {
+        window.location.href = '/' + LANG + '/login/';
+        return;
+      }
+      var path = btn.getAttribute('data-path');
+      var weekIdx = btn.getAttribute('data-week');
+      var weekTotal = parseInt(btn.getAttribute('data-week-total'));
+      var done = await SB.toggleProgress(path);
+      markCard(path, done);
+      if (done) { btn.classList.add('course-done'); btn.style.opacity = '1'; }
+      else { btn.classList.remove('course-done'); btn.style.opacity = ''; }
+      updateWeekBadge(weekIdx, weekTotal);
+    });
+  });
+})();
+</script>
 
 {% endblock %}

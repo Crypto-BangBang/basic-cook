@@ -24,6 +24,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="{{ url_for('static', filename='js/sb.js') }}"></script>
 </head>
 <body>
 
@@ -95,13 +97,22 @@
         <div class="lang-switcher">
           {% set lang_labels = {"ko": "한국어", "en": "EN", "ja": "日本語", "zh": "中文"} %}
           {% for l in langs %}
-            {% set extra = '' %}
-            {% if request.args.get('q') %}{% set extra = '&q=' + request.args.get('q') %}{% endif %}
-            <a href="{{ request.path }}?lang={{ l }}{{ extra }}"
+            <a href="{{ request.path }}?lang={{ l }}"
                class="lang-btn {% if l == lang %}active{% endif %}">
               {{ lang_labels[l] }}
             </a>
           {% endfor %}
+        </div>
+
+        <!-- Auth area (controlled by JS) -->
+        <div id="nav-auth-area" style="display:none">
+          <a href="/{{ lang }}/profile/" id="nav-profile-btn" class="nav-profile-btn" style="display:none">
+            <span class="nav-avatar" id="nav-avatar-char">?</span>
+            <span class="nav-profile-name" id="nav-display-name"></span>
+          </a>
+          <a href="/{{ lang }}/login/" id="nav-login-btn" class="nav-login-btn" style="display:none">
+            {% if lang=='ko' %}로그인{% elif lang=='en' %}Login{% elif lang=='ja' %}ログイン{% else %}登录{% endif %}
+          </a>
         </div>
 
         <!-- Hamburger (mobile) -->
@@ -133,13 +144,26 @@
       <a href="/favorites?lang={{ lang }}" class="mobile-nav-link {% if request.endpoint=='favorites' %}active{% endif %}">
         {% if lang=='ko' %}즐겨찾기{% elif lang=='en' %}Favorites{% elif lang=='ja' %}お気に入り{% else %}收藏{% endif %}
       </a>
+      <!-- Mobile auth (controlled by JS) -->
+      <div id="mobile-logged-in" style="display:none">
+        <a href="/{{ lang }}/profile/" class="mobile-nav-link" id="mobile-profile-name"></a>
+        <a href="#" class="mobile-nav-link" id="mobile-logout-link">
+          {% if lang=='ko' %}로그아웃{% elif lang=='en' %}Logout{% elif lang=='ja' %}ログアウト{% else %}退出{% endif %}
+        </a>
+      </div>
+      <div id="mobile-logged-out" style="display:none">
+        <a href="/{{ lang }}/login/" class="mobile-nav-link">
+          {% if lang=='ko' %}로그인{% elif lang=='en' %}Login{% elif lang=='ja' %}ログイン{% else %}登录{% endif %}
+        </a>
+        <a href="/{{ lang }}/register/" class="mobile-nav-link">
+          {% if lang=='ko' %}회원가입{% elif lang=='en' %}Sign Up{% elif lang=='ja' %}新規登録{% else %}注册{% endif %}
+        </a>
+      </div>
     </div>
     <div class="mobile-lang">
       {% set lang_labels = {"ko": "한국어", "en": "EN", "ja": "日本語", "zh": "中文"} %}
       {% for l in langs %}
-        {% set extra = '' %}
-        {% if request.args.get('q') %}{% set extra = '&q=' + request.args.get('q') %}{% endif %}
-        <a href="{{ request.path }}?lang={{ l }}{{ extra }}"
+        <a href="{{ request.path }}?lang={{ l }}"
            class="lang-btn {% if l == lang %}active{% endif %}">
           {{ lang_labels[l] }}
         </a>
@@ -179,6 +203,46 @@
       }
     });
 
+    /* ── Auth UI ── */
+    function updateNavAuth(session) {
+      var authArea = document.getElementById('nav-auth-area');
+      var profileBtn = document.getElementById('nav-profile-btn');
+      var loginBtn = document.getElementById('nav-login-btn');
+      var mobileIn = document.getElementById('mobile-logged-in');
+      var mobileOut = document.getElementById('mobile-logged-out');
+      if (!authArea) return;
+      authArea.style.display = '';
+      if (session) {
+        var username = SB.getUsername(session.user);
+        document.getElementById('nav-avatar-char').textContent = username[0].toUpperCase();
+        document.getElementById('nav-display-name').textContent = username;
+        var mobileNameEl = document.getElementById('mobile-profile-name');
+        if (mobileNameEl) mobileNameEl.textContent = username;
+        profileBtn.style.display = '';
+        loginBtn.style.display = 'none';
+        if (mobileIn) mobileIn.style.display = '';
+        if (mobileOut) mobileOut.style.display = 'none';
+      } else {
+        profileBtn.style.display = 'none';
+        loginBtn.style.display = '';
+        if (mobileIn) mobileIn.style.display = 'none';
+        if (mobileOut) mobileOut.style.display = '';
+      }
+    }
+
+    SB.client.auth.getSession().then(function (res) { updateNavAuth(res.data.session); });
+    SB.client.auth.onAuthStateChange(function (event, session) {
+      updateNavAuth(session);
+      if (event === 'SIGNED_OUT') window.location.reload();
+    });
+
+    var logoutLink = document.getElementById('mobile-logout-link');
+    if (logoutLink) {
+      logoutLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        SB.signOut();
+      });
+    }
   })();
   </script>
 

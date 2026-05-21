@@ -36,40 +36,36 @@
       var ALL = {{ all_recipes | tojson }};
       var DIFF = {{ difficulty | tojson }};
       var FAV_KEY = 'easyrecipe-favorites';
-
-      function getFavs() {
-        try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); } catch (e) { return []; }
-      }
-
-      var favs = getFavs();
-      var matched = ALL.filter(function (r) { return favs.indexOf(r.path) !== -1; });
       var grid = document.getElementById('fav-grid');
       var empty = document.getElementById('fav-empty');
 
-      if (matched.length === 0) { empty.style.display = 'block'; return; }
+      function renderItems(paths) {
+        grid.innerHTML = '';
+        var matched = ALL.filter(function (r) { return paths.indexOf(r.path) !== -1; });
+        if (matched.length === 0) { empty.style.display = 'block'; return; }
+        empty.style.display = 'none';
+        var timeUnit = { ko: '분', en: 'min', ja: '分', zh: '分钟' }[LANG] || 'min';
+        matched.forEach(function (item) {
+          var diff = (DIFF[String(item.difficulty)] || {})[LANG] || '';
+          var a = document.createElement('a');
+          a.href = '/category/' + item.cat_id + '/' + item.sub_id + '/' + item.recipe_id + '?lang=' + LANG;
+          a.className = 'recipe-card';
+          a.style.cssText = '--cat-color:' + item.cat_color;
+          a.innerHTML =
+            '<div class="recipe-card-header"><span class="meta-tag time">' + item.time + timeUnit + '</span><span class="meta-tag diff diff-' + item.difficulty + '">' + diff + '</span></div>' +
+            '<div class="recipe-card-body"><p class="search-breadcrumb">' + (item.cat_name[LANG] || '') + ' · ' + (item.sub_name[LANG] || '') + '</p>' +
+            '<h3 class="recipe-name">' + (item.name[LANG] || '') + '</h3><p class="recipe-desc">' + (item.desc[LANG] || '') + '</p></div>';
+          grid.appendChild(a);
+        });
+      }
 
-      var timeUnit = { ko: '분', en: 'min', ja: '分', zh: '分钟' }[LANG] || 'min';
-      matched.forEach(function (item) {
-        var diff = (DIFF[String(item.difficulty)] || {})[LANG] || '';
-        var name = item.name[LANG] || item.name['ko'] || '';
-        var desc = item.desc[LANG] || item.desc['ko'] || '';
-        var catName = item.cat_name[LANG] || item.cat_name['ko'] || '';
-        var subName = item.sub_name[LANG] || item.sub_name['ko'] || '';
-        var a = document.createElement('a');
-        a.href = '/category/' + item.cat_id + '/' + item.sub_id + '/' + item.recipe_id + '?lang=' + LANG;
-        a.className = 'recipe-card';
-        a.style.cssText = '--cat-color:' + item.cat_color;
-        a.innerHTML =
-          '<div class="recipe-card-header">' +
-            '<span class="meta-tag time">' + item.time + timeUnit + '</span>' +
-            '<span class="meta-tag diff diff-' + item.difficulty + '">' + diff + '</span>' +
-          '</div>' +
-          '<div class="recipe-card-body">' +
-            '<p class="search-breadcrumb">' + catName + ' · ' + subName + '</p>' +
-            '<h3 class="recipe-name">' + name + '</h3>' +
-            '<p class="recipe-desc">' + desc + '</p>' +
-          '</div>';
-        grid.appendChild(a);
+      /* Try Supabase first, fall back to localStorage */
+      SB.getFavorites().then(function (sbPaths) {
+        if (sbPaths !== null) {
+          renderItems(sbPaths);
+        } else {
+          try { renderItems(JSON.parse(localStorage.getItem(FAV_KEY) || '[]')); } catch (e) { renderItems([]); }
+        }
       });
     })();
     </script>

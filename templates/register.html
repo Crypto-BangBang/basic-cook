@@ -18,31 +18,30 @@
       {% endif %}
     </p>
 
-    {% if error %}
-    <div class="auth-error">{{ error }}</div>
-    {% endif %}
+    <div class="auth-error" id="auth-error" style="display:none"></div>
+    <div class="auth-success" id="auth-success" style="display:none"></div>
 
-    <form method="post" class="auth-form">
+    <div class="auth-form" id="auth-form">
       <label class="auth-label">
         {% if lang == 'ko' %}이메일{% elif lang == 'en' %}Email{% elif lang == 'ja' %}メール{% else %}邮箱{% endif %}
-        <input type="email" name="email" class="auth-input" required autofocus>
+        <input type="email" id="auth-email" class="auth-input" autofocus>
       </label>
       <label class="auth-label">
         {% if lang == 'ko' %}닉네임{% elif lang == 'en' %}Nickname{% elif lang == 'ja' %}ニックネーム{% else %}昵称{% endif %}
-        <input type="text" name="username" class="auth-input" required maxlength="30">
+        <input type="text" id="auth-username" class="auth-input" maxlength="30">
       </label>
       <label class="auth-label">
         {% if lang == 'ko' %}비밀번호 (6자 이상){% elif lang == 'en' %}Password (min 6 chars){% elif lang == 'ja' %}パスワード（6文字以上）{% else %}密码（至少6位）{% endif %}
-        <input type="password" name="password" class="auth-input" required minlength="6">
+        <input type="password" id="auth-password" class="auth-input" minlength="6">
       </label>
       <label class="auth-label">
         {% if lang == 'ko' %}비밀번호 확인{% elif lang == 'en' %}Confirm Password{% elif lang == 'ja' %}パスワード確認{% else %}确认密码{% endif %}
-        <input type="password" name="password2" class="auth-input" required minlength="6">
+        <input type="password" id="auth-password2" class="auth-input" minlength="6">
       </label>
-      <button type="submit" class="auth-btn">
+      <button type="button" class="auth-btn" id="auth-submit">
         {% if lang == 'ko' %}가입하기{% elif lang == 'en' %}Create Account{% elif lang == 'ja' %}登録する{% else %}注册{% endif %}
       </button>
-    </form>
+    </div>
 
     <p class="auth-switch">
       {% if lang == 'ko' %}이미 계정이 있으신가요?
@@ -50,10 +49,48 @@
       {% elif lang == 'ja' %}アカウントをお持ちの方は
       {% else %}已有账号？
       {% endif %}
-      <a href="{{ url_for('auth.login', lang=lang) }}" class="auth-link">
+      <a href="/{{ lang }}/login/" class="auth-link">
         {% if lang == 'ko' %}로그인{% elif lang == 'en' %}Login{% elif lang == 'ja' %}ログイン{% else %}登录{% endif %}
       </a>
     </p>
   </div>
 </section>
+
+<script>
+(function () {
+  var LANG = '{{ lang }}';
+
+  SB.getUser().then(function (user) {
+    if (user) window.location.href = '/' + LANG + '/';
+  });
+
+  document.getElementById('auth-submit').addEventListener('click', async function () {
+    var email = document.getElementById('auth-email').value.trim();
+    var username = document.getElementById('auth-username').value.trim();
+    var password = document.getElementById('auth-password').value;
+    var password2 = document.getElementById('auth-password2').value;
+    var errEl = document.getElementById('auth-error');
+    var sucEl = document.getElementById('auth-success');
+    errEl.style.display = 'none';
+
+    var pwMismatch = { ko: '비밀번호가 일치하지 않아요.', en: 'Passwords do not match.', ja: 'パスワードが一致しません。', zh: '密码不一致。' };
+    if (password !== password2) {
+      errEl.textContent = pwMismatch[LANG] || pwMismatch.en;
+      errEl.style.display = '';
+      return;
+    }
+
+    var res = await SB.signUp(email, password, username);
+    if (res.error) {
+      errEl.textContent = res.error.message;
+      errEl.style.display = '';
+    } else {
+      var msg = { ko: '가입 완료! 이메일을 확인해 인증 링크를 클릭하세요.', en: 'Signed up! Check your email for the confirmation link.', ja: '登録完了！メールで認証リンクをご確認ください。', zh: '注册成功！请查看邮件中的确认链接。' };
+      document.getElementById('auth-form').style.display = 'none';
+      sucEl.textContent = msg[LANG] || msg.en;
+      sucEl.style.display = '';
+    }
+  });
+})();
+</script>
 {% endblock %}
