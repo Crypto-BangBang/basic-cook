@@ -101,9 +101,11 @@
     async updatePassword(newPw) { return client.auth.updateUser({ password: newPw }); },
 
     async signInWithGoogle() {
+      var path = window.location.pathname;
+      var lang = path.startsWith('/en/') ? 'en' : path.startsWith('/ja/') ? 'ja' : path.startsWith('/zh/') ? 'zh' : 'ko';
       return client.auth.signInWithOAuth({
         provider: 'google',
-        options: { redirectTo: window.location.origin + '/' }
+        options: { redirectTo: window.location.origin + '/' + lang + '/' }
       });
     },
 
