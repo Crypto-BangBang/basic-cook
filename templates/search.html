@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block title %}
-  {% if q %}{{ q }} —{% endif %}
   {% if lang == 'ko' %}검색{% elif lang == 'en' %}Search{% elif lang == 'ja' %}検索{% else %}搜索{% endif %}
   — {{ ui.site_title[lang] }}
 {% endblock %}
@@ -14,12 +13,10 @@
         <h1 class="page-hero-title" style="margin-bottom:24px">
           {% if lang == 'ko' %}레시피 검색{% elif lang == 'en' %}Recipe Search{% elif lang == 'ja' %}レシピ検索{% else %}食谱搜索{% endif %}
         </h1>
-        <form action="/search" method="get" class="search-form" style="max-width:640px">
-          <input type="hidden" name="lang" value="{{ lang }}">
+        <form class="search-form" style="max-width:640px" id="search-page-form">
           <div class="search-bar">
-            <input type="text" name="q" class="search-input"
-                   placeholder="{{ search_placeholder }}"
-                   value="{{ q }}">
+            <input type="text" id="search-page-input" class="search-input"
+                   placeholder="{{ search_placeholder }}">
             <button type="submit" class="search-btn">{{ search_btn }}</button>
           </div>
         </form>
@@ -31,35 +28,33 @@
 <section class="section">
   <div class="container">
 
-    {% if not q %}
-      <div class="search-empty">
-        <p>
-          {% if lang == 'ko' %}재료명이나 요리 이름을 입력해 검색해 보세요.
-          {% elif lang == 'en' %}Enter an ingredient or recipe name to search.
-          {% elif lang == 'ja' %}食材名や料理名を入力して検索してください。
-          {% else %}请输入食材名或菜名进行搜索。
-          {% endif %}
-        </p>
-      </div>
+    <div id="state-empty" class="search-empty">
+      <p>
+        {% if lang == 'ko' %}재료명이나 요리 이름을 입력해 검색해 보세요.
+        {% elif lang == 'en' %}Enter an ingredient or recipe name to search.
+        {% elif lang == 'ja' %}食材名や料理名を入力して検索してください。
+        {% else %}请输入食材名或菜名进行搜索。
+        {% endif %}
+      </p>
+    </div>
 
-    {% elif results|length == 0 %}
-      <div class="search-empty">
-        <p>
-          {% if lang == 'ko' %}"{{ q }}"에 대한 검색 결과가 없어요.
-          {% elif lang == 'en' %}No results found for "{{ q }}".
-          {% elif lang == 'ja' %}"{{ q }}" の検索結果はありません。
-          {% else %}"{{ q }}"没有搜索结果。
-          {% endif %}
-        </p>
-      </div>
+    <div id="state-noresult" class="search-empty" style="display:none">
+      <p>
+        {% if lang == 'ko' %}"<span id="q-noresult"></span>"에 대한 검색 결과가 없어요.
+        {% elif lang == 'en' %}No results found for "<span id="q-noresult"></span>".
+        {% elif lang == 'ja' %}"<span id="q-noresult"></span>" の検索結果はありません。
+        {% else %}"<span id="q-noresult"></span>"没有搜索结果。
+        {% endif %}
+      </p>
+    </div>
 
-    {% else %}
+    <div id="state-results" style="display:none">
       <div class="search-results-bar">
         <p class="search-results-header">
-          {% if lang == 'ko' %}"{{ q }}" 검색 결과 <span id="visible-count">{{ results|length }}</span>건
-          {% elif lang == 'en' %}<span id="visible-count">{{ results|length }}</span> result{% if results|length != 1 %}s{% endif %} for "{{ q }}"
-          {% elif lang == 'ja' %}"{{ q }}" の検索結果 <span id="visible-count">{{ results|length }}</span>件
-          {% else %}"{{ q }}" 的搜索结果共 <span id="visible-count">{{ results|length }}</span> 条
+          {% if lang == 'ko' %}"<span id="q-header"></span>" 검색 결과 <span id="visible-count">0</span>건
+          {% elif lang == 'en' %}<span id="visible-count">0</span> result(s) for "<span id="q-header"></span>"
+          {% elif lang == 'ja' %}"<span id="q-header"></span>" の検索結果 <span id="visible-count">0</span>件
+          {% else %}"<span id="q-header"></span>" 的搜索结果共 <span id="visible-count">0</span> 条
           {% endif %}
         </p>
 
@@ -102,30 +97,7 @@
         </div>
       </div>
 
-      <div class="recipe-grid" id="results-grid">
-        {% for item in results %}
-        {% set recipe = item.recipe %}
-        {% set cat = item.cat %}
-        {% set sub = item.sub %}
-        <a href="/category/{{ item.cat_id }}/{{ item.sub_id }}/{{ recipe.id }}?lang={{ lang }}"
-           class="recipe-card"
-           style="--cat-color: {{ cat.color if cat else '#c9a84c' }}"
-           data-diff="{{ recipe.difficulty }}"
-           data-time="{{ recipe.time }}">
-          <div class="recipe-card-header">
-            <span class="meta-tag time">{{ recipe.time }}{% if lang == 'ko' %}분{% elif lang == 'ja' %}分{% elif lang == 'zh' %}分钟{% else %}min{% endif %}</span>
-            <span class="meta-tag diff diff-{{ recipe.difficulty }}">{{ difficulty[recipe.difficulty][lang] }}</span>
-          </div>
-          <div class="recipe-card-body">
-            <p class="search-breadcrumb">
-              {{ cat.name[lang] if cat else item.cat_id }} · {{ sub.name[lang] if sub else item.sub_id }}
-            </p>
-            <h3 class="recipe-name">{{ recipe.name[lang] }}</h3>
-            <p class="recipe-desc">{{ recipe.desc.get(lang, recipe.desc.get('en', recipe.desc.get('ko', ''))) }}</p>
-          </div>
-        </a>
-        {% endfor %}
-      </div>
+      <div class="recipe-grid" id="results-grid"></div>
 
       <div class="search-no-filter-result" id="no-filter-result" style="display:none">
         <p>
@@ -136,34 +108,102 @@
           {% endif %}
         </p>
       </div>
-    {% endif %}
+    </div>
 
   </div>
 </section>
 
 <script>
 (function () {
+  var LANG = '{{ lang }}';
+  var ALL = {{ all_recipes | tojson }};
+  var DIFF = {{ difficulty | tojson }};
+  var TIME_UNIT = { ko: '분', en: 'min', ja: '分', zh: '分钟' }[LANG] || 'min';
+
+  var params = new URLSearchParams(window.location.search);
+  var rawQ = params.get('q') || '';
+  var q = rawQ.trim().toLowerCase();
+
+  var input = document.getElementById('search-page-input');
+  if (input && rawQ) input.value = rawQ;
+
+  var stateEmpty = document.getElementById('state-empty');
+  var stateNoresult = document.getElementById('state-noresult');
+  var stateResults = document.getElementById('state-results');
   var diffFilter = 'all';
   var timeFilter = 'all';
 
-  function applyFilters() {
-    var cards = document.querySelectorAll('#results-grid .recipe-card');
+  var filtered = [];
+  if (q) {
+    filtered = ALL.filter(function (r) {
+      var nameMatch = Object.keys(r.name || {}).some(function (k) {
+        return (r.name[k] || '').toLowerCase().indexOf(q) !== -1;
+      });
+      var ingMatch = (r.ingredients || []).some(function (ing) {
+        return (ing || '').toLowerCase().indexOf(q) !== -1;
+      });
+      return nameMatch || ingMatch;
+    });
+  }
+
+  function renderGrid() {
+    var grid = document.getElementById('results-grid');
+    var noFilter = document.getElementById('no-filter-result');
+    var countEl = document.getElementById('visible-count');
+    grid.innerHTML = '';
     var visible = 0;
-    cards.forEach(function (card) {
-      var d = parseInt(card.getAttribute('data-diff'));
-      var t = parseInt(card.getAttribute('data-time'));
+
+    filtered.forEach(function (item) {
+      var d = parseInt(item.difficulty);
+      var t = parseInt(item.time);
       var diffOk = diffFilter === 'all' || d === parseInt(diffFilter);
       var timeOk = timeFilter === 'all'
         || (timeFilter === '30' && t <= 30)
         || (timeFilter === '60' && t <= 60)
         || (timeFilter === '61' && t > 60);
-      if (diffOk && timeOk) { card.style.display = ''; visible++; }
-      else card.style.display = 'none';
+      if (!diffOk || !timeOk) return;
+      visible++;
+
+      var diff = (DIFF[String(d)] || {})[LANG] || '';
+      var a = document.createElement('a');
+      a.href = '/' + LANG + '/category/' + item.cat_id + '/' + item.sub_id + '/' + item.recipe_id + '/';
+      a.className = 'recipe-card';
+      a.style.cssText = '--cat-color:' + item.cat_color;
+      a.innerHTML =
+        '<div class="recipe-card-header">' +
+          '<span class="meta-tag time">' + item.time + TIME_UNIT + '</span>' +
+          '<span class="meta-tag diff diff-' + d + '">' + diff + '</span>' +
+        '</div>' +
+        '<div class="recipe-card-body">' +
+          '<p class="search-breadcrumb">' + (item.cat_name[LANG] || '') + ' · ' + (item.sub_name[LANG] || '') + '</p>' +
+          '<h3 class="recipe-name">' + (item.name[LANG] || '') + '</h3>' +
+          '<p class="recipe-desc">' + (item.desc[LANG] || '') + '</p>' +
+        '</div>';
+      grid.appendChild(a);
     });
-    var countEl = document.getElementById('visible-count');
+
     if (countEl) countEl.textContent = visible;
-    var noResult = document.getElementById('no-filter-result');
-    if (noResult) noResult.style.display = visible === 0 ? '' : 'none';
+    if (noFilter) noFilter.style.display = (filtered.length > 0 && visible === 0) ? '' : 'none';
+  }
+
+  if (!q) {
+    stateEmpty.style.display = '';
+    stateNoresult.style.display = 'none';
+    stateResults.style.display = 'none';
+  } else if (filtered.length === 0) {
+    stateEmpty.style.display = 'none';
+    stateNoresult.style.display = '';
+    stateResults.style.display = 'none';
+    var qEl = document.getElementById('q-noresult');
+    if (qEl) qEl.textContent = rawQ;
+  } else {
+    stateEmpty.style.display = 'none';
+    stateNoresult.style.display = 'none';
+    stateResults.style.display = '';
+    var qHeader = document.getElementById('q-header');
+    if (qHeader) qHeader.textContent = rawQ;
+    document.getElementById('visible-count').textContent = filtered.length;
+    renderGrid();
   }
 
   document.querySelectorAll('.filter-btn').forEach(function (btn) {
@@ -175,9 +215,18 @@
       btn.classList.add('active');
       if (group === 'diff') diffFilter = val;
       else timeFilter = val;
-      applyFilters();
+      renderGrid();
     });
   });
+
+  var form = document.getElementById('search-page-form');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var val = (input ? input.value : '').trim();
+      if (val) window.location.href = window.location.pathname + '?q=' + encodeURIComponent(val);
+    });
+  }
 })();
 </script>
 

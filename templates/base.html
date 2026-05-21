@@ -104,6 +104,13 @@
           {% endfor %}
         </div>
 
+        <!-- Search icon -->
+        <button class="search-icon-btn" id="search-icon-btn" aria-label="search">
+          <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8.5" cy="8.5" r="5.5"/><line x1="13" y1="13" x2="18" y2="18"/>
+          </svg>
+        </button>
+
         <!-- Auth area (controlled by JS) -->
         <div id="nav-auth-area" style="display:none">
           <a href="/{{ lang }}/profile/" id="nav-profile-btn" class="nav-profile-btn" style="display:none">
@@ -122,6 +129,24 @@
       </div>
     </div>
   </nav>
+
+  <!-- Search overlay -->
+  <div class="search-overlay" id="search-overlay">
+    <div class="search-overlay-inner">
+      <button class="search-overlay-close" id="search-overlay-close" aria-label="close">
+        <svg viewBox="0 0 20 20" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/>
+        </svg>
+      </button>
+      <form class="search-bar" id="search-overlay-form">
+        <input type="text" class="search-input" id="search-overlay-input"
+               placeholder="{% if lang=='ko' %}재료나 요리 이름으로 검색{% elif lang=='en' %}Search by ingredient or recipe name{% elif lang=='ja' %}食材や料理名で検索{% else %}按食材或菜名搜索{% endif %}">
+        <button type="submit" class="search-btn">
+          {% if lang=='ko' %}검색{% elif lang=='en' %}Search{% elif lang=='ja' %}検索{% else %}搜索{% endif %}
+        </button>
+      </form>
+    </div>
+  </div>
 
   <!-- Mobile menu -->
   <div class="mobile-menu" id="mobile-menu">
@@ -243,6 +268,32 @@
         SB.signOut();
       });
     }
+
+    /* ── Search overlay ── */
+    var searchIconBtn = document.getElementById('search-icon-btn');
+    var searchOverlay = document.getElementById('search-overlay');
+    var searchOverlayClose = document.getElementById('search-overlay-close');
+    var searchOverlayInput = document.getElementById('search-overlay-input');
+    var searchOverlayForm = document.getElementById('search-overlay-form');
+
+    searchIconBtn.addEventListener('click', function () {
+      searchOverlay.classList.add('open');
+      setTimeout(function () { searchOverlayInput.focus(); }, 50);
+    });
+    searchOverlayClose.addEventListener('click', function () {
+      searchOverlay.classList.remove('open');
+    });
+    searchOverlay.addEventListener('click', function (e) {
+      if (e.target === searchOverlay) searchOverlay.classList.remove('open');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') searchOverlay.classList.remove('open');
+    });
+    searchOverlayForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var q = searchOverlayInput.value.trim();
+      if (q) window.location.href = '/{{ lang }}/search/?q=' + encodeURIComponent(q);
+    });
   })();
   </script>
 

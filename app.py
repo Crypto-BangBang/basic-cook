@@ -143,29 +143,29 @@ def tools():
 @app.route("/search")
 def search():
     lang = get_lang()
-    q = request.args.get("q", "").strip().lower()
-    results = []
-    if q:
-        for key, recipe_list in RECIPES.items():
-            cat_id, sub_id = key.split("/")
-            cat = CATEGORIES.get(cat_id)
-            if not cat:
-                continue
-            sub = next((s for s in cat["sub"] if s["id"] == sub_id), None)
-            for recipe in recipe_list:
-                name_match = any(q in recipe["name"].get(l, "").lower() for l in LANGS)
-                ing_match = any(q in ing["name"].lower() for ing in recipe.get("ingredients", []))
-                if name_match or ing_match:
-                    results.append({
-                        "recipe": recipe,
-                        "cat_id": cat_id,
-                        "sub_id": sub_id,
-                        "cat": cat,
-                        "sub": sub,
-                    })
+    all_recipes = []
+    for key, recipe_list in RECIPES.items():
+        cat_id, sub_id = key.split("/")
+        cat = CATEGORIES.get(cat_id)
+        if not cat:
+            continue
+        sub = next((s for s in cat["sub"] if s["id"] == sub_id), None)
+        for recipe in recipe_list:
+            all_recipes.append({
+                "cat_id": cat_id, "sub_id": sub_id,
+                "recipe_id": recipe["id"],
+                "name": recipe["name"],
+                "desc": recipe.get("desc", {}),
+                "time": recipe["time"],
+                "difficulty": recipe["difficulty"],
+                "cat_name": cat["name"],
+                "cat_color": cat["color"],
+                "sub_name": sub["name"] if sub else {"ko": "", "en": "", "ja": "", "zh": ""},
+                "ingredients": [i["name"] for i in recipe.get("ingredients", [])],
+            })
     return render_template(
         "search.html",
-        results=results, q=q,
+        all_recipes=all_recipes,
         search_placeholder=SEARCH_PLACEHOLDER[lang],
         search_btn=SEARCH_BTN[lang],
     )
