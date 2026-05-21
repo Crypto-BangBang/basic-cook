@@ -48,7 +48,7 @@
         matched.forEach(function (item) {
           var diff = (DIFF[String(item.difficulty)] || {})[LANG] || '';
           var a = document.createElement('a');
-          a.href = '/category/' + item.cat_id + '/' + item.sub_id + '/' + item.recipe_id + '?lang=' + LANG;
+          a.href = '/' + LANG + '/category/' + item.cat_id + '/' + item.sub_id + '/' + item.recipe_id + '/';
           a.className = 'recipe-card';
           a.style.cssText = '--cat-color:' + item.cat_color;
           a.innerHTML =

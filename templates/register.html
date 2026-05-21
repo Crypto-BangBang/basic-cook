@@ -84,6 +84,8 @@
     if (res.error) {
       errEl.textContent = res.error.message;
       errEl.style.display = '';
+    } else if (res.data && res.data.session) {
+      window.location.href = '/' + LANG + '/';
     } else {
       var msg = { ko: '가입 완료! 이메일을 확인해 인증 링크를 클릭하세요.', en: 'Signed up! Check your email for the confirmation link.', ja: '登録完了！メールで認証リンクをご確認ください。', zh: '注册成功！请查看邮件中的确认链接。' };
       document.getElementById('auth-form').style.display = 'none';

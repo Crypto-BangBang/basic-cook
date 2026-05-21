@@ -118,7 +118,7 @@
     var timeUnit = { ko: '분', en: 'min', ja: '分', zh: '分钟' }[LANG] || 'min';
     matched.forEach(function (item) {
       var a = document.createElement('a');
-      a.href = '/category/' + item.cat_id + '/' + item.sub_id + '/' + item.recipe_id + '?lang=' + LANG;
+      a.href = '/' + LANG + '/category/' + item.cat_id + '/' + item.sub_id + '/' + item.recipe_id + '/';
       a.className = 'recipe-card';
       a.style.cssText = '--cat-color:' + item.cat_color;
       var diff = (DIFF[String(item.difficulty)] || {})[LANG] || '';
@@ -142,7 +142,7 @@
       if (!recipe) return;
       var date = item.last_cooked ? item.last_cooked.slice(0, 10).replace(/-/g, '.') : '';
       var a = document.createElement('a');
-      a.href = '/category/' + catId + '/' + subId + '/' + recipeId + '?lang=' + LANG;
+      a.href = '/' + LANG + '/category/' + catId + '/' + subId + '/' + recipeId + '/';
       a.className = 'cook-log-item';
       a.style.cssText = '--cat-color:' + recipe.cat_color;
       a.innerHTML = '<div class="cook-log-bar"></div><div class="cook-log-body"><p class="cook-log-cat">' +

@@ -7,11 +7,11 @@
 <meta property="og:title"        content="{{ recipe.name[lang] }} — Basic Cook">
 <meta property="og:description"  content="{{ recipe.desc.get(lang, recipe.desc.get('en', recipe.desc.get('ko', ''))) }}">
 <meta property="og:url"          content="{{ request.url }}">
-<meta property="og:image"        content="{{ url_for('static', filename='images/' + cat_id + '-' + sub_id + '.jpg', _external=True) }}">
+<meta property="og:image"        content="{{ site_url }}/static/images/{{ cat_id }}-{{ sub_id }}.jpg">
 <meta name="twitter:card"        content="summary_large_image">
 <meta name="twitter:title"       content="{{ recipe.name[lang] }} — Basic Cook">
 <meta name="twitter:description" content="{{ recipe.desc.get(lang, recipe.desc.get('en', recipe.desc.get('ko', ''))) }}">
-<meta name="twitter:image"       content="{{ url_for('static', filename='images/' + cat_id + '-' + sub_id + '.jpg', _external=True) }}">
+<meta name="twitter:image"       content="{{ site_url }}/static/images/{{ cat_id }}-{{ sub_id }}.jpg">
 {% endblock %}
 
 {% block content %}
@@ -199,13 +199,6 @@
     });
   });
 
-  var TOAST_MSGS = {
-    copied:  { ko: '링크를 복사했어요', en: 'Link copied', ja: 'リンクをコピーしました', zh: '已复制链接' },
-    saved:   { ko: '저장됐어요', en: 'Saved', ja: '保存しました', zh: '已收藏' },
-    unsaved: { ko: '즐겨찾기 해제', en: 'Removed from favorites', ja: '保存を解除しました', zh: '已取消收藏' },
-    cooked:  { ko: '요리 완료 기록!', en: 'Cooking logged!', ja: '調理記録完了！', zh: '烹饪记录成功！' },
-  };
-
   /* Step checkboxes */
   var STORAGE_KEY = 'steps-{{ cat_id }}-{{ sub_id }}-{{ recipe.id }}';
 
@@ -249,6 +242,7 @@
     copied:  { ko: '링크를 복사했어요', en: 'Link copied', ja: 'リンクをコピーしました', zh: '已复制链接' },
     saved:   { ko: '저장됐어요', en: 'Saved', ja: '保存しました', zh: '已收藏' },
     unsaved: { ko: '즐겨찾기 해제', en: 'Removed from favorites', ja: '保存を解除しました', zh: '已取消收藏' },
+    cooked:  { ko: '요리 완료 기록!', en: 'Cooking logged!', ja: '調理記録完了！', zh: '烹饪记录成功！' },
   };
 
   /* Favorites */

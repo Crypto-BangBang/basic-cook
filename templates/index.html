@@ -65,7 +65,7 @@
       var subName = (item.sub_name || {})[LANG] || (item.sub_name || {})['ko'] || '';
       var diff = ((DIFF[String(item.difficulty)] || {})[LANG]) || '';
       var a = document.createElement('a');
-      a.href = '/category/' + item.path + '?lang=' + LANG;
+      a.href = '/' + LANG + '/category/' + item.path + '/';
       a.className = 'recently-card';
       a.style.cssText = '--cat-color:' + (item.cat_color || 'var(--gold)');
       a.innerHTML =

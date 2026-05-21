@@ -1,5 +1,5 @@
 [build]
-  command = "pip install flask python-dotenv werkzeug beautifulsoup4 && python generate.py"
+  command = "pip install flask werkzeug && python generate.py"
   publish = "build"
 
 [[redirects]]

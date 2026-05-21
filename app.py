@@ -80,6 +80,7 @@ def inject_globals():
         langs=LANGS,
         lang=lang,
         difficulty=DIFFICULTY,
+        site_url="https://basic-cook.netlify.app",
     )
 
 
